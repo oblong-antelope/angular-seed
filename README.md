@@ -1,4 +1,13 @@
-# Introduction
+# Oblong Web Interface
+
+A web interface built in Angular-2 Typescript for the Oblong text-expertise mining API backend.
+
+Uses a fork of the Angular 2 seed as a extensible starter for the base of the project.
+
+Angular 2 seed details listed below
+
+
+# Angular 2 Seed Introduction
 
 [![Angular Style Guide](https://mgechev.github.io/angular2-style-guide/images/badge.svg)](https://angular.io/styleguide)
 [![Build Status](https://travis-ci.org/mgechev/angular-seed.svg?branch=master)](https://travis-ci.org/mgechev/angular-seed)
