@@ -48,3 +48,6 @@ cache:
 
 script:
   - npm run tests.all && npm run build.prod.exp
+  
+notifications:
+  slack: oblong-antelope:1eXsnKpfCiWpdAGGizILVk7j
