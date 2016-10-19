@@ -1,10 +1,28 @@
-<p>Find a person</p>
+<h1>Find a person</h1>
 
 <!--FORM GOES HERE-->
-<form (submit)="addName()">
-  <input [(ngModel)]="newName" name="newName" placeholder="Awesome Computer Scientist">
-  <button type="submit">Add</button>
-</form>
+<div class="container">
+    <form (ngSubmit)="onSubmit()" #queryform="ngForm">
+      <div class="form-group">
+        <label for="expertise">Expertise</label>
+        <input type="text" class="form-control" 
+               [(ngModel)]="query.expertise" name="expertise" id="expertise" #expertise="ngModel">
+      </div>
+
+      <div class="form-group">
+        <label for="roleselect">Role</label>
+        <select class="form-control" id="roleselect" 
+                [(ngModel)]="query.role" name="role" id="roleselect" #roleselect="ngModel">
+          <option *ngFor="let role of roles">{{role}}</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-default">Submit</button>
+      <button type="reset" class="btn btn-default btn-sm" (click)="resetForm()">Reset</button>
+    </form>
+</div>
+
+<hr>
 
 <ul>
   <li *ngFor="let name of names">{{name}}</li>
