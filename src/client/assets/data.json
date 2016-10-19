@@ -1,6 +1,6 @@
 [
-  "Edsger Dijkstra",
-  "Donald Knuth",
-  "Alan Turing",
-  "Grace Hopper"
+  { "name":"Edsger Dijkstra", "department":"Computing", "info":"blah/blah" },
+  { "name":"Donald Knuth", "department":"Biology", "info":"blah/blah2" },
+  { "name":"Alan Turing", "department":"Mathematics", "info":"blah/blah3" },
+  { "name":"Grace Hopper", "department":"Business", "info":"blah/blah4" },
 ]

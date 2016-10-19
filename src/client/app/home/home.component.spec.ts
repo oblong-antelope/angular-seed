@@ -12,7 +12,7 @@ import {
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { NameListService } from '../shared/index';
+import { QueryService } from '../shared/index';
 import { HomeModule } from './home.module';
 
 export function main() {
@@ -24,7 +24,7 @@ export function main() {
         imports: [FormsModule, RouterModule, HttpModule, HomeModule],
         declarations: [TestComponent],
         providers: [
-          NameListService,
+          QueryService,
           BaseRequestOptions,
           MockBackend,
           {provide: Http, useFactory: function (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) {
@@ -47,7 +47,7 @@ export function main() {
             let homeInstance = fixture.debugElement.children[0].componentInstance;
             let homeDOMEl = fixture.debugElement.children[0].nativeElement;
 
-            expect(homeInstance.nameListService).toEqual(jasmine.any(NameListService));
+            expect(homeInstance.nameListService).toEqual(jasmine.any(QueryService));
             expect(homeDOMEl.querySelectorAll('li').length).toEqual(0);
 
             homeInstance.newName = 'Minko';

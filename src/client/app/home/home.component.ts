@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { QueryService } from '../shared/index';
+import { FormQuery, ReturnQuery } from '../models/index';
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -15,21 +17,24 @@ export class HomeComponent implements OnInit {
   errorMessage: string;
 
   query: FormQuery;
-  roles: string[] = ['', 'Collaborator', 'Supervisor', 'Lecturer'];
+  roles: string[] ;
   submitted: boolean;
+
+  personList: ReturnQuery[];
 
   /**
    * Creates an instance of the HomeComponent with the injected
-   * NameListService.
+   * QueryService.
    *
-   * @param {NameListService} nameListService - The injected NameListService.
+   * @param {QueryService} queryService - The injected QueryService.
    */
-  constructor() {}
+  constructor(private queryService: QueryService) {}
 
   /**
    * Initialise the form OnInit
    */
   ngOnInit() {
+    this.roles = ['', 'Collaborator', 'Supervisor', 'Lecturer']
     this.resetForm();
   }
 
@@ -47,20 +52,21 @@ export class HomeComponent implements OnInit {
    */
   resetForm() {
     this.query = new FormQuery('', '');
+    this.personList = [];
     this.submitted = false;
   }
 
 
   /**
-   * Handle the nameListService observable
+   * Handle the querySerivce observable
    */
-  // getNames() {
-  //   this.nameListService.get()
-  //     .subscribe(
-  //       names => this.names = names,
-  //       error =>  this.errorMessage = <any>error
-  //     );
-  // }
+  sendQuery() {
+    this.queryService.get()
+      .subscribe(
+        list => this.personList = list,
+        error =>  this.errorMessage = <any>error
+      );
+  }
 
   /**
    * Pushes a new name onto the names array
@@ -72,18 +78,4 @@ export class HomeComponent implements OnInit {
   //   this.newName = '';
   //   return false;
   // }
-
-}
-
-export class FormQuery {
-  constructor(
-    public expertise: string,
-    public role: string
-  ) {}
-}
-
-export interface ReturnQuery {
-  name: string;
-  department: string;
-  info: string;
 }
