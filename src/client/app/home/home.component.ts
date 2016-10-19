@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
    * Initialise the form OnInit
    */
   ngOnInit() {
-    this.roles = ['', 'Collaborator', 'Supervisor', 'Lecturer']
+    this.roles = ['None Specific', 'Collaborator', 'Supervisor', 'Lecturer']
     this.resetForm();
   }
 
@@ -45,37 +45,28 @@ export class HomeComponent implements OnInit {
   onSubmit() {
     console.log('Submitted', this.query);
     this.submitted = true;
+    this.sendQuery();
   }
 
   /**
    * Resets the query form.
    */
   resetForm() {
-    this.query = new FormQuery('', '');
+    this.query = new FormQuery('', this.roles[0]);
     this.personList = [];
     this.submitted = false;
   }
 
 
   /**
-   * Handle the querySerivce observable
+   * Handle the queryService observable
    */
   sendQuery() {
     this.queryService.get()
       .subscribe(
         list => this.personList = list,
-        error =>  this.errorMessage = <any>error
+        error =>  {this.errorMessage = <any>error; console.log(error);}
       );
   }
 
-  /**
-   * Pushes a new name onto the names array
-   * @return {boolean} false to prevent default form submit behavior to refresh the page.
-   */
-  // addName(): boolean {
-  //   // TODO: implement nameListService.post
-  //   this.names.push(this.newName);
-  //   this.newName = '';
-  //   return false;
-  // }
 }

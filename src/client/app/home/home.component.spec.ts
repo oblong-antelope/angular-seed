@@ -41,15 +41,17 @@ export function main() {
         TestBed
           .compileComponents()
           .then(() => {
-            // let fixture = TestBed.createComponent(TestComponent);
-            // fixture.detectChanges();
+            let fixture = TestBed.createComponent(TestComponent);
+            fixture.detectChanges();
 
-            // let homeInstance = fixture.debugElement.children[0].componentInstance;
-            // let homeDOMEl = fixture.debugElement.children[0].nativeElement;
+            let homeInstance = fixture.debugElement.children[0].componentInstance;
+            let homeDOMEl = fixture.debugElement.children[0].nativeElement;
 
-            // expect(homeInstance.nameListService).toEqual(jasmine.any(QueryService));
-            // expect(homeDOMEl.querySelectorAll('li').length).toEqual(0);
+            expect(homeInstance.queryService).toEqual(jasmine.any(QueryService));
+            expect(homeDOMEl.querySelectorAll('li').length).toEqual(0);
 
+            
+            // Need to find way of testing the sendQuery function
             // homeInstance.newName = 'Minko';
             // homeInstance.addName();
 
