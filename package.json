@@ -1,9 +1,9 @@
 {
-  "name": "angular2-seed",
-  "version": "0.0.0",
-  "description": "High-quality, modular starter (seed) project for Angular 2 apps with statically typed build and AoT",
+  "name": "oblong",
+  "version": "0.0.1",
+  "description": "Academic expertise mining system",
   "repository": {
-    "url": "https://github.com/mgechev/angular2-seed"
+    "url": "https://github.com/oblong-antelope/oblong"
   },
   "scripts": {
     "build.dev": "gulp build.dev --color --config-env dev",
@@ -32,7 +32,8 @@
     "tasks.list": "gulp --tasks-simple --color",
     "test": "gulp test --color",
     "e2e.ci": "gulp build.prod --color && gulp build.js.e2e --color && gulp e2e --color",
-    "tests.all": "npm test && npm run e2e.ci",
+    "tests.all":  "npm test",
+    //"tests.all": "npm test && npm run e2e.ci",
     "webdriver-start": "webdriver-manager start",
     "webdriver-update": "webdriver-manager update"
   },

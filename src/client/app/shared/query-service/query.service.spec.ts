@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { QueryService } from './query.service';
 
 export function main() {
-  describe('NameList Service', () => {
+  describe('QueryService Service', () => {
     let queryService: QueryService;
     let mockBackend: MockBackend;
     let initialResponse: any;

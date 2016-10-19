@@ -50,7 +50,7 @@ export function main() {
             expect(homeInstance.queryService).toEqual(jasmine.any(QueryService));
             expect(homeDOMEl.querySelectorAll('li').length).toEqual(0);
 
-            
+
             // Need to find way of testing the sendQuery function
             // homeInstance.newName = 'Minko';
             // homeInstance.addName();

@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
    * Initialise the form OnInit
    */
   ngOnInit() {
-    this.roles = ['None Specific', 'Collaborator', 'Supervisor', 'Lecturer']
+    this.roles = ['None Specific', 'Collaborator', 'Supervisor', 'Lecturer'];
     this.resetForm();
   }
 
