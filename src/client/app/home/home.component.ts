@@ -62,9 +62,28 @@ export class HomeComponent implements OnInit {
    * Handle the queryService observable
    */
   sendQuery() {
-    this.queryService.get()
+    this.queryService.postForm(this.query)
       .subscribe(
-        list => this.personList = list,
+        link => {
+          if(link.success) {
+            this.getList(link.results);
+          }
+        },
+        error =>  {this.errorMessage = <any>error; console.log(error);}
+      );
+  }
+
+  /**
+   * Handles the queryService observable, gets the List from an api
+   * @param {string} api: api url to get the list from
+   */
+  getList(api : string) {
+    this.queryService.getList(api)
+      .subscribe(
+        list => {
+          this.personList = list;
+          console.log('List Returned', this.personList);
+        },
         error =>  {this.errorMessage = <any>error; console.log(error);}
       );
   }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { ReturnQuery } from '../../models/index';
+import { Config } from '../index';
+import { FormQuery, ReturnQuery, ReturnLinkQuery } from '../../models/index';
 
 import 'rxjs/add/observable/throw';
 // import 'rxjs/add/operator/do';  // for debugging
@@ -12,6 +13,8 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class QueryService {
 
+  API = Config.API;
+
   /**
    * Creates a new NameListService with the injected Http.
    * @param {Http} http - The injected Http.
@@ -20,11 +23,24 @@ export class QueryService {
   constructor(private http: Http) {}
 
   /**
-   * Returns an Observable for the HTTP GET request for the JSON resource.
-   * @return {string[]} The Observable for the HTTP request.
+   * Returns an Observable for the HTTP POST request
+   * @param {FormQuery} fq - the query to send to the REST Server
+   * @return {ReturnQuery[]} The Observable for the HTTP request.
    */
-  get(): Observable<ReturnQuery[]> {
-    return this.http.get('/assets/data.json')
+  postForm(fq: FormQuery): Observable<ReturnLinkQuery> {
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post(this.genUri('/api/query/submit'), JSON.stringify(fq), options)
+                    .map((res: Response) => res.json())
+                    .catch(this.handleError);
+  }
+
+  /**
+   * Returns an Observable for the HTTP GET request for the JSON resource.
+   * @return {ReturnQuery[]} The Observable for the HTTP request.
+   */
+  getList(api: string): Observable<ReturnQuery[]> {
+    return this.http.get(this.genUri(api))
                     .map((res: Response) => res.json())
     //              .do(data => console.log('server data:', data))  // debug
                     .catch(this.handleError);
@@ -40,6 +56,15 @@ export class QueryService {
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead
     return Observable.throw(errMsg);
+  }
+
+  /**
+   * Appends path to API
+   * @param {string} path - path to resource
+   * @return {string} - full path including server address
+   */
+  private genUri(path: string, query?: string) : string {
+    return this.API + path + (query === undefined ? '' : query);
   }
 }
 
