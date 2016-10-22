@@ -4,3 +4,8 @@ Welcome to                _                                   _
  | (_| | | | | (_| | |_| | | (_| | | |_____\__ \  __/  __/ (_| |
   \__,_|_| |_|\__, |\__,_|_|\__,_|_|       |___/\___|\___|\__,_|
               |___/
+
+Oblong Edition
+
+Created by:
+Mickey Li, Zichen Liu, Blaine Rogers, Jonathan Sutton, Aran Dhaliwal, Peng Peng

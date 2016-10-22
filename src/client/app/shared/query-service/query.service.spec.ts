@@ -51,7 +51,7 @@ export function main() {
       connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(mockReturnQuery) })));
 
       postFormResponse = queryService.postForm(mockFormQuery);
-      connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(mockReturnLinkQuery)})))
+      connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(mockReturnLinkQuery)})));
     });
 
     it('should return an Observable when getList called', () => {
@@ -72,7 +72,7 @@ export function main() {
       let links: ReturnLinkQuery;
       postFormResponse.subscribe((data: ReturnLinkQuery) => links = data);
       expect(links).toEqual(mockReturnLinkQuery);
-    })
+    });
 
   });
 }
