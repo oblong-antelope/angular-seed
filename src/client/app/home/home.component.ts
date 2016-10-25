@@ -1,6 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryService } from '../shared/index';
 import { FormQuery, ReturnQuery } from '../models/index';
+import {
+  TableOptions,
+  SelectionType,
+  TableColumn,
+  ColumnMode,
+  DataTable,
+  DataTableBodyRow
+} from 'angular2-data-table';
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -19,8 +27,20 @@ export class HomeComponent implements OnInit {
   query: FormQuery;
   roles: string[] ;
   submitted: boolean;
+  timeout: any;
 
   personList: ReturnQuery[];
+
+  @ViewChild('mydatatable') table: DataTable;
+
+  options = new TableOptions({
+    columnMode: ColumnMode.force,
+    headerHeight: 50,
+    footerHeight: 50,
+    rowHeight: 50,
+    detailRowHeight: 100,
+    scrollbarV: false,
+  });
 
   /**
    * Creates an instance of the HomeComponent with the injected
@@ -52,7 +72,7 @@ export class HomeComponent implements OnInit {
    * Resets the query form.
    */
   resetForm() {
-    this.query = new FormQuery('', this.roles[0]);
+    this.query = new FormQuery('', '', this.roles[0]);
     this.personList = [];
     this.submitted = false;
   }
@@ -87,5 +107,55 @@ export class HomeComponent implements OnInit {
         error =>  {this.errorMessage = <any>error; console.log(error);}
       );
   }
+
+  /**
+   * Handles the queryService observable, gets the summary of a person from the api
+   * @param {number} i: the index of the person to get within the personList
+   */
+  getPersonSummary(i : number) {
+    console.log(this.personList[i]);
+  }
+
+
+  /**
+   * Manually toggles the given row
+   * @param {DataTableBodyRow} row: the row to toggle
+   */
+  toggleExpandRow(row: DataTableBodyRow) {
+    console.log('Toggled Expand Row!', row);
+    // TODO: Hookup async update example using fetchUser
+    console.log(row);
+    this.table.toggleExpandRow(row);
+  }
+
+  // fetch(cb) {
+  //   const req = new XMLHttpRequest();
+  //   req.open('GET', `https://unpkg.com/angular2-data-table@0.2.0/assets/data/100k.json`);
+
+  //   req.onload = () => {
+  //     cb(JSON.parse(req.response));
+  //   };
+
+  //   req.send();
+  // }
+
+  paged(event : any) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      console.log('paged!', event);
+    }, 100);
+  }
+ 
+  // fetchUser(cb) {
+  //   let req = new XMLHttpRequest();
+  //   req.open('GET', `https://randomuser.me/api`);
+
+  //   req.onload = () => {
+  //     cb(JSON.parse(req.response));
+  //   };
+
+  //   req.send();
+  // }
+
 
 }

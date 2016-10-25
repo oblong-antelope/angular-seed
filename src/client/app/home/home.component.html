@@ -3,6 +3,13 @@
 <!--FORM GOES HERE-->
 <div class="container">
     <form (ngSubmit)="onSubmit()" #queryform="ngForm">
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" 
+               [(ngModel)]="query.name" name="name" id="name" #name="ngModel">
+      </div>
+
       <div class="form-group">
         <label for="expertise">Expertise</label>
         <input type="text" class="form-control" 
@@ -24,21 +31,105 @@
 
 <hr>
 
-<table class="table table-hover">
+<datatable
+    #mydatatable
+    class='material expandable'
+    [rows]='personList'
+    (onPageChange)="paged($event)"
+    (onRowClick)="toggleExpandRow($event.row)"
+    [options]='options'>
+    
+
+    <datatable-row-detail-template>
+      <template let-row="row">
+        <div style="padding-left:10px;">
+          <!--<h3 style="padding:0;margin:0">Address</h3>-->
+          <div>SOME DATA!</div>
+        </div>
+      </template>
+    </datatable-row-detail-template>
+
+    <datatable-column
+      [width]="50"
+      [resizeable]="false"
+      [sortable]="false"
+      [draggable]="false"
+      [canAutoResize]="true">
+      <template let-row="row">
+        <a
+          href="#"
+          [class.icon-right]="!row.$$expanded"
+          [class.icon-down]="row.$$expanded"
+          class="expander-btn"
+          title="Expand/Collapse Row"
+          (click)="toggleExpandRow(row)">
+        </a>
+      </template>
+    </datatable-column>
+
+    <datatable-column name="Index" width="80">
+      <template let-row="row">
+        <strong>{{row.$$index}}</strong>
+      </template>
+    </datatable-column>
+
+    <datatable-column name="Name" width="200">
+      <template let-value="value">
+        <strong>{{value}}</strong>
+      </template>
+    </datatable-column>
+
+    <datatable-column name="Department" width="300">
+      <template let-row="row" let-value="value">
+        {{value}}
+      </template>
+    </datatable-column>
+
+    <datatable-column name="Email" width="300">
+      <template let-row="row" let-value="value">
+        {{value}}
+      </template>
+    </datatable-column>
+
+  </datatable>
+
+  <!--<table class="table table-hover">
   <thead class="thead-default">
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th>Department</th>
-      <th>Email</th>
-    </tr>
+  <tr>
+  <th>#</th>
+  <th>Name</th>
+  <th>Department</th>
+  <th>Email</th>
+  </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let p of personList ; let i = index">
-      <th scope="row">{{i}}</th>
-      <td>{{p.name}}</td>
-      <td>{{p.department}}</td>
-      <td>{{p.email}}</td>
-    </tr>
+  <tr *ngFor="let p of personList ; let i = index">
+  <th scope="row">{{i}}</th>
+  <td>{{p.name}}</td>
+  <td>{{p.department}}</td>
+  <td>{{p.email}}</td>
+  </tr>
   </tbody>
-</table>
+  </table>-->
+
+  <!--<accordion>
+  <accordion-group *ngFor="let p of personList ; let i = index" [isOpen]="getPersonSummary(i)">
+  <div accordion-heading>
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <th scope="row">{{i}}</th>
+            <td>{{p.name}}</td>
+            <td>{{p.department}}</td>
+            <td>{{p.email}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <i class="pull-right glyphicon"
+         [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+    </div>
+
+    Some stuff For Now
+  </accordion-group>
+
+</accordion>-->

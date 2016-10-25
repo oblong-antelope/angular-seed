@@ -1,5 +1,6 @@
 export class FormQuery {
   constructor(
+    public name: string,
     public expertise: string,
     public role: string
   ) {}
