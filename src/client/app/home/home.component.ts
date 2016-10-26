@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QueryService } from '../shared/index';
-import { FormQuery, ReturnQuery } from '../models/index';
+import { FormQuery, ReturnQuery, ResearchSummary } from '../models/index';
 import {
   TableOptions,
   SelectionType,
@@ -26,10 +26,11 @@ export class HomeComponent implements OnInit {
 
   query: FormQuery;
   roles: string[] ;
+  expanded: any = {};
   submitted: boolean;
   timeout: any;
 
-  personList: ReturnQuery[];
+  personList: DataTableElement[];
 
   @ViewChild('mydatatable') table: DataTable;
 
@@ -38,8 +39,7 @@ export class HomeComponent implements OnInit {
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 50,
-    detailRowHeight: 100,
-    scrollbarV: false,
+    detailRowHeight: 150,
   });
 
   /**
@@ -89,7 +89,8 @@ export class HomeComponent implements OnInit {
             this.getList(link.results);
           }
         },
-        error =>  {this.errorMessage = <any>error; console.log(error);}
+        error =>  {this.errorMessage = <any>error; console.log(error);},
+        () => console.log('Research Summary Request Complete')
       );
   }
 
@@ -101,10 +102,11 @@ export class HomeComponent implements OnInit {
     this.queryService.getList(api)
       .subscribe(
         list => {
-          this.personList = list;
+          this.personList = <DataTableElement[]> list;
           console.log('List Returned', this.personList);
         },
-        error =>  {this.errorMessage = <any>error; console.log(error);}
+        error =>  {this.errorMessage = <any>error; console.log(error);},
+        () => console.log('Research Summary Request Complete')
       );
   }
 
@@ -112,32 +114,35 @@ export class HomeComponent implements OnInit {
    * Handles the queryService observable, gets the summary of a person from the api
    * @param {number} i: the index of the person to get within the personList
    */
-  getPersonSummary(i : number) {
+  getPersonSummary(api: string, i : number) {
     console.log(this.personList[i]);
   }
 
 
   /**
-   * Manually toggles the given row
-   * @param {DataTableBodyRow} row: the row to toggle
+   * Manually toggles the given row, will close it if its open, and get data if it hasnt been got before
+   * Asynchronously gets the research summary of the given row
+   * @param {ReturnQuery} row: the row to toggle
    */
-  toggleExpandRow(row: DataTableBodyRow) {
-    console.log('Toggled Expand Row!', row);
-    // TODO: Hookup async update example using fetchUser
-    console.log(row);
-    this.table.toggleExpandRow(row);
+  toggleExpandRow(row: any) {
+    let i:number = row.$$index;
+
+    if(row.$$expanded || this.personList[i].summary !== undefined) {
+      this.table.toggleExpandRow(row);
+      return;
+    }
+
+    this.queryService.getResearchSummary(row.research_summary)
+      .subscribe(
+        data => {
+          this.personList[i].summary = data;
+          this.table.toggleExpandRow(row);
+        },
+        error =>  {this.errorMessage = <any>error; console.log(error);},
+        () => console.log('Research Summary Request Complete')
+      );
   }
 
-  // fetch(cb) {
-  //   const req = new XMLHttpRequest();
-  //   req.open('GET', `https://unpkg.com/angular2-data-table@0.2.0/assets/data/100k.json`);
-
-  //   req.onload = () => {
-  //     cb(JSON.parse(req.response));
-  //   };
-
-  //   req.send();
-  // }
 
   paged(event : any) {
     clearTimeout(this.timeout);
@@ -145,17 +150,9 @@ export class HomeComponent implements OnInit {
       console.log('paged!', event);
     }, 100);
   }
- 
-  // fetchUser(cb) {
-  //   let req = new XMLHttpRequest();
-  //   req.open('GET', `https://randomuser.me/api`);
 
-  //   req.onload = () => {
-  //     cb(JSON.parse(req.response));
-  //   };
+}
 
-  //   req.send();
-  // }
-
-
+interface DataTableElement extends ReturnQuery {
+  summary : ResearchSummary;
 }

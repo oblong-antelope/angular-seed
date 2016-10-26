@@ -10,10 +10,18 @@ export interface ReturnQuery {
   name: string;
   department: string;
   email: string;
-  info: string;
+  research_summary: string;
+  full: string;
 }
 
 export interface ReturnLinkQuery {
   success: boolean;
   results: string;
+}
+
+export interface ResearchSummary {
+  papers: number;
+	keywords: string[];
+	recent_paper: string;
+	full_profile: string;
 }

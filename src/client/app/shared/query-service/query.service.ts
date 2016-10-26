@@ -2,9 +2,14 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Config } from '../index';
-import { FormQuery, ReturnQuery, ReturnLinkQuery } from '../../models/index';
+import { FormQuery,
+         ReturnQuery,
+         ReturnLinkQuery,
+         ResearchSummary
+        } from '../../models/index';
 
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/of';
 // import 'rxjs/add/operator/do';  // for debugging
 
 /**
@@ -37,12 +42,33 @@ export class QueryService {
 
   /**
    * Returns an Observable for the HTTP GET request for the JSON resource.
+   * @param {string} api : The location of the resource
    * @return {ReturnQuery[]} The Observable for the HTTP request.
    */
   getList(api: string): Observable<ReturnQuery[]> {
     return this.http.get(this.genUri(api))
                     .map((res: Response) => res.json())
     //              .do(data => console.log('server data:', data))  // debug
+                    .catch(this.handleError);
+  }
+
+  /**
+   * Returns an Observable for the HTTP GET request for the JSON resource.
+   * @param {string} api : The location of the resource
+   * @return {ResearchSummary} THe Observable for the http RequestOptions
+   */
+  getResearchSummary(api: string): Observable<ResearchSummary> {
+
+      // let obj: ResearchSummary = {
+      //   papers : 21,
+      //   keywords: ['artificial intelligence', 'argumentation'],
+      //   recent_paper: 'http://www.arxiv.com/mymostrecentpaper',
+      //   full_profile: 'http://myfullprofile/api'
+      // };
+
+      // return Observable.of(obj);
+    return this.http.get(this.genUri(api))
+                    .map((res:Response) => res.json())
                     .catch(this.handleError);
   }
 
