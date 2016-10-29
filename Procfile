@@ -1,1 +1,2 @@
-web: node node_modules/gulp/bin/gulp serve.prod
+web: npm install
+web: npm start
