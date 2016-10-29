@@ -1,6 +1,4 @@
-# Oblong Web Interface
-
-[![devDependency Status](https://travis-ci.org/oblong-antelope/oblong-web.svg?branch=master)](https://travis-ci.org/oblong-antelope/oblong-web.svg)
+# Oblong Web Interface [![devDependency Status](https://travis-ci.org/oblong-antelope/oblong-web.svg?branch=master)](https://travis-ci.org/oblong-antelope/oblong-web.svg)
 
 A web interface built in Angular-2 Typescript for the Oblong text-expertise mining API backend.
 
