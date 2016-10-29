@@ -3,12 +3,9 @@ import { QueryService } from '../shared/index';
 import { FormQuery, ReturnQuery, ResearchSummary } from '../models/index';
 import {
   TableOptions,
-  SelectionType,
-  TableColumn,
   ColumnMode,
   DataTable,
-  DataTableBodyRow
-} from 'angular2-data-table';
+} from 'angular2-data-table/release/index';
 
 /**
  * This class represents the lazy loaded HomeComponent.

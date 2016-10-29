@@ -39,9 +39,10 @@ export function main() {
 
       //Mock Objects
       mockUri = 'api/test';
-      mockFormQuery = new FormQuery('expertise1', 'collaborator');
+      mockFormQuery = new FormQuery('name', 'expertise1', 'collaborator');
       mockReturnLinkQuery = {success: true, results:'api/query/someuri'};
-      mockReturnQuery = [{name:'name', department:'department',  email:'email@email', info: ''}];
+      mockReturnQuery = [{name:'name', department:'department',  email:'email@email',
+                          research_summary: 'anotherurl.co.uk', full:'Someurl.co.uk'}];
 
       let connection: any;
       mockBackend.connections.subscribe((c: any) => connection = c);
