@@ -47,7 +47,7 @@ cache:
   directories: node_modules
 
 script:
-  - npm run tests.all && npm run build.prod.exp
-  
+  - npm run tests.all
+
 notifications:
   slack: oblong-antelope:1eXsnKpfCiWpdAGGizILVk7j
