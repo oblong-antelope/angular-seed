@@ -28,11 +28,19 @@ export class ProjectConfig extends SeedConfig {
     this.APP_ASSETS = [
       ...this.APP_ASSETS,
       //{src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
-      {src: `node_modules/angular2-data-table/release/index.min.js`, inject: true, vendor: false},
+      {src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs'},
       {src: `node_modules/bootstrap/dist/css/bootstrap.min.css`, inject: true, vendor: false},
       {src: `node_modules/angular2-data-table/release/datatable.css`, inject: true, vendor: false},
       {src: `node_modules/angular2-data-table/release/material.css`, inject: true, vendor: false},
     ];
+
+    this.SYSTEM_CONFIG_DEV.paths['angular2-data-table'] =
+      `node_modules/angular2-data-table/release/index`;
+
+    this.SYSTEM_BUILDER_CONFIG.packages['angular2-data-table'] = {
+        main: 'release/index.js',
+        defaultExtension : 'js'
+    };
 
     /* Add to or override NPM module configurations: */
     // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });
