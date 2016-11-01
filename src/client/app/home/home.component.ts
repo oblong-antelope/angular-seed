@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { QueryService } from '../shared/index';
 import { FormQuery, ReturnQuery, ResearchSummary } from '../models/index';
 import {
@@ -44,8 +45,9 @@ export class HomeComponent implements OnInit {
    * QueryService.
    *
    * @param {QueryService} queryService - The injected QueryService.
+   * @param {Router} router - The inected Router
    */
-  constructor(private queryService: QueryService) {}
+  constructor(private queryService: QueryService, private router: Router) {}
 
   /**
    * Initialise the form OnInit
@@ -138,6 +140,24 @@ export class HomeComponent implements OnInit {
         error =>  {this.errorMessage = <any>error; console.log(error);},
         () => console.log('Research Summary Request Complete')
       );
+  }
+
+  /**
+   * Takes the button press event and navigates to the correct place
+   */
+  expandedButtonPress(e: any) {
+    let index:number = e.$$index;
+    if(this.personList[index].full !== undefined) {
+      this.navigateToProfile(this.personList[index].full);
+    }
+  }
+
+  /**
+   * On the give more details button press, we will navigate to the profile component.
+   */
+  navigateToProfile(api: string) {
+    let vals:string[] = api.split('/');
+    this.router.navigate(['/profile/' + vals[2]]);
   }
 
 

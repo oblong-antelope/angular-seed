@@ -3,7 +3,7 @@ import { ProfileComponent } from './index';
 
 export const ProfileRoutes: Route[] = [
   {
-    path: '/profile/:id',
+    path: 'profile/:id',
     component: ProfileComponent
   }
 ];

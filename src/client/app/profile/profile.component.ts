@@ -39,12 +39,16 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
       this.id = +params['id']; // (+) converts string 'id' to a number
-      // let data = params['data'];
-      // if(data !== undefined && data.includes('api')) {
-      //   this.api = data.api;
-      // }
-      this.getProfile();
    });
+
+   this.route.data.subscribe(
+     data => {
+       console.log(data);
+      //   if(data !== undefined && data.includes('api')) {
+      //     this.api = data.api;
+      //  }
+     }
+   )
   }
 
   /**
