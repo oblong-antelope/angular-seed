@@ -5,7 +5,8 @@ import { Config } from '../index';
 import { FormQuery,
          ReturnQuery,
          ReturnLinkQuery,
-         ResearchSummary
+         ResearchSummary,
+         Profile
         } from '../../models/index';
 
 import 'rxjs/add/observable/throw';
@@ -55,18 +56,21 @@ export class QueryService {
   /**
    * Returns an Observable for the HTTP GET request for the JSON resource.
    * @param {string} api : The location of the resource
-   * @return {ResearchSummary} THe Observable for the http RequestOptions
+   * @return {ResearchSummary} THe Observable for the http request
    */
   getResearchSummary(api: string): Observable<ResearchSummary> {
+    return this.http.get(this.genUri(api))
+                    .map((res:Response) => res.json())
+                    .catch(this.handleError);
+  }
 
-      // let obj: ResearchSummary = {
-      //   papers : 21,
-      //   keywords: ['artificial intelligence', 'argumentation'],
-      //   recent_paper: 'http://www.arxiv.com/mymostrecentpaper',
-      //   full_profile: 'http://myfullprofile/api'
-      // };
 
-      // return Observable.of(obj);
+  /**
+   * Returns an Observable for the HTTP GET request for the JSON resource.
+   * @param {string} api : The location fo the resource
+   * @return {Profile} The Observable for the http request.
+   */
+  getProfile(api: string) : Observable<Profile> {
     return this.http.get(this.genUri(api))
                     .map((res:Response) => res.json())
                     .catch(this.handleError);

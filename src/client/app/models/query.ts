@@ -25,3 +25,12 @@ export interface ResearchSummary {
 	recent_paper: string;
 	full_profile: string;
 }
+
+export interface Profile {
+  name: string;
+  department: string;
+  email: string;
+  keywords: Object;
+  papers: string[];
+  awards: string[];
+}
