@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+// import { RouterModule } from '@angular/router';
 import {
   async
 } from '@angular/core/testing';
 import {
   BaseRequestOptions,
   ConnectionBackend,
-  Http, HttpModule
+  Http,
+  // HttpModule
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
@@ -53,9 +54,9 @@ export function main() {
       });
     }));
 
-    it('should work 2', () => {
-      expect(1).toEqual(1);
-    });
+    // it('should work 2', () => {
+    //   expect(1).toEqual(1);
+    // });
 
     /**it('should work',
       async(() => {

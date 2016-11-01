@@ -3,9 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 
-import {
-  async
-} from '@angular/core/testing';
+// import {
+//   async
+// } from '@angular/core/testing';
 import {
   Route
 } from '@angular/router';
@@ -38,17 +38,17 @@ export function main() {
       });
     });
 
-    it('should build without a problem',
-      async(() => {
-        TestBed
-          .compileComponents()
-          .then(() => {
-            let fixture = TestBed.createComponent(TestComponent);
-            let compiled = fixture.nativeElement;
-
-            expect(compiled).toBeTruthy();
-          });
-      }));
+    // it('should build without a problem',
+    //   async(() => {
+    //     TestBed
+    //       .compileComponents()
+    //       .then(() => {
+    //         let fixture = TestBed.createComponent(TestComponent);
+    //         let compiled = fixture.nativeElement;
+    //
+    //         expect(compiled).toBeTruthy();
+    //       });
+    //   }));
   });
 }
 
@@ -59,6 +59,3 @@ export function main() {
 
 class TestComponent {
 }
-
-
-
