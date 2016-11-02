@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
       //     this.api = data.api;
       //  }
      }
-   )
+   );
   }
 
   /**
