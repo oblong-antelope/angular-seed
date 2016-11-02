@@ -11,7 +11,7 @@ export interface ReturnQuery {
   department: string;
   email: string;
   research_summary: string;
-  full: string;
+  full_profile: string;
 }
 
 export interface ReturnLinkQuery {

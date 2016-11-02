@@ -135,6 +135,7 @@ export class HomeComponent implements OnInit {
       .subscribe(
         data => {
           this.personList[i].summary = data;
+          this.personList[i].row = i;
           this.table.toggleExpandRow(row);
         },
         error =>  {this.errorMessage = <any>error; console.log(error);},
@@ -145,10 +146,10 @@ export class HomeComponent implements OnInit {
   /**
    * Takes the button press event and navigates to the correct place
    */
-  expandedButtonPress(e: any) {
-    let index:number = e.$$index;
-    if(this.personList[index].full !== undefined) {
-      this.navigateToProfile(this.personList[index].full);
+  expandedButtonPress(index: number) {
+    console.log(this.personList[index]);
+    if(this.personList[index].full_profile !== undefined) {
+      this.navigateToProfile(this.personList[index].full_profile);
     }
   }
 
@@ -157,7 +158,8 @@ export class HomeComponent implements OnInit {
    */
   navigateToProfile(api: string) {
     let vals:string[] = api.split('/');
-    this.router.navigate(['/profile/' + vals[2]]);
+    console.log('Routing to profile/' + vals[3]);
+    this.router.navigate(['profile/' + vals[3]]);
   }
 
 
@@ -172,4 +174,5 @@ export class HomeComponent implements OnInit {
 
 interface DataTableElement extends ReturnQuery {
   summary : ResearchSummary;
+  row: number;
 }
