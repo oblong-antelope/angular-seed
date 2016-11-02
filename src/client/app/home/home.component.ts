@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
           }
         },
         error =>  {this.errorMessage = <any>error; console.log(error);},
-        () => console.log('Research Summary Request Complete')
+        () => console.log('Send Query Complete')
       );
   }
 
@@ -100,12 +100,9 @@ export class HomeComponent implements OnInit {
   getList(api : string) {
     this.queryService.getList(api)
       .subscribe(
-        list => {
-          this.personList = <DataTableElement[]> list;
-          console.log('List Returned', this.personList);
-        },
+        list => this.personList = <DataTableElement[]> list,
         error =>  {this.errorMessage = <any>error; console.log(error);},
-        () => console.log('Research Summary Request Complete')
+        () => console.log('Results List Request Complete')
       );
   }
 
@@ -147,7 +144,6 @@ export class HomeComponent implements OnInit {
    * Takes the button press event and navigates to the correct place
    */
   expandedButtonPress(index: number) {
-    console.log(this.personList[index]);
     if(this.personList[index].full_profile !== undefined) {
       this.navigateToProfile(this.personList[index].full_profile);
     }
@@ -157,8 +153,8 @@ export class HomeComponent implements OnInit {
    * On the give more details button press, we will navigate to the profile component.
    */
   navigateToProfile(api: string) {
+    this.queryService.storeNavigationInformation(api);
     let vals:string[] = api.split('/');
-    console.log('Routing to profile/' + vals[3]);
     this.router.navigate(['profile/' + vals[3]]);
   }
 

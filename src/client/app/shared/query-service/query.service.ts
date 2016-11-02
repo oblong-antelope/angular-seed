@@ -21,6 +21,8 @@ export class QueryService {
 
   API = Config.API;
 
+  navigationInformation: string;
+
   /**
    * Creates a new NameListService with the injected Http.
    * @param {Http} http - The injected Http.
@@ -74,6 +76,22 @@ export class QueryService {
     return this.http.get(this.genUri(api))
                     .map((res:Response) => res.json())
                     .catch(this.handleError);
+  }
+
+  /**
+   * A temporary store for data between router navigations
+   */
+  storeNavigationInformation(information: string) {
+    this.navigationInformation = information;
+  }
+
+  /**
+   * Returns the value in the temporary store and emptys it.
+   */
+  getNavigationInformation() {
+    let k: string = this.navigationInformation;
+    // this.navigationInformation = '';
+    return k;
   }
 
   /**
