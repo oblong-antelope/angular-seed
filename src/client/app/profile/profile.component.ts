@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Profile } from '../models/index';
-import { QueryService } from '../shared/index';
+import { WordCloudComponent, QueryService } from '../shared/index';
+
 
 /**
  * This class represents the lazy loaded AboutComponent.
@@ -74,5 +75,12 @@ export class ProfileComponent implements OnInit {
    */
   getProfileKeywords() {
     return Object.keys(this.profile.keywords);
+  }
+
+  /**
+   * Returns the list of keywords and their frequency
+   */
+  getKeywords() {
+    return this.profile.keywords;
   }
 }

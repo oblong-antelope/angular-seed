@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
 import { QueryService } from './query-service/index';
+import { WordCloudComponent } from './word-cloud/index';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -13,8 +14,8 @@ import { QueryService } from './query-service/index';
 
 @NgModule({
   imports: [CommonModule, RouterModule],
-  declarations: [ToolbarComponent, NavbarComponent],
-  exports: [ToolbarComponent, NavbarComponent,
+  declarations: [ToolbarComponent, NavbarComponent, WordCloudComponent],
+  exports: [ToolbarComponent, NavbarComponent, WordCloudComponent,
     CommonModule, FormsModule, RouterModule]
 })
 export class SharedModule {

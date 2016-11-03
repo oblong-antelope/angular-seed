@@ -5,4 +5,4 @@ export * from './query-service/index';
 export * from './navbar/index';
 export * from './toolbar/index';
 export * from './config/env.config';
-//export * from './timed-hover/index';
+export * from './word-cloud/index';
