@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Profile } from '../models/index';
@@ -39,7 +38,6 @@ export class ProfileComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private location: Location,
               private queryService: QueryService) {}
 
   /**
@@ -72,9 +70,9 @@ export class ProfileComponent implements OnInit {
   }
 
   /**
-   *  Handles the back button press, returns to the previous page.
+   * Returns the keys of the keywords profile
    */
-  goBack() {
-    this.location.back();
+  getProfileKeywords() {
+    return Object.keys(this.profile.keywords);
   }
 }

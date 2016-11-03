@@ -21,7 +21,7 @@ export class QueryService {
 
   API = Config.API;
 
-  navigationInformation: string;
+  navigationInformation: string = '/api/person/0/full';
 
   /**
    * Creates a new NameListService with the injected Http.

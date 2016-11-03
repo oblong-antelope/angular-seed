@@ -10,3 +10,12 @@ h2 {
   margin-bottom: 0;
   margin-top: 0.83em;
 }
+
+.list-columns {
+  -moz-column-count: 3;
+  -moz-column-gap: 20px;
+  -webkit-column-count: 3;
+  -webkit-column-gap: 20px;
+  column-count: 3;
+  column-gap: 20px;
+}
