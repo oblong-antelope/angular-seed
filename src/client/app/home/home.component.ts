@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
   getList(api : string) {
     this.queryService.getList(api)
       .subscribe(
-        list => this.personList = <DataTableElement[]> list,
+        list => {this.personList = <DataTableElement[]> list; console.log(list);},
         error =>  {this.errorMessage = <any>error; console.log(error);},
         () => console.log('Results List Request Complete')
       );

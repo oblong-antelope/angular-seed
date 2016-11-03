@@ -16,7 +16,7 @@ import { WordCloudComponent, QueryService } from '../shared/index';
 })
 export class ProfileComponent implements OnInit {
 
-  id: number;
+  id: string;
   api: string;
   errorMessage: string;
   profile: Profile = {
@@ -47,8 +47,9 @@ export class ProfileComponent implements OnInit {
    */
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id']; // (+) converts string 'id' to a number      
+      this.id = params['id']; // (+) converts string 'id' to a number      
       this.api = this.queryService.getNavigationInformation();
+      console.log('api', this.api);
       if(this.api === '') {
         // You would have to get profile by person id from server.
       } else {
