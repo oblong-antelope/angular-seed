@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Profile } from '../models/index';
-import { WordCloudComponent, QueryService } from '../shared/index';
+import { QueryService } from '../shared/index';
 
 
 /**

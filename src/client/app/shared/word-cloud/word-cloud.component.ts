@@ -3,17 +3,18 @@ import { Component, OnInit, Input } from '@angular/core';
 declare var d3:any;
 
 /**
- * This class represents the lazy loaded AboutComponent.
+ * This class represents the lazy loaded Word Component.
  */
 @Component({
   moduleId: module.id,
   selector: 'sd-word-cloud',
-  template: `<template>{{words}}</template>`
+  template: `
+                <p> I am word cloud Component </p>
+                <p *ngFor="let w of words"> {{w}} </p>
+            `
 })
-export class WordCloudComponent implements OnInit{
+export class WordCloudComponent implements OnInit {
     @Input('words') words: any[];
-
-    constructor() {}
 
     ngOnInit() {
         console.log(this.words);
