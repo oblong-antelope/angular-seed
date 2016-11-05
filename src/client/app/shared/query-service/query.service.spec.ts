@@ -42,7 +42,7 @@ export function main() {
       mockFormQuery = new FormQuery('name', 'expertise1', 'collaborator');
       mockReturnLinkQuery = {success: true, results:'api/query/someuri'};
       mockReturnQuery = [{name:'name', department:'department',  email:'email@email',
-                          research_summary: 'anotherurl.co.uk', full:'Someurl.co.uk'}];
+                          research_summary: 'anotherurl.co.uk', full_profile:'Someurl.co.uk'}];
 
       let connection: any;
       mockBackend.connections.subscribe((c: any) => connection = c);
