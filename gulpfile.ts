@@ -123,6 +123,11 @@ gulp.task('serve.prod', (done: any) =>
               'server.prod',
               done));
 
+// --------------
+// Serve prod without build
+gulp.task('serve.prod_no_build', (done: any) =>
+  runSequence('server.prod', done));
+
 
 // --------------
 // Test.

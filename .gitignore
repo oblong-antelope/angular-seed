@@ -38,7 +38,9 @@ ts-node
 *.iml
 
 /tools/**/*.js
-dist
+!/dist/prod
+/dist/dev
+/dist/tmp
 dev
 docs
 lib
