@@ -7,6 +7,7 @@ import { ToolbarComponent } from './toolbar/index';
 import { NavbarComponent } from './navbar/index';
 import { QueryService } from './query-service/index';
 import { WordCloudComponent } from './word-cloud/index';
+import { ExpertiseWebComponent } from './expertise-web/index';
 
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
@@ -14,8 +15,8 @@ import { WordCloudComponent } from './word-cloud/index';
 
 @NgModule({
   imports: [CommonModule, RouterModule],
-  declarations: [ToolbarComponent, NavbarComponent, WordCloudComponent],
-  exports: [ToolbarComponent, NavbarComponent, WordCloudComponent,
+  declarations: [ToolbarComponent, NavbarComponent, WordCloudComponent, ExpertiseWebComponent],
+  exports: [ToolbarComponent, NavbarComponent, WordCloudComponent, ExpertiseWebComponent,
     CommonModule, FormsModule, RouterModule]
 })
 export class SharedModule {

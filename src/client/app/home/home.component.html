@@ -34,6 +34,7 @@
 <hr>
 
 <!--<button type="submit" class="btn btn-default" (click)="navigateToProfile('/api/person/0/full')">CLIEK ME!</button>-->
+<sd-expertise-web></sd-expertise-web>
 
 <datatable
     #mydatatable
@@ -75,14 +76,12 @@
       [draggable]="false"
       [canAutoResize]="true">
       <template let-row="row">
-        <a
-          href="#"
+        <span
           [class.glyphicon-chevron-right]="!row.$$expanded"
           [class.glyphicon-chevron-down]="row.$$expanded"
           class="expander-btn glyphicon"
-          title="Expand/Collapse Row"
-          (click)="toggleExpandRow(row)">
-        </a>
+          title="Expand/Collapse Row">
+        </span>
       </template>
     </datatable-column>
 
@@ -111,5 +110,4 @@
     </datatable-column>
 
   </datatable>
-
-<!--<sd-graph [list]=results></sd-graph>-->
+  

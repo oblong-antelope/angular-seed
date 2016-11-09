@@ -197,6 +197,7 @@
     "karma-remap-istanbul": "^0.2.1",
     "merge-stream": "^1.0.0",
     "open": "0.0.5",
+    "plotly": "^1.0.6",
     "protractor": "^4.0.9",
     "reflect-metadata": "^0.1.8",
     "remap-istanbul": "^0.7.0",

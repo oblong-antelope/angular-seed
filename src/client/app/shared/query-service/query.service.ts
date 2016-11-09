@@ -79,6 +79,14 @@ export class QueryService {
   }
 
   /**
+   * Returns an Observable for the HTTP GET request for the JSON resource.
+   * @return {any} The Observable for the http request
+   */
+  getExpertiseWebData() : Observable<any> {
+    return Observable.of({});
+  }
+
+  /**
    * A temporary store for data between router navigations
    */
   storeNavigationInformation(information: string) {
