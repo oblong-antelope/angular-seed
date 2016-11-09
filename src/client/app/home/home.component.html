@@ -31,7 +31,7 @@
 
 <hr>
 
-<button type="submit" class="btn btn-default" (click)="navigateToProfile('/api/person/0/full')">CLIEK ME!</button>
+<!--<button type="submit" class="btn btn-default" (click)="navigateToProfile('/api/person/0/full')">CLIEK ME!</button>-->
 
 <datatable
     #mydatatable
@@ -50,13 +50,13 @@
               <h4>Number of papers:</h4> 
               {{row.summary.papers}}
             </div>
-            <div class="col-sm-3" style="overflow-y:scroll">
+            <div class="col-sm-3">
               <h4>Keywords:</h4>
-              <li *ngFor="let word of row.summary.keywords">{{word}}</li>
+              <li *ngFor="let word of getTopFourKeywords(row)">{{word}}</li>
             </div>
             <div class="col-sm-3">
               <h4>Most Recent Paper:</h4>
-              {{row.summary.recent_paper}}
+                {{row.summary.recent_paper}}
             </div>
             <div class="col-sm-3">
               <button type="button" class="btn btn-default btn-arrow-right info-btn" 
@@ -110,3 +110,5 @@
     </datatable-column>
 
   </datatable>
+
+<!--<sd-graph [list]=results></sd-graph>-->

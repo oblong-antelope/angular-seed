@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     headerHeight: 50,
     footerHeight: 50,
     rowHeight: 50,
-    detailRowHeight: 150,
+    detailRowHeight: 200,
   });
 
   /**
@@ -112,6 +112,15 @@ export class HomeComponent implements OnInit {
    */
   getPersonSummary(api: string, i : number) {
     console.log(this.personList[i]);
+  }
+
+  /**
+   * Returns the top four keywords
+   * @param {DataTableElement} : person to get keywords from
+   */
+  getTopFourKeywords(person: DataTableElement) {
+    let x:string[] = person.summary.keywords;
+    return x.slice(0, 4);
   }
 
 
