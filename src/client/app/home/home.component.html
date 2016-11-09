@@ -8,6 +8,8 @@
         <label for="name">Name</label>
         <input type="text" class="form-control" 
                [(ngModel)]="query.name" name="name" id="name" #name="ngModel">
+        <p>Note: name has to be of the form 'SURNAME, Firstname'</p>
+        <p>with surname in all capitals, and firstname with capitalised first letter</p>
       </div>
 
       <div class="form-group">
