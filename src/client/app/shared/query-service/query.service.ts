@@ -11,7 +11,7 @@ import { FormQuery,
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
-// import 'rxjs/add/operator/do';  // for debugging
+import 'rxjs/add/operator/do';  // for debugging
 
 /**
  * This class provides the Query service with methods to read names and add names.
@@ -75,6 +75,18 @@ export class QueryService {
   getProfile(api: string) : Observable<Profile> {
     return this.http.get(this.genUri(api))
                     .map((res:Response) => res.json())
+                    .catch(this.handleError);
+  }
+
+    /**
+   * Returns an Observable for the HTTP GET request for the JSON resource.
+   * @param {string} api : The location fo the resource
+   * @return {Profile} The Observable for the http request.
+   */
+  getSomeData(api: string) : Observable<any> {
+    return this.http.get(api)
+                    .do((res) => console.log(res))
+                    .map((res:Response) => res.text())
                     .catch(this.handleError);
   }
 

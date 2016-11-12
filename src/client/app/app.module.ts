@@ -10,6 +10,7 @@ import { AboutModule } from './about/about.module';
 import { HomeModule } from './home/home.module';
 import { ProfileModule } from './profile/profile.module';
 import { SharedModule } from './shared/shared.module';
+import { LandingModule } from './landing/landing.module';
 
 @NgModule({
   imports: [BrowserModule,
@@ -18,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
             AboutModule,
             HomeModule,
             ProfileModule,
+            LandingModule,
             SharedModule.forRoot()],
   declarations: [AppComponent],
   providers: [{

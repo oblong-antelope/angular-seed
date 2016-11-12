@@ -22,7 +22,7 @@ export class ProjectConfig extends SeedConfig {
       ...this.NPM_DEPENDENCIES,
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
-      {src: 'plotly/index.js', inject: 'libs'},
+      // {src: 'plotly/index.js', inject: 'libs'},
     ];
 
     // Add `local` third-party libraries to be injected/bundled.
@@ -30,7 +30,7 @@ export class ProjectConfig extends SeedConfig {
       ...this.APP_ASSETS,
       //{src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
       {src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs'},
-      {src: 'nodex_modules/plotly/index.js', inject:'libs'},
+      // {src: 'plotly-latest.min.js', inject:'libs'},
       {src: `node_modules/bootstrap/dist/css/bootstrap.min.css`, inject: true, vendor: false},
       {src: `node_modules/angular2-data-table/release/datatable.css`, inject: true, vendor: false},
       {src: `node_modules/angular2-data-table/release/material.css`, inject: true, vendor: false},
@@ -41,14 +41,6 @@ export class ProjectConfig extends SeedConfig {
 
     this.SYSTEM_BUILDER_CONFIG.packages['angular2-data-table'] = {
         main: 'release/index.js',
-        defaultExtension : 'js'
-    };
-
-    this.SYSTEM_CONFIG_DEV.paths['plotly'] =
-      `node_modules/plotly/index`;
-
-    this.SYSTEM_BUILDER_CONFIG.packages['plotly'] = {
-        main: 'index.js',
         defaultExtension : 'js'
     };
 
