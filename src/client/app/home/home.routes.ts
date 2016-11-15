@@ -1,9 +1,17 @@
 import { Route } from '@angular/router';
 import { HomeComponent } from './index';
 
-export const HomeRoutes: Route[] = [
+export const LandingRoutes: Route[] = [
   {
-    path: 'home',
+    path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'search',
+    component: HomeComponent
+  },
+  {
+    path: 'profile',
     component: HomeComponent
   }
 ];

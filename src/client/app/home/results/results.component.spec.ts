@@ -13,9 +13,8 @@ import {
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { QueryService } from '../shared/index';
-import { SharedModule } from '../shared/shared.module';
-import { HomeModule } from './home.module';
+import { QueryService } from '../../shared/index';
+import { SharedModule } from '../../shared/shared.module';
 import { Angular2DataTableModule } from 'angular2-data-table/release/index';
 
 class FakeQueryService {
@@ -34,8 +33,7 @@ export function main() {
       TestBed.configureTestingModule({
         imports: [FormsModule,
                   SharedModule,
-                  Angular2DataTableModule,
-                  HomeModule],
+                  Angular2DataTableModule],
         declarations: [TestComponent],
         providers: [
           BaseRequestOptions,

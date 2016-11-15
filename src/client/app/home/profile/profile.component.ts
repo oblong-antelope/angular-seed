@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { Profile } from '../models/index';
-import { QueryService } from '../shared/index';
+import { Profile } from '../../models/index';
+import { QueryService } from '../../shared/index';
 
 
 /**

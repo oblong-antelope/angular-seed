@@ -1,21 +1,20 @@
-///<reference path="../../../../tools/manual_typings/project/plotly.d.ts" />
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { QueryService } from '../shared/index';
+import { QueryService } from '../../shared/index';
 
 declare var Plotly:any;
 
 /**
- * This class represents the lazy loaded LandingComponent.
+ * This class represents the lazy loaded graphComponent.
  */
 @Component({
   moduleId: module.id,
-  selector: 'sd-landing',
-  templateUrl: 'landing.component.html',
-  styleUrls: ['landing.component.css'],
+  selector: 'sd-graph',
+  templateUrl: 'graph.component.html',
+  styleUrls: ['graph.component.css'],
 })
 
-export class LandingComponent implements OnInit{
+export class GraphComponent implements OnInit{
 
   errorMessage: string;
   exampleData: string = 'https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv';
@@ -26,13 +25,13 @@ export class LandingComponent implements OnInit{
   public PlotlyOptions: any;
 
   /**
-   * Creates an instance of the LandingComponent with the injected
+   * Creates an instance of the GraphComponent with the injected
    * QueryService.
    *
    * @param {QueryService} queryService - The injected QueryService.
    * @param {Router} router - The inected Router
    */
-  constructor(private queryService: QueryService, private router: Router, private elementRef: ElementRef) {}
+  constructor(private queryService: QueryService, private elementRef: ElementRef) {}
 
   ngOnInit() {
     // this.plotlyplot();
