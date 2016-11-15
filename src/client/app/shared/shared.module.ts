@@ -13,7 +13,7 @@ import { WordCloudComponent } from './word-cloud/index';
  */
 
 @NgModule({
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   declarations: [ToolbarComponent, SearchBarComponent, WordCloudComponent],
   exports: [ToolbarComponent, SearchBarComponent, WordCloudComponent, CommonModule, FormsModule, RouterModule]
 })

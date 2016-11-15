@@ -81,7 +81,7 @@ export class ResultsComponent implements OnInit {
    * Handle the queryService observable
    */
   sendQuery() {
-    this.queryService.postForm(this.query)
+    this.queryService.postQuery(JSON.stringify(this.query))
       .subscribe(
         link => {
           if(link.success) {

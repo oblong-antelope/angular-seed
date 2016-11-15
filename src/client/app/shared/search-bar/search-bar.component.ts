@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { QueryService } from '../query-service/index';
 
 /**
  * This class represents the search bar component.
@@ -9,7 +11,46 @@ import { Component } from '@angular/core';
   templateUrl: 'search-bar.component.html',
   styleUrls: ['search-bar.component.css'],
 })
-
 export class SearchBarComponent {
   placeholder:string = 'An expert in NLP';
+  query:string = '';
+
+  /**
+   * Creates the new search-bar component
+   * @param {QueryService} queryService - The injected query serivce
+   * @param {Router} router - The injected router
+   */
+  constructor(private queryService: QueryService, private router:Router){}
+
+  /**
+   * Submit handler for the input group
+   */
+  onSubmit() {
+    console.log(this.query);
+    this.submitQuery(this.query);
+  }
+
+  /**
+   * Submits the stored query to the service.
+   * @param {string} query - the query to be sent
+   */
+  submitQuery(query: string) {
+    this.queryService.postQuery(query)
+          .subscribe(
+            data => {
+              console.log(data);
+              this.displaySearch(data.results);
+            },
+            error => console.log(error),
+            () => console.log('Query posted to the server')
+          );
+  }
+
+  /**
+   * Takes a returned uri and routes to the results display.
+   */
+  displaySearch(link: string) {
+    this.router.navigate([]);
+  }
+
 }
