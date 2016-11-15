@@ -1,8 +1,16 @@
 <div class="container">
-    <div class="search">
-        <sd-search-bar></sd-search-bar>
+    <div class="left-container" #leftContainer>
+        <div class="search" *ngIf="home_route">
+            <sd-search-bar></sd-search-bar>
+        </div>
+        <div class ="graph">
+            <button class="btn btn-primary" (click)="toggleRight()">Toggle Right Bar</button>
+            <!--<sd-graph></sd-graph>-->
+        </div>
     </div>
-    <div class ="graph">
-        <sd-graph></sd-graph>
+    <div class="right-container" *ngIf="right_open" #rightContainer>
+        <div class="results">
+            This is the right container
+        </div>
     </div>
 </div>
