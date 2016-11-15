@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { ToolbarComponent } from './toolbar/index';
-import { NavbarComponent } from './navbar/index';
+import { SearchBarComponent } from './search-bar/index';
 import { QueryService } from './query-service/index';
 import { WordCloudComponent } from './word-cloud/index';
 import { ExpertiseWebComponent } from './expertise-web/index';
@@ -15,8 +15,8 @@ import { ExpertiseWebComponent } from './expertise-web/index';
 
 @NgModule({
   imports: [CommonModule, RouterModule],
-  declarations: [ToolbarComponent, NavbarComponent, WordCloudComponent, ExpertiseWebComponent],
-  exports: [ToolbarComponent, NavbarComponent, WordCloudComponent, ExpertiseWebComponent,
+  declarations: [ToolbarComponent, SearchBarComponent, WordCloudComponent, ExpertiseWebComponent],
+  exports: [ToolbarComponent, SearchBarComponent, WordCloudComponent, ExpertiseWebComponent,
     CommonModule, FormsModule, RouterModule]
 })
 export class SharedModule {

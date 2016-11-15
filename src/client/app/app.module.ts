@@ -8,9 +8,7 @@ import { routes } from './app.routes';
 
 import { AboutModule } from './about/about.module';
 import { HomeModule } from './home/home.module';
-import { ProfileModule } from './profile/profile.module';
 import { SharedModule } from './shared/shared.module';
-import { LandingModule } from './landing/landing.module';
 
 @NgModule({
   imports: [BrowserModule,
@@ -18,8 +16,6 @@ import { LandingModule } from './landing/landing.module';
             RouterModule.forRoot(routes),
             AboutModule,
             HomeModule,
-            ProfileModule,
-            LandingModule,
             SharedModule.forRoot()],
   declarations: [AppComponent],
   providers: [{
