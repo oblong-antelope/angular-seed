@@ -9,7 +9,5 @@
 
 .search {
   text-align: center;
-  width: 40%;
-  vertical-align: middle;
-  margin: auto;
+  z-index: 10;
 }
