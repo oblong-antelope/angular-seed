@@ -1,16 +1,17 @@
 <div class="container">
     <div class="left-container" #leftContainer>
+        <button class="btn btn-primary btn-toggle btn-sm" 
+                        (click)="toggleRight()">Toggle Right Bar</button>
         <div class="search" *ngIf="home_route">
             <sd-search-bar></sd-search-bar>
         </div>
         <div class ="graph">
-            <button class="btn btn-primary" (click)="toggleRight()">Toggle Right Bar</button>
             <!--<sd-graph></sd-graph>-->
         </div>
     </div>
-    <div class="right-container" *ngIf="right_open" #rightContainer>
+    <div class="right-container" [hidden]="!right_open" #rightContainer>
         <div class="results" *ngIf="results_route">
-            This is the results container
+            <sd-results [id]="results_url_id" [query]="results_query"></sd-results>
         </div>
         <div class="profile" *ngIf="profile_route">
             This is profile route

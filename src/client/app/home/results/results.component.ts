@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { QueryService } from '../../shared/index';
-import { FormQuery, ReturnQuery, ResearchSummary } from '../../models/index';
+import { ReturnQuery, ResearchSummary } from '../../models/index';
 import {
   TableOptions,
   ColumnMode,
@@ -20,12 +20,13 @@ import {
 
 export class ResultsComponent implements OnInit {
 
+  @Input('id') id:number;
+  @Input('query') query:string;
+
   errorMessage: string;
 
-  query: FormQuery;
-  roles: string[] ;
+  roles: string[];
   expanded: any = {};
-  submitted: boolean;
   timeout: any;
 
   personList: DataTableElement[];
@@ -53,44 +54,7 @@ export class ResultsComponent implements OnInit {
    * Initialise the form OnInit
    */
   ngOnInit() {
-    this.roles = ['None Specific', 'Collaborator', 'Supervisor', 'Lecturer'];
-    this.resetForm();
-  }
-
-
-  /**
-   * Handle the submit event from the form
-   */
-  onSubmit() {
-    console.log('Submitted', this.query);
-    this.submitted = true;
-    this.sendQuery();
-  }
-
-  /**
-   * Resets the query form.
-   */
-  resetForm() {
-    this.query = new FormQuery('', '', this.roles[0]);
-    this.personList = [];
-    this.submitted = false;
-  }
-
-
-  /**
-   * Handle the queryService observable
-   */
-  sendQuery() {
-    this.queryService.postQuery(JSON.stringify(this.query))
-      .subscribe(
-        link => {
-          if(link.success) {
-            this.getList(link.results);
-          }
-        },
-        error =>  {this.errorMessage = <any>error; console.log(error);},
-        () => console.log('Send Query Complete')
-      );
+    this.getList('/api/results/' + this.id);
   }
 
   /**
