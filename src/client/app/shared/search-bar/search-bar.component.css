@@ -7,17 +7,11 @@
   padding: 0 16px;
 }
 
-nav a {
-  color: #8f8f8f;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 48px;
-  margin-right: 20px;
-  text-decoration: none;
+.search {
+  text-align: center;
+  width: 40%;
   vertical-align: middle;
-  cursor: pointer;
-}
-
-nav a.router-link-active {
-  color: #106cc8;
+  /*margin-left: auto;
+  margin-right: auto;*/
+  margin: auto;
 }

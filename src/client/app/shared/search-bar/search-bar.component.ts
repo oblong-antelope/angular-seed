@@ -10,4 +10,6 @@ import { Component } from '@angular/core';
   styleUrls: ['search-bar.component.css'],
 })
 
-export class SearchBarComponent { }
+export class SearchBarComponent {
+  placeholder:string = 'An expert in NLP';
+}
