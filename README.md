@@ -7,6 +7,9 @@ Uses a fork of the Angular 2 seed as a extensible starter for the base of the pr
 Angular 2 seed details listed below
 
 
+To start the dev rotation, goto home.component.html and uncomment sd-graph
+Options in graph.component.ts
+
 # Angular 2 Seed Introduction
 
 [![Angular Style Guide](https://mgechev.github.io/angular2-style-guide/images/badge.svg)](https://angular.io/styleguide)

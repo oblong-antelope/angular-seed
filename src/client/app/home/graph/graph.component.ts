@@ -34,108 +34,107 @@ export class GraphComponent implements OnInit{
   constructor(private queryService: QueryService, private elementRef: ElementRef) {}
 
   ngOnInit() {
-    // this.plotlyplot();
     this.plotlyPlot2();
   }
 
-  plotlyplot() {
-    Plotly.d3.csv(this.exampleData, (err:any, rows:any) => {
-      var YEAR = 2007;
-      var continents = ['Asia', 'Europe', 'Africa', 'Oceania', 'Americas'];
-      var POP_TO_PX_SIZE = 2e5;
-
-      function unpack(rows:any, key:any) {
-        return rows.map(function(row:any) { return row[key]; });
-      }
-
-      var data = continents.map(function(continent) {
-        var rowsFiltered = rows.filter(function(row:any) {
-            return (row.continent === continent) && (+row.year === YEAR);
-        });
-        return {
-            mode: 'markers',
-            name: continent,
-            x: unpack(rowsFiltered, 'lifeExp'),
-            y: unpack(rowsFiltered, 'gdpPercap'),
-            text: unpack(rowsFiltered, 'country'),
-            marker: {
-                sizemode: 'area',
-                size: unpack(rowsFiltered, 'pop'),
-                sizeref: POP_TO_PX_SIZE
-            }
-        };
-      });
-
-      let t = this.elementRef.nativeElement;
-      console.log(t);
-
-      var layout = {
-        b : 0,
-        l : 0,
-        r : 0,
-        pad : 0,
-        t : 0,
-        width: t.offsetWidth,
-        height: t.offsetHeight
-        // xaxis: {title: 'Life Expectancy'},
-        // yaxis: {title: 'GDP per Capita', type: 'log'},
-        // hovermode: 'closest'
-      };
-      console.log(layout);
-
-      Plotly.plot('myPlotlyDiv', data, layout, {showLink: false});
-      });
-  }
-
   plotlyPlot2() {
-    let uri = 'https://raw.githubusercontent.com/plotly/datasets/master/3d-scatter.csv';
-    Plotly.d3.csv(uri, (err:any, rows:any) =>{
+    var TOTAL_ELEMENT_HEIGHT = 920;
+    var TOTAL_ELEMENT_WIDTH = 1900;
+    var TOTAL_TITLE = 'AI vs AMMP vs GeoPhysics';
+    var NAME_LABEL_SIZE = 12;
+    var MARKER_DOT_SIZE = 12;
+    var T = 0;
+
+    Plotly.d3.csv('http://oblong-relentless.herokuapp.com/', function(err:any, rows:any){
+      setInterval(intervalWake, 200);
+
+      var graphDiv = 'myPlotlyDiv';
+
       function unpack(rows:any, key:any) {
         return rows.map(function(row:any)
         { return row[key]; });}
 
       var trace1 = {
-        x:unpack(rows, 'x1'), y: unpack(rows, 'y1'), z: unpack(rows, 'z1'),
+        x:unpack(rows, 'x'), y: unpack(rows, 'y'), z: unpack(rows, 'z'),
         mode: 'markers',
         marker: {
-          size: 12,
+          size: MARKER_DOT_SIZE,
           line: {
-          color: 'rgba(217, 217, 217, 0.14)',
-          width: 0.5},
+            color: 'rgba(217, 217, 217, 0.14)',
+            width: 1},
           opacity: 0.8},
-        type: 'scatter3d'
+        type: 'scatter3d',
+        text: unpack(rows, 'surname'),
+        textfont: {
+          size: NAME_LABEL_SIZE
+        },
+        hoverinfo: 'text'
       };
 
-      var trace2 = {
-        x:unpack(rows, 'x2'), y: unpack(rows, 'y2'), z: unpack(rows, 'z2'),
-        mode: 'markers',
-        marker: {
-          color: 'rgb(127, 127, 127)',
-          size: 12,
-          symbol: 'circle',
-          line: {
-          color: 'rgb(204, 204, 204)',
-          width: 1},
-          opacity: 0.8},
-        type: 'scatter3d'};
+      /*var trace2 = {
+       x:unpack(rows, 'x2'), y: unpack(rows, 'y2'), z: unpack(rows, 'z2'),
+       mode: 'markers',
+       marker: {
+       color: 'rgb(127, 127, 127)',
+       size: 12,
+       symbol: 'circle',
+       line: {
+       color: 'rgb(204, 204, 204)',
+       width: 1},
+       opacity: 0.8},
+       type: 'scatter3d'};*/
 
-      var data = [trace1, trace2];
-      let t = this.elementRef.nativeElement;
-      // console.log(t);
-
+      var data = [trace1/*,trace2*/];
       var layout = {
         margin: {
           l: 0,
           r: 0,
           b: 0,
-          t: 0
-        },
-        width: t.offsetWidth,
-        height: t.offsetHeight,
-        showline: false,
+          t: 0},
+        height: TOTAL_ELEMENT_HEIGHT,
+        width: TOTAL_ELEMENT_WIDTH,
+        scene:{
+          camera:{
+            center:{
+              x:0,
+              y:0,
+              z:0
+            },
+            eye:{//zoom of the thing
+              x:0,
+              y:2,
+              z:0.5
+            }
+          },
+          xaxis:{
+            showgrid:false,
+            zeroline:false,
+            showticklabels:false,
+            title:''
+          },
+          yaxis:{
+            showgrid:false,
+            zeroline:false,
+            showticklabels :false,
+            title:''
+          },
+          zaxis:{
+            showgrid:false,
+            zeroline:false,
+            showticklabels:false,
+            title:''
+          }
+        }
       };
+      Plotly.newPlot(graphDiv, data, layout);
 
-      Plotly.newPlot('myPlotlyDiv', data, layout, {showLink: false});
+      function intervalWake(){
+        //Plotly.purge(graphDiv);
+        T+=0.03;
+        layout.scene.camera.eye.x = Math.sin(T)*2;
+        layout.scene.camera.eye.y = Math.cos(T)*2;
+        Plotly.newPlot(graphDiv, data, layout);
+      }
     });
   }
 
