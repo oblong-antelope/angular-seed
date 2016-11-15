@@ -9,8 +9,11 @@
         </div>
     </div>
     <div class="right-container" *ngIf="right_open" #rightContainer>
-        <div class="results">
-            This is the right container
+        <div class="results" *ngIf="results_route">
+            This is the results container
+        </div>
+        <div class="profile" *ngIf="profile_route">
+            This is profile route
         </div>
     </div>
 </div>

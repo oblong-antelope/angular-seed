@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { QueryService } from '../query-service/index';
+import { FormQuery } from '../../models/index';
 
 /**
  * This class represents the search bar component.
@@ -35,10 +36,9 @@ export class SearchBarComponent {
    * @param {string} query - the query to be sent
    */
   submitQuery(query: string) {
-    this.queryService.postQuery(query)
+    this.queryService.postQuery(new FormQuery('', query, ''))
           .subscribe(
             data => {
-              console.log(data);
               this.displaySearch(data.results);
             },
             error => console.log(error),
@@ -50,7 +50,8 @@ export class SearchBarComponent {
    * Takes a returned uri and routes to the results display.
    */
   displaySearch(link: string) {
-    this.router.navigate([]);
+    let uri:string[] = link.split('/');
+    this.router.navigate(['search',{id: uri[3]}]);
   }
 
 }
