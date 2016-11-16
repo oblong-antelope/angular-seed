@@ -44,12 +44,12 @@ export class GraphComponent implements OnInit{
       var t = 0;
 
       $(document).ready(function(){
-        setInterval(runInter, 200);
+        setInterval(runInter, 250);
       });
 
       var dataa = [[1,2,3]];
       //PRODUCTION: <=200; SAFE <=400; TESTING <=600; EXPERIMENTAL ~2000
-      for(var i=1; i<200; i++){
+      for(var i=1; i<100; i++){
         dataa[i] = [Math.random()*20-10, Math.random()*20-10, Math.random()*20-10]
       }
 
@@ -57,7 +57,7 @@ export class GraphComponent implements OnInit{
         //chart.series[0].setData([[4*Math.sin(t)+3,5,4*Math.cos(t)+3],[4*Math.sin(t)-1,3,4*Math.cos(t)+1]], true);
         chart.options.chart.options3d.beta = t%360;
         chart.redraw();
-        t+=0.4;
+        t+=0.5;
       }
 
       // Give the points a 3D feel by adding a radial gradient
