@@ -45,7 +45,7 @@ export class GraphComponent implements OnInit{
     var MARKER_DOT_SIZE = 12;
     var T = 0;
 
-    Plotly.d3.csv('http://oblong-relentless.herokuapp.com/', function(err:any, rows:any){
+    Plotly.d3.csv('https://oblong-relentless.herokuapp.com/', function(err:any, rows:any){
       setInterval(intervalWake, 200);
 
       var graphDiv = 'myPlotlyDiv';
