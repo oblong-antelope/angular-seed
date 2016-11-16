@@ -71,20 +71,20 @@ export class GraphComponent implements OnInit{
         hoverinfo: 'text'
       };
 
-      /*var trace2 = {
+      var trace2 = {
        x:unpack(rows, 'x2'), y: unpack(rows, 'y2'), z: unpack(rows, 'z2'),
        mode: 'markers',
        marker: {
-       color: 'rgb(127, 127, 127)',
-       size: 12,
-       symbol: 'circle',
-       line: {
+        color: 'rgb(127, 127, 127)',
+        size: MARKER_DOT_SIZE,
+        symbol: 'circle',
+        line: {
        color: 'rgb(204, 204, 204)',
        width: 1},
        opacity: 0.8},
-       type: 'scatter3d'};*/
+       type: 'scatter3d'};
 
-      var data = [trace1/*,trace2*/];
+      var data = [trace1,trace2];
       var layout = {
         margin: {
           l: 0,
