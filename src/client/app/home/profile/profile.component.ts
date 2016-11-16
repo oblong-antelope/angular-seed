@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-
+import { Component, OnInit, Input } from '@angular/core';
 import { Profile } from '../../models/index';
 import { QueryService } from '../../shared/index';
 
@@ -16,9 +14,10 @@ import { QueryService } from '../../shared/index';
 })
 export class ProfileComponent implements OnInit {
 
-  id: string;
-  api: string;
+  @Input('id') id: string = '';
+
   errorMessage: string;
+
   profile: Profile = {
      name: '',
      department: '',
@@ -32,38 +31,27 @@ export class ProfileComponent implements OnInit {
    * Creates an instance of the ProfileComponent with the injected
    * QueryService
    * 
-   * @param {ActivatedRoute} route - The service for accessing route data
    * @param {Router} router - The injected routing provider
-   * @param {Location} location - The injected location service
    * @param {QueryService} queryService - The injected QueryService
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private queryService: QueryService) {}
+  constructor(private queryService: QueryService) {}
 
   /**
    * Initialises the id and gets the profile.
    * Uses the ActivatedRoute to get the url parameters and data
    */
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.id = params['id']; // (+) converts string 'id' to a number      
-      this.api = this.queryService.getNavigationInformation();
-      console.log('api', this.api);
-      if(this.api === '') {
-        // You would have to get profile by person id from server.
-      } else {
-        this.getProfile();
-      }
-   });
+    if(this.id !== '') {
+      this.getProfile('/api/person/' + this.id + '/full');
+    }
   }
 
   /**
    * Handles the QueryService Observable that is returned from the call
    * to getProfile(api:string)
    */
-  getProfile() {
-    this.queryService.getProfile(this.api)
+  getProfile(api: string) {
+    this.queryService.getProfile(api)
           .subscribe(
             profile => this.profile = profile,
             error => {this.errorMessage = <any>error; console.log(error);},

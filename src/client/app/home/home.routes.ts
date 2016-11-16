@@ -13,5 +13,9 @@ export const HomeRoutes: Route[] = [
   {
     path: 'profile',
     component: HomeComponent
+  },
+  {
+    path: '**',
+    component: HomeComponent
   }
 ];

@@ -25,11 +25,12 @@ export class ResultsComponent implements OnInit {
 
   errorMessage: string;
 
-  roles: string[];
   expanded: any = {};
-  timeout: any;
+  timeout: any = 100;
 
-  personList: DataTableElement[];
+  submitted: boolean = false;
+
+  personList: DataTableElement[] = [];
 
   @ViewChild('mydatatable') table: DataTable;
 
@@ -54,7 +55,7 @@ export class ResultsComponent implements OnInit {
    * Initialise the form OnInit
    */
   ngOnInit() {
-    this.getList('/api/results/' + this.id);
+    this.getList('/api/query/' + this.id);
   }
 
   /**
@@ -64,7 +65,10 @@ export class ResultsComponent implements OnInit {
   getList(api : string) {
     this.queryService.getList(api)
       .subscribe(
-        list => {this.personList = <DataTableElement[]> list; console.log(list);},
+        data => {
+          this.personList = <DataTableElement[]> data.results;
+          this.submitted = true;
+        },
         error =>  {this.errorMessage = <any>error; console.log(error);},
         () => console.log('Results List Request Complete')
       );
@@ -126,9 +130,8 @@ export class ResultsComponent implements OnInit {
    * On the give more details button press, we will navigate to the profile component.
    */
   navigateToProfile(api: string) {
-    this.queryService.storeNavigationInformation(api);
     let vals:string[] = api.split('/');
-    this.router.navigate(['profile/' + vals[3]]);
+    this.router.navigate(['profile', {'id': vals[3]}]);
   }
 
 

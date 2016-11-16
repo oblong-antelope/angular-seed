@@ -3,7 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Config } from '../index';
 import { FormQuery,
-         ReturnQuery,
+         ReturnListQuery,
          ReturnLinkQuery,
          ResearchSummary,
          Profile
@@ -20,8 +20,6 @@ import 'rxjs/add/operator/do';  // for debugging
 export class QueryService {
 
   API = Config.API;
-
-  navigationInformation: string = '/api/person/0/full';
 
   /**
    * Creates a new NameListService with the injected Http.
@@ -48,7 +46,7 @@ export class QueryService {
    * @param {string} api : The location of the resource
    * @return {ReturnQuery[]} The Observable for the HTTP request.
    */
-  getList(api: string): Observable<ReturnQuery[]> {
+  getList(api: string): Observable<ReturnListQuery> {
     return this.http.get(this.genUri(api))
                     .map((res: Response) => res.json())
     //              .do(data => console.log('server data:', data))  // debug
@@ -96,22 +94,6 @@ export class QueryService {
    */
   getExpertiseWebData() : Observable<any> {
     return Observable.of({});
-  }
-
-  /**
-   * A temporary store for data between router navigations
-   */
-  storeNavigationInformation(information: string) {
-    this.navigationInformation = information;
-  }
-
-  /**
-   * Returns the value in the temporary store and emptys it.
-   */
-  getNavigationInformation() {
-    let k: string = this.navigationInformation;
-    // this.navigationInformation = '';
-    return k;
   }
 
   /**

@@ -14,7 +14,7 @@ import { FormQuery } from '../../models/index';
 })
 export class SearchBarComponent {
   @Input('query') query:string = '';
-  placeholder:string = 'An expert in NLP';
+  placeholder:string = 'query format: NAME ; EXPERTISE ; ROLE';
 
   /**
    * Creates the new search-bar component
@@ -28,16 +28,19 @@ export class SearchBarComponent {
    */
   onSubmit() {
     console.log(this.query);
-    this.submitQuery(this.query);
+    if(this.query !== '') {
+      var qelem:string[] = this.query.split(';');
+      if(qelem.length !== 3) { return; }
+      this.submitQuery(new FormQuery(qelem[0], qelem[1], qelem[2]));
+    }
   }
 
   /**
    * Submits the stored query to the service.
    * @param {string} query - the query to be sent
    */
-  submitQuery(query: string) {
-    if(query === '') { return; }
-    this.queryService.postQuery(new FormQuery('', query, ''))
+  submitQuery(query: FormQuery) {
+    this.queryService.postQuery(query)
           .subscribe(
             data => {
               this.displaySearch(data.results);

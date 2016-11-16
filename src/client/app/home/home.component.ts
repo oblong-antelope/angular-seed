@@ -25,8 +25,13 @@ export class HomeComponent implements OnInit {
   /**
    * Results Route Variables
    */
-  results_url_id = -1;
-  results_query = '';
+  results_url_id:number = -1;
+  results_query:string = '';
+
+  /**
+   * Profile Route Variables
+   */
+  profile_url_id:string = '';
 
   /**
    * View Variables
@@ -47,13 +52,13 @@ export class HomeComponent implements OnInit {
 
   /**
    * Runs on View Init
+   * Initialises the correct view dependant on the url
    */
   ngOnInit() {
     let url:string = this.router.url;
-    console.log(url);
-    if(url.includes('search')) {
+    if(url.includes('/search')) {
       this.initResults();
-    } else if (url.includes('profile')) {
+    } else if (url.includes('/profile')) {
       this.initProfile();
     } else {
       this.initHome();
@@ -61,6 +66,10 @@ export class HomeComponent implements OnInit {
     this.openRightIfChecked();
   }
 
+  /**
+   * Initialises the results components
+   * Extracts id and query from the url
+   */
   initResults() {
     this.results_route = true;
     this.right_open = true;
@@ -69,15 +78,29 @@ export class HomeComponent implements OnInit {
         this.results_url_id = +params['id'];
         this.results_query = params['query'];
       },
-      error => console.log(error)
-    )
+      error => this.routeErrorRedirect(error)
+    );
   }
 
+  /**
+   * Initialises the profile components
+   * Extracts the id from the url
+   */
   initProfile() {
     this.profile_route = true;
     this.right_open = true;
+    this.ar.params.subscribe(
+      params => {
+        this.profile_url_id = params['id'];
+      },
+      error => this.routeErrorRedirect(error)
+    );
   }
 
+  /**
+   * Initialises the home components
+   * No extraction necessary
+   */
   initHome() {
     this.home_route = true;
     this.right_open = false;
@@ -102,7 +125,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  determineRoute(url:string) {
-    
+  /**
+   * Any errors in routing will cause a redirect back to home page.
+   */
+  routeErrorRedirect(error:any) {
+    console.log(error);
+    this.router.navigate(['/']);
   }
+
 }
