@@ -38,8 +38,8 @@ export class GraphComponent implements OnInit{
   }
 
   plotlyPlot2() {
-    var TOTAL_ELEMENT_HEIGHT = 920;
-    var TOTAL_ELEMENT_WIDTH = 1900;
+    var TOTAL_ELEMENT_HEIGHT = this.elementRef.nativeElement.offsetHeight;
+    var TOTAL_ELEMENT_WIDTH = this.elementRef.nativeElement.offsetWidth;
     var TOTAL_TITLE = 'AI vs AMMP vs GeoPhysics';
     var NAME_LABEL_SIZE = 12;
     var MARKER_DOT_SIZE = 12;
