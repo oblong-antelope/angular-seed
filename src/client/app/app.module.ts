@@ -8,7 +8,6 @@ import { routes } from './app.routes';
 
 import { AboutModule } from './about/about.module';
 import { HomeModule } from './home/home.module';
-import { ProfileModule } from './profile/profile.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -17,7 +16,6 @@ import { SharedModule } from './shared/shared.module';
             RouterModule.forRoot(routes),
             AboutModule,
             HomeModule,
-            ProfileModule,
             SharedModule.forRoot()],
   declarations: [AppComponent],
   providers: [{

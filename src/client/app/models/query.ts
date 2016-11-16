@@ -8,10 +8,13 @@ export class FormQuery {
 
 export interface ReturnQuery {
   name: string;
-  department: string;
-  email: string;
   research_summary: string;
   full_profile: string;
+}
+
+export interface ReturnListQuery {
+  results: ReturnQuery[];
+  status: boolean;
 }
 
 export interface ReturnLinkQuery {

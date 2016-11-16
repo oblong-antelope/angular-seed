@@ -5,5 +5,17 @@ export const HomeRoutes: Route[] = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'search',
+    component: HomeComponent
+  },
+  {
+    path: 'profile',
+    component: HomeComponent
+  },
+  {
+    path: '**',
+    component: HomeComponent
   }
 ];

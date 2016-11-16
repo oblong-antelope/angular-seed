@@ -3,7 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Config } from '../index';
 import { FormQuery,
-         ReturnQuery,
+         ReturnListQuery,
          ReturnLinkQuery,
          ResearchSummary,
          Profile
@@ -11,7 +11,7 @@ import { FormQuery,
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
-// import 'rxjs/add/operator/do';  // for debugging
+import 'rxjs/add/operator/do';  // for debugging
 
 /**
  * This class provides the Query service with methods to read names and add names.
@@ -20,8 +20,6 @@ import 'rxjs/add/observable/of';
 export class QueryService {
 
   API = Config.API;
-
-  navigationInformation: string = '/api/person/0/full';
 
   /**
    * Creates a new NameListService with the injected Http.
@@ -32,13 +30,13 @@ export class QueryService {
 
   /**
    * Returns an Observable for the HTTP POST request
-   * @param {FormQuery} fq - the query to send to the REST Server
+   * @param {FormQuery} query - the query string to send to the REST Server
    * @return {ReturnQuery[]} The Observable for the HTTP request.
    */
-  postForm(fq: FormQuery): Observable<ReturnLinkQuery> {
+  postQuery(query: FormQuery): Observable<ReturnLinkQuery> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.genUri('/api/query/submit'), JSON.stringify(fq), options)
+    return this.http.post(this.genUri('/api/query/submit'), JSON.stringify(query), options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }
@@ -48,7 +46,7 @@ export class QueryService {
    * @param {string} api : The location of the resource
    * @return {ReturnQuery[]} The Observable for the HTTP request.
    */
-  getList(api: string): Observable<ReturnQuery[]> {
+  getList(api: string): Observable<ReturnListQuery> {
     return this.http.get(this.genUri(api))
                     .map((res: Response) => res.json())
     //              .do(data => console.log('server data:', data))  // debug
@@ -78,28 +76,24 @@ export class QueryService {
                     .catch(this.handleError);
   }
 
+    /**
+   * Returns an Observable for the HTTP GET request for the JSON resource.
+   * @param {string} api : The location fo the resource
+   * @return {Profile} The Observable for the http request.
+   */
+  getSomeData(api: string) : Observable<any> {
+    return this.http.get(api)
+                    .do((res) => console.log(res))
+                    .map((res:Response) => res.text())
+                    .catch(this.handleError);
+  }
+
   /**
    * Returns an Observable for the HTTP GET request for the JSON resource.
    * @return {any} The Observable for the http request
    */
   getExpertiseWebData() : Observable<any> {
     return Observable.of({});
-  }
-
-  /**
-   * A temporary store for data between router navigations
-   */
-  storeNavigationInformation(information: string) {
-    this.navigationInformation = information;
-  }
-
-  /**
-   * Returns the value in the temporary store and emptys it.
-   */
-  getNavigationInformation() {
-    let k: string = this.navigationInformation;
-    // this.navigationInformation = '';
-    return k;
   }
 
   /**

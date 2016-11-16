@@ -1,0 +1,74 @@
+<div class="search">
+  <sd-search-bar [query]="query"></sd-search-bar>
+</div>
+
+<br>
+
+<datatable
+    #mydatatable
+    class='material expandable'
+    [rows]='personList'
+    (onPageChange)="paged($event)"
+    (onRowClick)="toggleExpandRow($event.row)"
+    [options]='options'>
+
+    <datatable-row-detail-template>
+      <template let-row="row">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-3">
+              <h4>Number of papers:</h4> 
+              {{row.summary.papers}}
+            </div>
+            <div class="col-sm-3">
+              <h4>Keywords:</h4>
+              <li *ngFor="let word of getTopFourKeywords(row)">{{word}}</li>
+            </div>
+            <div class="col-sm-3">
+              <h4>Most Recent Paper:</h4>
+                {{row.summary.recent_paper}}
+            </div>
+            <div class="col-sm-3">
+              <button type="button" class="btn btn-default btn-arrow-right info-btn" 
+                                    (click)="expandedButtonPress(row.row)" >More Details</button>
+            </div>
+          </div>
+        </div>
+      </template>
+    </datatable-row-detail-template>
+
+    <datatable-column
+      [width]="50"
+      [resizeable]="false"
+      [sortable]="false"
+      [draggable]="false"
+      [canAutoResize]="true">
+      <template let-row="row">
+        <span
+          [class.glyphicon-chevron-right]="!row.$$expanded"
+          [class.glyphicon-chevron-down]="row.$$expanded"
+          class="expander-btn glyphicon"
+          title="Expand/Collapse Row">
+        </span>
+      </template>
+    </datatable-column>
+
+    <datatable-column name="Index" width="50">
+      <template let-row="row">
+        <strong>{{row.$$index}}</strong>
+      </template>
+    </datatable-column>
+
+    <datatable-column name="Name" width="150">
+      <template let-value="value">
+        <strong>{{value}}</strong>
+      </template>
+    </datatable-column>
+
+    <!--<datatable-column name="Department" width="150">
+      <template let-row="row" let-value="value">
+        {{value}}
+      </template>
+    </datatable-column>-->
+  </datatable>
+  

@@ -1,15 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { QueryService } from '../shared/index';
-import { FormQuery, ReturnQuery, ResearchSummary } from '../models/index';
-import {
-  TableOptions,
-  ColumnMode,
-  DataTable,
-} from 'angular2-data-table/release/index';
+import { Component, ElementRef, ViewChild, Renderer, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /**
- * This class represents the lazy loaded HomeComponent.
+ * This class represents the lazy loaded home
+ Component.
  */
 @Component({
   moduleId: module.id,
@@ -20,164 +14,123 @@ import {
 
 export class HomeComponent implements OnInit {
 
-  errorMessage: string;
-
-  query: FormQuery;
-  roles: string[] ;
-  expanded: any = {};
-  submitted: boolean;
-  timeout: any;
-
-  personList: DataTableElement[];
-
-  @ViewChild('mydatatable') table: DataTable;
-
-  options = new TableOptions({
-    columnMode: ColumnMode.force,
-    headerHeight: 50,
-    footerHeight: 50,
-    rowHeight: 50,
-    detailRowHeight: 200,
-  });
 
   /**
-   * Creates an instance of the HomeComponent with the injected
-   * QueryService.
-   *
-   * @param {QueryService} queryService - The injected QueryService.
-   * @param {Router} router - The inected Router
+   * Routing Variables
    */
-  constructor(private queryService: QueryService, private router: Router) {}
+  home_route:boolean = false; //default true
+  results_route:boolean = false;
+  profile_route:boolean = false;
 
   /**
-   * Initialise the form OnInit
+   * Results Route Variables
+   */
+  results_url_id:number = -1;
+  results_query:string = '';
+
+  /**
+   * Profile Route Variables
+   */
+  profile_url_id:string = '';
+
+  /**
+   * View Variables
+   */
+  right_open:boolean = false;
+  @ViewChild('leftContainer') left : ElementRef;
+  // @ViewChild('rightContainer') right : ElementRef;
+
+  /**
+   * Creates an instance of HomeComponent
+   * @param {Renderer} renderer - injects the renderer
+   * @param {Router} router - injects the router service
+   * @param {ActivatedRoute} ar - injects details of the current activated route
+   */
+  constructor(private renderer:Renderer,
+              private router: Router,
+              private ar: ActivatedRoute) {}
+
+  /**
+   * Runs on View Init
+   * Initialises the correct view dependant on the url
    */
   ngOnInit() {
-    this.roles = ['None Specific', 'Collaborator', 'Supervisor', 'Lecturer'];
-    this.resetForm();
-  }
-
-
-  /**
-   * Handle the submit event from the form
-   */
-  onSubmit() {
-    console.log('Submitted', this.query);
-    this.submitted = true;
-    this.sendQuery();
-  }
-
-  /**
-   * Resets the query form.
-   */
-  resetForm() {
-    this.query = new FormQuery('', '', this.roles[0]);
-    this.personList = [];
-    this.submitted = false;
-  }
-
-
-  /**
-   * Handle the queryService observable
-   */
-  sendQuery() {
-    this.queryService.postForm(this.query)
-      .subscribe(
-        link => {
-          if(link.success) {
-            this.getList(link.results);
-          }
-        },
-        error =>  {this.errorMessage = <any>error; console.log(error);},
-        () => console.log('Send Query Complete')
-      );
-  }
-
-  /**
-   * Handles the queryService observable, gets the List from an api
-   * @param {string} api: api url to get the list from
-   */
-  getList(api : string) {
-    this.queryService.getList(api)
-      .subscribe(
-        list => {this.personList = <DataTableElement[]> list; console.log(list);},
-        error =>  {this.errorMessage = <any>error; console.log(error);},
-        () => console.log('Results List Request Complete')
-      );
-  }
-
-  /**
-   * Handles the queryService observable, gets the summary of a person from the api
-   * @param {number} i: the index of the person to get within the personList
-   */
-  getPersonSummary(api: string, i : number) {
-    console.log(this.personList[i]);
-  }
-
-  /**
-   * Returns the top four keywords
-   * @param {DataTableElement} : person to get keywords from
-   */
-  getTopFourKeywords(person: DataTableElement) {
-    let x:string[] = person.summary.keywords;
-    return x.slice(0, 4);
-  }
-
-
-  /**
-   * Manually toggles the given row, will close it if its open, and get data if it hasnt been got before
-   * Asynchronously gets the research summary of the given row
-   * @param {ReturnQuery} row: the row to toggle
-   */
-  toggleExpandRow(row: any) {
-    let i:number = row.$$index;
-
-    if(row.$$expanded || this.personList[i].summary !== undefined) {
-      this.table.toggleExpandRow(row);
-      return;
+    let url:string = this.router.url;
+    if(url.includes('/search')) {
+      this.initResults();
+    } else if (url.includes('/profile')) {
+      this.initProfile();
+    } else {
+      this.initHome();
     }
-
-    this.queryService.getResearchSummary(row.research_summary)
-      .subscribe(
-        data => {
-          this.personList[i].summary = data;
-          this.personList[i].row = i;
-          this.table.toggleExpandRow(row);
-        },
-        error =>  {this.errorMessage = <any>error; console.log(error);},
-        () => console.log('Research Summary Request Complete')
-      );
+    this.openRightIfChecked();
   }
 
   /**
-   * Takes the button press event and navigates to the correct place
+   * Initialises the results components
+   * Extracts id and query from the url
    */
-  expandedButtonPress(index: number) {
-    if(this.personList[index].full_profile !== undefined) {
-      this.navigateToProfile(this.personList[index].full_profile);
+  initResults() {
+    this.results_route = true;
+    this.right_open = true;
+    this.ar.params.subscribe(
+      params => {
+        this.results_url_id = +params['id'];
+        this.results_query = params['query'];
+      },
+      error => this.routeErrorRedirect(error)
+    );
+  }
+
+  /**
+   * Initialises the profile components
+   * Extracts the id from the url
+   */
+  initProfile() {
+    this.profile_route = true;
+    this.right_open = true;
+    this.ar.params.subscribe(
+      params => {
+        this.profile_url_id = params['id'];
+      },
+      error => this.routeErrorRedirect(error)
+    );
+  }
+
+  /**
+   * Initialises the home components
+   * No extraction necessary
+   */
+  initHome() {
+    this.home_route = true;
+    this.right_open = false;
+  }
+
+  /**
+   * Toggles the right menu
+   */
+  toggleRight() {
+    this.right_open = !this.right_open;
+    this.openRightIfChecked();
+  }
+
+  /**
+   * Sets the css to the correct width if the right menu is open
+   */
+  openRightIfChecked() {
+    if(this.right_open) {
+        this.renderer.setElementStyle(this.left.nativeElement, 'width', '60%');
+    } else {
+        this.renderer.setElementStyle(this.left.nativeElement, 'width', '100%');
     }
   }
 
   /**
-   * On the give more details button press, we will navigate to the profile component.
+   * Any errors in routing will cause a redirect back to home page.
    */
-  navigateToProfile(api: string) {
-    this.queryService.storeNavigationInformation(api);
-    let vals:string[] = api.split('/');
-    this.router.navigate(['profile/' + vals[3]]);
+  routeErrorRedirect(error:any) {
+    console.log(error);
+    this.router.navigate(['/']);
   }
 
-
-  paged(event : any) {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      console.log('paged!', event);
-    }, 100);
-  }
-
-}
-
-interface DataTableElement extends ReturnQuery {
-  summary : ResearchSummary;
-  row: number;
 }

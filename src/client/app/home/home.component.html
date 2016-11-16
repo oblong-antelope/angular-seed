@@ -1,113 +1,20 @@
-<h1>Find a person</h1>
-
-<!--FORM GOES HERE-->
 <div class="container">
-    <form (ngSubmit)="onSubmit()" #queryform="ngForm">
-
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" 
-               [(ngModel)]="query.name" name="name" id="name" #name="ngModel">
-        <p>Note: name has to be of the form 'SURNAME, Firstname'</p>
-        <p>with surname in all capitals, and firstname with capitalised first letter</p>
-      </div>
-
-      <div class="form-group">
-        <label for="expertise">Expertise</label>
-        <input type="text" class="form-control" 
-               [(ngModel)]="query.expertise" name="expertise" id="expertise" #expertise="ngModel">
-      </div>
-
-      <div class="form-group">
-        <label for="roleselect">Role</label>
-        <select class="form-control" id="roleselect" 
-                [(ngModel)]="query.role" name="role" id="roleselect" #roleselect="ngModel">
-          <option *ngFor="let role of roles">{{role}}</option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn btn-default">Submit</button>
-      <button type="reset" class="btn btn-default btn-sm" (click)="resetForm()">Reset</button>
-    </form>
-</div>
-
-<hr>
-
-<!--<button type="submit" class="btn btn-default" (click)="navigateToProfile('/api/person/0/full')">CLIEK ME!</button>-->
-<sd-expertise-web></sd-expertise-web>
-
-<datatable
-    #mydatatable
-    class='material expandable'
-    [rows]='personList'
-    (onPageChange)="paged($event)"
-    (onRowClick)="toggleExpandRow($event.row)"
-    [options]='options'>
-
-    <datatable-row-detail-template>
-      <template let-row="row">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-3">
-              <h4>Number of papers:</h4> 
-              {{row.summary.papers}}
-            </div>
-            <div class="col-sm-3">
-              <h4>Keywords:</h4>
-              <li *ngFor="let word of getTopFourKeywords(row)">{{word}}</li>
-            </div>
-            <div class="col-sm-3">
-              <h4>Most Recent Paper:</h4>
-                {{row.summary.recent_paper}}
-            </div>
-            <div class="col-sm-3">
-              <button type="button" class="btn btn-default btn-arrow-right info-btn" 
-                                    (click)="expandedButtonPress(row.row)" >More Details</button>
-            </div>
-          </div>
+    <div class="left-container" #leftContainer>
+        <button class="btn btn-primary btn-toggle btn-sm" 
+                        (click)="toggleRight()">Toggle Right Bar</button>
+        <div class="search" *ngIf="home_route">
+            <sd-search-bar></sd-search-bar>
         </div>
-      </template>
-    </datatable-row-detail-template>
-
-    <datatable-column
-      [width]="50"
-      [resizeable]="false"
-      [sortable]="false"
-      [draggable]="false"
-      [canAutoResize]="true">
-      <template let-row="row">
-        <span
-          [class.glyphicon-chevron-right]="!row.$$expanded"
-          [class.glyphicon-chevron-down]="row.$$expanded"
-          class="expander-btn glyphicon"
-          title="Expand/Collapse Row">
-        </span>
-      </template>
-    </datatable-column>
-
-    <datatable-column name="Index" width="80">
-      <template let-row="row">
-        <strong>{{row.$$index}}</strong>
-      </template>
-    </datatable-column>
-
-    <datatable-column name="Name" width="200">
-      <template let-value="value">
-        <strong>{{value}}</strong>
-      </template>
-    </datatable-column>
-
-    <datatable-column name="Department" width="300">
-      <template let-row="row" let-value="value">
-        {{value}}
-      </template>
-    </datatable-column>
-
-    <datatable-column name="Email" width="300">
-      <template let-row="row" let-value="value">
-        {{value}}
-      </template>
-    </datatable-column>
-
-  </datatable>
-  
+        <div class ="graph">
+            <!--<sd-graph></sd-graph>-->
+        </div>
+    </div>
+    <div class="right-container" [hidden]="!right_open" #rightContainer>
+        <div class="results" *ngIf="results_route">
+            <sd-results [id]="results_url_id" [query]="results_query"></sd-results>
+        </div>
+        <div class="profile" *ngIf="profile_route">
+            <sd-profile></sd-profile>
+        </div>
+    </div>
+</div>

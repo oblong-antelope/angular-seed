@@ -9,7 +9,7 @@ import {
 } from '@angular/router';
 
 import { ProfileModule } from './profile.module';
-import { QueryService } from '../shared/index';
+import { QueryService } from '../../shared/index';
 
 class RouterStub {
   navigateByUrl(url: string) { return url; }
