@@ -1,5 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ElementRef, DoCheck } from '@angular/core';
 import { QueryService } from '../../shared/index';
 
 declare var $:any;
@@ -11,19 +10,17 @@ declare var Highcharts:any;
 @Component({
   moduleId: module.id,
   selector: 'sd-graph',
-  templateUrl: 'graph.component.html',
+  template: `<div id="container" class="container"></div>`,
   styleUrls: ['graph.component.css'],
 })
 
-export class GraphComponent implements OnInit{
+export class GraphComponent implements OnInit, DoCheck{
 
-  errorMessage: string;
-  exampleData: string = 'https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv';
   data: any;
 
-  public PlotlyLayout: any;
-  public PlotlyData: any;
-  public PlotlyOptions: any;
+  chart: any = undefined;
+  width: number;
+  height: number
 
   /**
    * Creates an instance of the GraphComponent with the injected
@@ -35,11 +32,32 @@ export class GraphComponent implements OnInit{
   constructor(private queryService: QueryService, private elementRef: ElementRef) {}
 
   ngOnInit() {
+    this.width = this.elementRef.nativeElement.offsetWidth;
+    this.height = this.elementRef.nativeElement.offsetHeight;
     this.plotlyPlot2();
   }
 
+  ngDoCheck() {
+    if(this.chart !== undefined) {
+      this.checkUpdatesPlot();
+    }
+  }
+
+  checkUpdatesPlot() {
+    let newwidth:number = this.elementRef.nativeElement.offsetWidth;
+    let newheight:number = this.elementRef.nativeElement.offsetHeight;
+    if(newwidth !== this.width || newheight !== this.height) {
+      console.log(this.chart);
+      this.chart.chartHeight = newheight;
+      this.chart.chartWidth = newwidth;
+      this.chart.redraw();
+      this.width = newwidth;
+      this.height = newheight;
+    }
+  }
+
   plotlyPlot2() {
-    $(function () {
+    $(() => {
 
       var t = 0;
 
@@ -78,6 +96,8 @@ export class GraphComponent implements OnInit{
       // Set up the chart
       var chart = new Highcharts.Chart({
         chart: {
+          width: this.width,
+          height: this.height,
           animation: true,
           renderTo: 'container',
           margin: 10,
@@ -167,6 +187,8 @@ export class GraphComponent implements OnInit{
           }
         }
       });
+
+      this.chart = chart;
 
 
       // Add mouse events for rotation
