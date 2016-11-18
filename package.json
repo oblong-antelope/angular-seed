@@ -28,6 +28,7 @@
     "serve.e2e": "gulp serve.e2e --color",
     "serve.prod": "gulp serve.prod --color --config-env prod",
     "serve.prod_no_build": "gulp serve.prod_no_build --color --config-env prod",
+    "serve.build.prod.heroku.push": "npm run build.prod && git commit -am 'Updated prod' && git push heroku master",
     "start": "gulp serve.dev --color",
     "start.deving": "gulp start.deving --color",
     "tasks.list": "gulp --tasks-simple --color",
