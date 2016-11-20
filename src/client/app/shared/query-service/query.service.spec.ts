@@ -41,8 +41,7 @@ export function main() {
       mockUri = 'api/test';
       mockFormQuery = new FormQuery('name', 'expertise1', 'collaborator');
       mockReturnLinkQuery = {success: true, results:'api/query/someuri'};
-      mockReturnQuery = [{name:'name', department:'department',  email:'email@email',
-                          research_summary: 'anotherurl.co.uk', full_profile:'Someurl.co.uk'}];
+      mockReturnQuery = [{name:'name', research_summary: 'anotherurl.co.uk', full_profile:'Someurl.co.uk'}];
 
       let connection: any;
       mockBackend.connections.subscribe((c: any) => connection = c);
@@ -51,7 +50,7 @@ export function main() {
       getListResponse = queryService.getList(mockUri);
       connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(mockReturnQuery) })));
 
-      postFormResponse = queryService.postForm(mockFormQuery);
+      postFormResponse = queryService.postQuery(mockFormQuery);
       connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(mockReturnLinkQuery)})));
     });
 

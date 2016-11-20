@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 @Directive({
   selector: '[sdBackButton]',
 })
-export class BackButtonDirective implements OnInit{
+export class BackButtonDirective implements OnInit {
 
   @Input() modified:boolean = false;
 
@@ -28,7 +28,7 @@ export class BackButtonDirective implements OnInit{
       this.modified = !window.confirm('There have been some modifications, please confirm');
     }
 
-    if(!this.modified){
+    if(!this.modified) {
       this.loc.back();
     }
   }

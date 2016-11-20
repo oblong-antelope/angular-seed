@@ -14,13 +14,13 @@ declare var Highcharts:any;
   styleUrls: ['graph.component.css'],
 })
 
-export class GraphComponent implements OnInit, DoCheck{
+export class GraphComponent implements OnInit, DoCheck {
 
   data: any;
 
   chart: any = undefined;
   width: number;
-  height: number
+  height: number;
 
   /**
    * Creates an instance of the GraphComponent with the injected
@@ -60,18 +60,19 @@ export class GraphComponent implements OnInit, DoCheck{
     $(() => {
 
       var t = 0;
+      var chart = this.chart;
 
-      $(document).ready(function(){
+      $(document).ready(function() {
         setInterval(runInter, 250);
       });
 
       var dataa = [[1,2,3]];
       //PRODUCTION: <=200; SAFE <=400; TESTING <=600; EXPERIMENTAL ~2000
-      for(var i=1; i<100; i++){
-        dataa[i] = [Math.random()*20-10, Math.random()*20-10, Math.random()*20-10]
+      for(var i=1; i<100; i++) {
+        dataa[i] = [Math.random()*20-10, Math.random()*20-10, Math.random()*20-10];
       }
 
-      function runInter(){
+      function runInter() {
         //chart.series[0].setData([[4*Math.sin(t)+3,5,4*Math.cos(t)+3],[4*Math.sin(t)-1,3,4*Math.cos(t)+1]], true);
         chart.options.chart.options3d.beta = t%360;
         chart.redraw();
@@ -94,7 +95,7 @@ export class GraphComponent implements OnInit, DoCheck{
       });
 
       // Set up the chart
-      var chart = new Highcharts.Chart({
+      chart = new Highcharts.Chart({
         chart: {
           width: this.width,
           height: this.height,

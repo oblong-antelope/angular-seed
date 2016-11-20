@@ -14,7 +14,7 @@ import { WordCloudComponent } from './word-cloud/index';
 /**
  * Directives
  */
-import { BackButtonDirective } from './back-button/index'; 
+import { BackButtonDirective } from './back-button/index';
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
  */

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-// import { RouterModule } from '@angular/router';
 import {
   async
 } from '@angular/core/testing';
@@ -12,10 +10,9 @@ import {
   // HttpModule
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { HomeModule } from '../home.module';
 
 import { QueryService } from '../../shared/index';
-import { SharedModule } from '../../shared/shared.module';
-import { Angular2DataTableModule } from 'angular2-data-table/release/index';
 
 class FakeQueryService {
   postForm(fq:any) { return fq; }
@@ -31,9 +28,7 @@ export function main() {
     // Disable old forms
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [FormsModule,
-                  SharedModule,
-                  Angular2DataTableModule],
+        imports: [HomeModule],
         declarations: [TestComponent],
         providers: [
           BaseRequestOptions,

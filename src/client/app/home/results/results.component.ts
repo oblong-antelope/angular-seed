@@ -110,6 +110,7 @@ export class ResultsComponent implements OnInit {
         data => {
           this.personList[i].summary = data;
           this.personList[i].row = i;
+          console.log(data);
           this.table.toggleExpandRow(row);
         },
         error =>  {this.errorMessage = <any>error; console.log(error);},

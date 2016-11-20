@@ -21,7 +21,7 @@ export class SearchBarComponent {
    * @param {QueryService} queryService - The injected query serivce
    * @param {Router} router - The injected router
    */
-  constructor(private queryService: QueryService, private router:Router){}
+  constructor(private queryService: QueryService, private router:Router) {}
 
   /**
    * Submit handler for the input group

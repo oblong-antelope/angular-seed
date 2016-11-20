@@ -8,7 +8,6 @@ import {
   ActivatedRoute
 } from '@angular/router';
 
-import { ProfileModule } from './profile.module';
 import { QueryService } from '../../shared/index';
 
 class RouterStub {
@@ -28,7 +27,7 @@ export function main() {
           ActivatedRoute,
           QueryService
         ],
-        imports: [ProfileModule]
+        imports: []
       }).compileComponents();
     }));
 
