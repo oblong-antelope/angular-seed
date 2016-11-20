@@ -119,7 +119,7 @@ export class HomeComponent implements OnInit {
    */
   openRightIfChecked() {
     if(this.right_open) {
-        this.renderer.setElementStyle(this.left.nativeElement, 'width', '60%');
+        this.renderer.setElementStyle(this.left.nativeElement, 'width', '50%');
     } else {
         this.renderer.setElementStyle(this.left.nativeElement, 'width', '100%');
     }

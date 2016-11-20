@@ -21,11 +21,11 @@
 
 
 .right-container {
-  position:relative;
+  position: relative;
   float: right;
   height: inherit;
-  width : 40%;
-  border-left: thick double #ff0000;
+  width : 50%;
+  border-left: thick ridge darkslategrey;
   padding: 10px;
 }
 
