@@ -31,14 +31,14 @@
     <!--Keywords-->
     <div class="row">
         <label for="displayKeywords" class="col-sm-2 col-form-label">Keywords</label>
-        <div class="col-sm-10 list-columns">
+        <div class="col-sm-10">
             <li *ngFor="let word of getProfileKeywords()">{{word}}: {{profile.keywords[word]}}</li>
         </div>
     </div>
     <!--Papers-->
     <div class="row">
         <label for="displayPapers" class="col-sm-2 col-form-label">Papers</label>
-        <div class="col-sm-10 list-columns">
+        <div class="col-sm-10 word-wrap">
             <li *ngFor="let paper of profile.papers">{{paper}}</li>
         </div>
     </div>
