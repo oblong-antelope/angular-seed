@@ -13,7 +13,7 @@ import 'rxjs/add/operator/do';  // for debugging
 @Injectable()
 export class GraphService {
 
-  API = 'http://oblong-relentless.herokuapp.com' ;
+  API = 'https://oblong-relentless.herokuapp.com' ;
 
   /**
    * Creates a new NameListService with the injected Http.
