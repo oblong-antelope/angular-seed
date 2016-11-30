@@ -1,8 +1,8 @@
-import { Component, OnInit, ElementRef, DoCheck } from '@angular/core';
-import { QueryService } from '../../shared/index';
+import { Component, ElementRef, ViewChild, OnInit, Renderer, EventEmitter, Output } from '@angular/core';
+import { GraphService } from './graph.service';
+import { DataSet } from './models';
 
-declare var $:any;
-declare var Highcharts:any;
+declare var Chart:any;
 
 /**
  * This class represents the lazy loaded graphComponent.
@@ -10,275 +10,136 @@ declare var Highcharts:any;
 @Component({
   moduleId: module.id,
   selector: 'sd-graph',
-  template: `<div id="container" class="container"></div>`,
+  template: `<div class='container'>
+                <canvas #mychart></canvas>
+            </div>`,
   styleUrls: ['graph.component.css'],
 })
 
-export class GraphComponent implements OnInit, DoCheck {
+export class GraphComponent implements OnInit {
 
-  data: any;
+  data: DataSet;
 
-  chart: any = undefined;
-  width: number;
-  height: number;
+  chart: any;
+
+  @Output() pointClick: EventEmitter<Object> = new EventEmitter();
 
   /**
-   * Creates an instance of the GraphComponent with the injected
-   * QueryService.
-   *
-   * @param {QueryService} queryService - The injected QueryService.
-   * @param {Router} router - The inected Router
+   * Chart Properties
    */
-  constructor(private queryService: QueryService, private elementRef: ElementRef) {}
+  type: string = 'bubble';
+  options: any = {};
 
+  @ViewChild('mychart') chartelem: ElementRef;
+
+  /**
+   * Creates an instance of the GraphComponent with the injected GraphService
+   *
+   * @param {GraphService} graphService - The injected GraphService
+   * @param {Renderer} Renderer - The injected Renderer
+   */
+  constructor(private graphService: GraphService, private renderer:Renderer) {}
+
+  /**
+   * Chart set up on view load
+   */
   ngOnInit() {
-    this.width = this.elementRef.nativeElement.offsetWidth;
-    this.height = this.elementRef.nativeElement.offsetHeight;
-    this.plotlyPlot2();
+      this.setCanvasSize();
+      this.setOptions();
+      this.initChart();
+      this.getDataAndUpdateChart();
   }
 
-  ngDoCheck() {
-    if(this.chart !== undefined) {
-      this.checkUpdatesPlot();
-    }
+  /**
+   * Set the canvas size to be 100% of the container
+   */
+  setCanvasSize() {
+      this.renderer.setElementProperty(this.chartelem.nativeElement, 'height', '100%');
+      this.renderer.setElementProperty(this.chartelem.nativeElement, 'width', '100%');
   }
 
-  checkUpdatesPlot() {
-    let newwidth:number = this.elementRef.nativeElement.offsetWidth;
-    let newheight:number = this.elementRef.nativeElement.offsetHeight;
-    if(newwidth !== this.width || newheight !== this.height) {
-      console.log(this.chart);
-      this.chart.setSize(newwidth, newheight);
-      this.width = newwidth;
-      this.height = newheight;
-    }
+  /**
+   * Initialise the chart with out type, options and data
+   */
+  initChart() {
+      this.chart = new Chart(this.chartelem.nativeElement, {
+          type: this.type,
+          options: this.options,
+          data: this.data
+      });
   }
 
-  plotlyPlot2() {
-    let chart = new Highcharts.Chart({
-        chart: {
-            renderTo: 'container',
-            margin: 0,
-            type: 'scatter',
-            options3d: {
-			        	enabled: true,
-                alpha: 20,
-                beta: 30,
-                depth: 200,
-                frame: {
-                    bottom: {
-                        size: 1,
-                        color: '#C0C0C0'
-                    }
-                }
+  /**
+   * Gets the data from the relentless server.
+   * Saves the data into chart data parameter to bind to
+   */
+  getDataAndUpdateChart() {
+      this.graphService.getData({})
+        .subscribe(
+            data => {
+                data.datasets = data.datasets.slice(0, 1000);
+                this.data = data;
+                this.chart.data['datasets'] = this.data.datasets;
+                this.chart.update();
+            },
+            error => console.log(error),
+            () => console.log('Request for graph data completed')
+        );
+  }
+
+  /**
+   * Handler for clicks on the Chart
+   */
+  chartOnClick(e:any, d:any, emitter: EventEmitter<Object>) {
+      if(d.length > 0) {
+        let idx = d[0]._datasetIndex;
+        let personClicked = this.data.datasets[idx];
+        emitter.emit({
+            name: personClicked.label.split('] ')[1],
+            person: personClicked,
+        });
+      }
+  }
+
+  /**
+   * Handler for tool tip label;
+   * @return {string} label
+   */
+  getToolTipLabel(e: any, d:any) {
+      return  d.datasets[e.datasetIndex].label;
+  }
+
+  /**
+   * Sets the options field of the chart
+   */
+  setOptions() {
+      this.options = {
+        onClick: (e:any, d:any) => this.chartOnClick(e, d, this.pointClick),
+        layout:{
+            padding:20
+        },
+        tooltips:{
+            titleFontSize:24,
+            bodyFontSize:24,
+            callbacks:{
+                label: this.getToolTipLabel
             }
         },
-        title: {
-            text: ''
+        legend:{
+            display:false
         },
-        yAxis: {
-            min: 0,
-            max: 10
-        },
-        xAxis: {
-            min: 0,
-            max: 10,
-            gridLineWidth: 1
-        },
-        zAxis: {
-            min: 0,
-            max: 10
-        },
-        legend: {
-          enabled: false
-        },
-        series: [{
-            data: [
-                // [X, Y, Z]
-                [1, 1, 1],
-                [1, 1, 2],
-                [1, 1, 5],
-                [2, 3, 2],
-                [2, 6, 4],
-                [4, 5, 7],
-                [4, 2, 8],
-                [7, 1, 3],
-                [7, 1, 5],
-                [8, 1, 5]
-            ]
-        }]
-    });
-
-    this.chart = chart;
+        scales: {
+            xAxes: [{
+                display:false
+                /*ticks: {
+                    min: 1,
+                    max: 100
+                    }*/
+            }],
+            yAxes: [{
+                display:false
+            }]
+        }
+      };
   }
-
-  // plotlyPlot2() {
-  //   $(() => {
-
-  //     var t = 0;
-  //     var chart = this.chart;
-
-  //     $(document).ready(function() {
-  //       setInterval(runInter, 250);
-  //     });
-
-  //     var dataa = [[1,2,3]];
-  //     //PRODUCTION: <=200; SAFE <=400; TESTING <=600; EXPERIMENTAL ~2000
-  //     for(var i=1; i<100; i++) {
-  //       dataa[i] = [Math.random()*20-10, Math.random()*20-10, Math.random()*20-10];
-  //     }
-
-  //     function runInter() {
-  //       //chart.series[0].setData([[4*Math.sin(t)+3,5,4*Math.cos(t)+3],[4*Math.sin(t)-1,3,4*Math.cos(t)+1]], true);
-  //       chart.options.chart.options3d.beta = t%360;
-  //       chart.redraw();
-  //       t+=0.5;
-  //     }
-
-  //     // Give the points a 3D feel by adding a radial gradient
-  //     Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function (color:any) {
-  //       return {
-  //         radialGradient: {
-  //           cx: 0.4,
-  //           cy: 0.3,
-  //           r: 0.5
-  //         },
-  //         stops: [
-  //           [0, color],
-  //           [1, Highcharts.Color(color).brighten(-0.2).get('rgb')]
-  //         ]
-  //       };
-  //     });
-
-  //     // Set up the chart
-  //     chart = new Highcharts.Chart({
-  //       chart: {
-  //         width: this.width,
-  //         height: this.height,
-  //         animation: true,
-  //         renderTo: 'container',
-  //         margin: 10,
-  //         type: 'scatter',
-  //         options3d: {
-  //           enabled: true,
-  //           alpha: 10,
-  //           beta: -20,
-  //           depth: 200,
-  //           viewDistance: 3,
-  //           fitToPlot: false,
-  //           frame: {
-  //             bottom: { size: 1, color: 'rgba(0,0,0,0)' },
-  //             back: { size: 1, color: 'rgba(0,0,0,0)' },
-  //             side: { size: 1, color: 'rgba(0,0,0,0)' }
-  //           }
-  //         }
-  //       },
-  //       title: {
-  //         text: ''
-  //       },
-  //       yAxis: {
-  //         min: -10,
-  //         max: 10,
-  //         title: null,
-  //         lineWidth: 0,
-  //         gridLineWidth: 0,
-  //         minorGridLineWidth: 0,
-  //         lineColor: 'transparent',
-  //         labels: {
-  //           enabled: false
-  //         },
-  //         minorTickLength: 0,
-  //         tickLength: 0
-  //       },
-  //       xAxis: {
-  //         min: -10,
-  //         max: 10,
-  //         gridLineWidth: 0,
-  //         lineWidth: 0,
-  //         minorGridLineWidth: 0,
-  //         lineColor: 'transparent',
-  //         labels: {
-  //           enabled: false
-  //         },
-  //         minorTickLength: 0,
-  //         tickLength: 0
-  //       },
-  //       zAxis: {
-  //         min: -10,
-  //         max: 10,
-  //         showFirstLabel: false,
-  //         gridLineWidth: 0,
-  //         lineWidth: 0,
-  //         minorGridLineWidth: 0,
-  //         lineColor: 'transparent',
-  //         labels: {
-  //           enabled: false
-  //         },
-  //         minorTickLength: 0,
-  //         tickLength: 0
-  //       },
-  //       legend: {
-  //         enabled: false
-  //       },
-  //       series: [{
-  //         name: 'Reading',
-  //         colorByPoint: true,
-  //         data: dataa
-  //       }],
-  //       plotOptions: {
-  //         scatter: {
-  //           width: 100,
-  //           height: 100,
-  //           depth: 100
-  //         },
-  //         series: {
-  //           cursor: 'pointer',
-  //           point: {
-  //             events: {
-  //               click: function (e:any) {
-  //                 alert(this.index);
-  //                 //console.log(this);
-  //               }
-  //             }
-  //           }
-  //         }
-  //       }
-  //     });
-
-  //     this.chart = chart;
-
-
-  //     // Add mouse events for rotation
-  //     $(chart.container).on('mousedown.hc touchstart.hc', function (eStart:any) {
-  //       eStart = chart.pointer.normalize(eStart);
-
-  //       var posX = eStart.pageX,
-  //         posY = eStart.pageY,
-  //         alpha = chart.options.chart.options3d.alpha,
-  //         beta = chart.options.chart.options3d.beta,
-  //         newAlpha:any,
-  //         newBeta:any,
-  //         sensitivity = 5; // lower is more sensitive
-
-  //       $(document).on({
-  //         'mousemove.hc touchdrag.hc': function (e:any) {
-  //           // Run beta
-  //           newBeta = beta + (posX - e.pageX) / sensitivity;
-  //           chart.options.chart.options3d.beta = newBeta;
-
-  //           // Run alpha
-  //           newAlpha = alpha + (e.pageY - posY) / sensitivity;
-  //           chart.options.chart.options3d.alpha = newAlpha;
-
-  //           chart.redraw(false);
-  //         },
-  //         'mouseup touchend': function () {
-  //           $(document).off('.hc');
-  //         }
-  //       });
-  //     });
-
-  //   });
-  // }
-
 }

@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { QueryService } from '../query-service/index';
-import { FormQuery } from '../../models/index';
 
 /**
  * This class represents the search bar component.
@@ -14,7 +13,7 @@ import { FormQuery } from '../../models/index';
 })
 export class SearchBarComponent {
   @Input('query') query:string = '';
-  placeholder:string = 'query format: NAME ; EXPERTISE ; ROLE';
+  placeholder:string = 'Who would you like to search for?';
 
   /**
    * Creates the new search-bar component
@@ -29,9 +28,7 @@ export class SearchBarComponent {
   onSubmit() {
     console.log(this.query);
     if(this.query !== '') {
-      var qelem:string[] = this.query.split(';');
-      if(qelem.length !== 3) { return; }
-      this.submitQuery(new FormQuery(qelem[0], qelem[1], qelem[2]));
+      this.submitQuery(this.query);
     }
   }
 
@@ -39,7 +36,7 @@ export class SearchBarComponent {
    * Submits the stored query to the service.
    * @param {string} query - the query to be sent
    */
-  submitQuery(query: FormQuery) {
+  submitQuery(query : string) {
     this.queryService.postQuery(query)
           .subscribe(
             data => {

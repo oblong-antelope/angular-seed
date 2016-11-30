@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { QueryService } from '../../shared/index';
-import { ReturnQuery, ResearchSummary } from '../../models/index';
+import { ReturnQuery } from '../../models/index';
 import {
   TableOptions,
   ColumnMode,
@@ -18,7 +18,7 @@ import {
   styleUrls: ['results.component.css'],
 })
 
-export class ResultsComponent implements OnInit {
+export class ResultsComponent implements OnInit, OnChanges {
 
   @Input('id') id:number;
   @Input('query') query:string;
@@ -29,6 +29,7 @@ export class ResultsComponent implements OnInit {
   timeout: any = 100;
 
   submitted: boolean = false;
+  querySuccessful: boolean = true;
 
   personList: DataTableElement[] = [];
 
@@ -40,6 +41,8 @@ export class ResultsComponent implements OnInit {
     footerHeight: 50,
     rowHeight: 50,
     detailRowHeight: 200,
+    scrollbarV: true,
+    scrollbarH: false
   });
 
   /**
@@ -55,7 +58,21 @@ export class ResultsComponent implements OnInit {
    * Initialise the form OnInit
    */
   ngOnInit() {
-    this.getList('/api/query/' + this.id);
+      this.refreshList();
+  }
+
+  /**
+   * Handler on input changes
+   */
+  ngOnChanges(changes: SimpleChanges) {
+    this.refreshList();
+  }
+
+  /**
+   * Gets the list based on the current new values
+   */
+  refreshList() {
+    this.getList('/api/queries/' + this.id);
   }
 
   /**
@@ -66,6 +83,7 @@ export class ResultsComponent implements OnInit {
     this.queryService.getList(api)
       .subscribe(
         data => {
+          this.querySuccessful = data.results.length !== 0;
           this.personList = <DataTableElement[]> data.results;
           this.submitted = true;
         },
@@ -87,44 +105,23 @@ export class ResultsComponent implements OnInit {
    * @param {DataTableElement} : person to get keywords from
    */
   getTopFourKeywords(person: DataTableElement) {
-    let x:string[] = person.summary.keywords;
-    return x.slice(0, 4);
+    return person.keywords;
   }
 
 
   /**
-   * Manually toggles the given row, will close it if its open, and get data if it hasnt been got before
-   * Asynchronously gets the research summary of the given row
+   * Manually toggles the given row, will close it if its open
    * @param {ReturnQuery} row: the row to toggle
    */
   toggleExpandRow(row: any) {
-    let i:number = row.$$index;
-
-    if(row.$$expanded || this.personList[i].summary !== undefined) {
-      this.table.toggleExpandRow(row);
-      return;
-    }
-
-    this.queryService.getResearchSummary(row.research_summary)
-      .subscribe(
-        data => {
-          this.personList[i].summary = data;
-          this.personList[i].row = i;
-          console.log(data);
-          this.table.toggleExpandRow(row);
-        },
-        error =>  {this.errorMessage = <any>error; console.log(error);},
-        () => console.log('Research Summary Request Complete')
-      );
+    this.table.toggleExpandRow(row);
   }
 
   /**
    * Takes the button press event and navigates to the correct place
    */
   expandedButtonPress(index: number) {
-    if(this.personList[index].full_profile !== undefined) {
-      this.navigateToProfile(this.personList[index].full_profile);
-    }
+    this.navigateToProfile(this.personList[index].link);
   }
 
   /**
@@ -146,6 +143,4 @@ export class ResultsComponent implements OnInit {
 }
 
 interface DataTableElement extends ReturnQuery {
-  summary : ResearchSummary;
-  row: number;
 }

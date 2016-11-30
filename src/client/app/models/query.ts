@@ -1,15 +1,10 @@
-export class FormQuery {
-  constructor(
-    public name: string,
-    public expertise: string,
-    public role: string
-  ) {}
-}
-
 export interface ReturnQuery {
-  name: string;
-  research_summary: string;
-  full_profile: string;
+  name: Name;
+  link: string; // /api/people/id
+  keywords: string[];
+  email: string;
+  faculty: string;
+  department: string;
 }
 
 export interface ReturnListQuery {
@@ -22,18 +17,30 @@ export interface ReturnLinkQuery {
   results: string;
 }
 
-export interface ResearchSummary {
-  papers: number;
-	keywords: string[];
-	recent_paper: string;
-	full_profile: string;
+export interface Profile {
+  name: Name;
+  department: string;
+  campus: string;
+  faculty: string;
+  building: string;
+  room: string;
+  email: string;
+  website: string;
+  keywords: Object;
+  publications: string[];
 }
 
-export interface Profile {
-  name: string;
-  department: string;
-  email: string;
-  keywords: Object;
-  papers: string[];
-  awards: string[];
+export interface Name {
+  first : string;
+  last : string;
+  title : string;
+  initials: string;
+  alias: string;
+}
+
+export interface Publication {
+  title: string;
+  abstract: string;
+  date: string;
+  authors: ReturnQuery[];
 }

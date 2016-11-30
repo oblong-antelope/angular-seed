@@ -115,6 +115,13 @@ export class HomeComponent implements OnInit {
   }
 
   /**
+   * Handles the click of a point on the graph, get a person object back
+   */
+  onGraphPointClick(e: any) {
+    this.results_query = e.name;
+  }
+
+  /**
    * Sets the css to the correct width if the right menu is open
    */
   openRightIfChecked() {

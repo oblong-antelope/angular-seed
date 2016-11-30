@@ -30,7 +30,8 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  margin:20px
+  margin:0;
+  position: relative;
 }
 .datatable-row-detail {
   height: 100%;
@@ -38,12 +39,13 @@ body{
 }
 
 .datatable {
-	text-align: left;
-	width:90%;
-	margin:0 auto;
+  text-align: left;
+  width: 85%;
+  margin: 0 auto;
 }
-.datatable.vertical-scroll {
-  height:70vh;
+
+.datatable.scroll-vertical {
+  height: 70vh;
 }
 
 a {
@@ -59,5 +61,5 @@ a {
 
 .info-btn {
   position: relative;
-  float: right;
+  float: left;
 }

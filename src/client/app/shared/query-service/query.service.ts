@@ -33,10 +33,10 @@ export class QueryService {
    * @param {FormQuery} query - the query string to send to the REST Server
    * @return {ReturnQuery[]} The Observable for the HTTP request.
    */
-  postQuery(query: FormQuery): Observable<ReturnLinkQuery> {
+  postQuery(query: string): Observable<ReturnLinkQuery> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.genUri('/api/query/submit'), JSON.stringify(query), options)
+    return this.http.post(this.genUri('/api/queries'), query, options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }

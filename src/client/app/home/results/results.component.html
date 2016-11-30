@@ -2,11 +2,13 @@
   <sd-search-bar [query]="query"></sd-search-bar>
 </div>
 
+<p *ngIf='!querySuccessful && submitted'>Search Was Not Successful, Please try another Search Term</p>
+
 <br>
 
 <datatable
     #mydatatable
-    class='material expandable'
+    class='material expandable '
     [rows]='personList'
     (onPageChange)="paged($event)"
     (onRowClick)="toggleExpandRow($event.row)"
@@ -14,46 +16,26 @@
 
     <datatable-row-detail-template>
       <template let-row="row">
-        <div class="container datatable-row-detail">
+        <div class="container">
           <div class="row">
-            <div class="col-sm-3">
-              <h4>Number of papers:</h4> 
-              {{row.summary.papers}}
-            </div>
-            <div class="col-sm-3">
-              <h4>Keywords:</h4>
-              <li *ngFor="let word of getTopFourKeywords(row)">{{word}}</li>
-            </div>
-            <div class="col-sm-3">
-              <h4>Most Recent Paper:</h4>
-              <p>{{row.summary.recent_paper}}</p>
-            </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
+              <h4>Email:</h4>
+              <p>{{row.email}}</p>
+              <h4>Faculty:</h4>
+              <p>{{row.faculty}}</p>
               <button type="button" class="btn btn-default btn-arrow-right info-btn" 
-                                    (click)="expandedButtonPress(row.row)" >More Details</button>
+                                    (click)="expandedButtonPress(row.$$index)" >More Details</button>
+            </div>
+            <div class="col-sm-8">
+              <h6>Keywords:</h6>
+              <li *ngFor="let word of row.keywords">{{word}}</li>
             </div>
           </div>
         </div>
       </template>
     </datatable-row-detail-template>
 
-    <datatable-column
-      [width]="50"
-      [resizeable]="false"
-      [sortable]="false"
-      [draggable]="false"
-      [canAutoResize]="true">
-      <template let-row="row">
-        <span
-          [class.glyphicon-chevron-right]="!row.$$expanded"
-          [class.glyphicon-chevron-down]="row.$$expanded"
-          class="expander-btn glyphicon"
-          title="Expand/Collapse Row">
-        </span>
-      </template>
-    </datatable-column>
-
-    <datatable-column name="Index" width="50">
+    <datatable-column name="" width="20">
       <template let-row="row">
         <strong>{{row.$$index}}</strong>
       </template>
@@ -61,14 +43,14 @@
 
     <datatable-column name="Name" width="150">
       <template let-value="value">
-        <strong>{{value}}</strong>
+        <strong>{{value.first}} {{value.last}}</strong>
       </template>
     </datatable-column>
 
-    <!--<datatable-column name="Department" width="150">
+    <datatable-column name="Department" width="150">
       <template let-row="row" let-value="value">
         {{value}}
       </template>
-    </datatable-column>-->
+    </datatable-column>
   </datatable>
   

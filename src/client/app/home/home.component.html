@@ -2,10 +2,10 @@
     <div class="left-container" #leftContainer>
         <!--<button class="btn btn-primary btn-toggle btn-sm" (click)="toggleRight()">Toggle Right Bar</button>-->
         <div class="search" *ngIf="home_route">
-            <sd-search-bar></sd-search-bar>
+            <sd-search-bar [query]="results_query"></sd-search-bar>
         </div>
         <div class ="graph">
-            <sd-graph></sd-graph>
+            <sd-graph (pointClick)="onGraphPointClick($event)"></sd-graph>
         </div>
     </div>
     <div class="right-container" [hidden]="!right_open" #rightContainer>
