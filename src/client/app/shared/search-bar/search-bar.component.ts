@@ -28,31 +28,15 @@ export class SearchBarComponent {
   onSubmit() {
     console.log(this.query);
     if(this.query !== '') {
-      this.submitQuery(this.query);
+      this.search(this.query);
     }
-  }
-
-  /**
-   * Submits the stored query to the service.
-   * @param {string} query - the query to be sent
-   */
-  submitQuery(query : string) {
-    this.queryService.postQuery(query)
-          .subscribe(
-            data => {
-              this.displaySearch(data.results);
-            },
-            error => console.log(error),
-            () => console.log('Query posted to the server')
-          );
   }
 
   /**
    * Takes a returned uri and routes to the results display.
    */
-  displaySearch(link: string) {
-    let uri:string[] = link.split('/');
-    this.router.navigate(['search',{id: uri[3], query: this.query}]);
+  search(link: string) {
+    this.router.navigate(['search',{query: this.query}]);
   }
 
 }

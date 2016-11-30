@@ -62,11 +62,11 @@ export class ProfileComponent implements OnInit, OnChanges {
    */
   getProfile(api: string) {
     this.queryService.getProfile(api)
-          .subscribe(
-            profile => this.profile = profile,
-            error => {this.errorMessage = <any>error; console.log(error);},
-            () => console.log('Profile Request Complete')
-          );
+        .subscribe(
+          profile => this.profile = profile,
+          error => {this.errorMessage = <any>error; console.log(error);},
+          () => console.log('Profile Request Complete')
+        );
   }
 
   /**
@@ -80,7 +80,10 @@ export class ProfileComponent implements OnInit, OnChanges {
    * Returns the keys of the publications profile
    */
   getPublications() {
-    return Object.keys(this.profile.publications);
+    console.log(this.profile.publications);
+    // let pubs: string[] = Object.keys(this.profile.publications);
+    // console.log(pubs);
+    return ['publication1', 'publication2'];
   }
 
   /**

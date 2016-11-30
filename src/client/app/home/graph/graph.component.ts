@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild, OnInit, Renderer, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { GraphService } from './graph.service';
 import { DataSet } from './models';
 
@@ -38,7 +39,9 @@ export class GraphComponent implements OnInit {
    * @param {GraphService} graphService - The injected GraphService
    * @param {Renderer} Renderer - The injected Renderer
    */
-  constructor(private graphService: GraphService, private renderer:Renderer) {}
+  constructor(private graphService: GraphService,
+              private renderer:Renderer,
+              private router: Router) {}
 
   /**
    * Chart set up on view load
@@ -79,6 +82,7 @@ export class GraphComponent implements OnInit {
             data => {
                 data.datasets = data.datasets.slice(0, 1000);
                 this.data = data;
+                console.log(data);
                 this.chart.data['datasets'] = this.data.datasets;
                 this.chart.update();
             },
@@ -93,11 +97,14 @@ export class GraphComponent implements OnInit {
   chartOnClick(e:any, d:any, emitter: EventEmitter<Object>) {
       if(d.length > 0) {
         let idx = d[0]._datasetIndex;
-        let personClicked = this.data.datasets[idx];
+        let personClicked: any = this.data.datasets[idx];
         emitter.emit({
             name: personClicked.label.split('] ')[1],
             person: personClicked,
         });
+        let vals:string[] = personClicked.idx.split('/');
+        console.log(vals);
+        this.router.navigate(['profile', {'id': vals[3]}]);
       }
   }
 
@@ -119,11 +126,12 @@ export class GraphComponent implements OnInit {
             padding:20
         },
         tooltips:{
-            titleFontSize:24,
-            bodyFontSize:24,
+            titleFontSize: 14,
+            bodyFontSize: 12,
             callbacks:{
                 label: this.getToolTipLabel
-            }
+            },
+            intersect: false
         },
         legend:{
             display:false
@@ -139,6 +147,14 @@ export class GraphComponent implements OnInit {
             yAxes: [{
                 display:false
             }]
+        },
+        pan: {
+            enabled: true,
+            mode: 'xy'
+        },
+        zoom: {
+            enabled: true,
+            mode: 'xy'
         }
       };
   }

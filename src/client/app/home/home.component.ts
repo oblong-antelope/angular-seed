@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
   /**
    * Results Route Variables
    */
-  results_url_id:number = -1;
   results_query:string = '';
 
   /**
@@ -75,7 +74,6 @@ export class HomeComponent implements OnInit {
     this.right_open = true;
     this.ar.params.subscribe(
       params => {
-        this.results_url_id = +params['id'];
         this.results_query = params['query'];
       },
       error => this.routeErrorRedirect(error)

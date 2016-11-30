@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Config } from '../index';
-import { ReturnListQuery,
-         ReturnLinkQuery,
+import { ReturnQuery,
          Profile
         } from '../../models/index';
 
@@ -31,23 +30,11 @@ export class QueryService {
    * @param {FormQuery} query - the query string to send to the REST Server
    * @return {ReturnQuery[]} The Observable for the HTTP request.
    */
-  postQuery(query: string): Observable<ReturnLinkQuery> {
+  getList(query: string): Observable<ReturnQuery[]> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
     return this.http.post(this.genUri('/api/queries'), query, options)
                     .map((res: Response) => res.json())
-                    .catch(this.handleError);
-  }
-
-  /**
-   * Returns an Observable for the HTTP GET request for the JSON resource.
-   * @param {string} api : The location of the resource
-   * @return {ReturnQuery[]} The Observable for the HTTP request.
-   */
-  getList(api: string): Observable<ReturnListQuery> {
-    return this.http.get(this.genUri(api))
-                    .map((res: Response) => res.json())
-    //              .do(data => console.log('server data:', data))  // debug
                     .catch(this.handleError);
   }
 

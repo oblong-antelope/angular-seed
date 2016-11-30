@@ -7,16 +7,6 @@ export interface ReturnQuery {
   department: string;
 }
 
-export interface ReturnListQuery {
-  results: ReturnQuery[];
-  status: boolean;
-}
-
-export interface ReturnLinkQuery {
-  success: boolean;
-  results: string;
-}
-
 export interface Profile {
   name: Name;
   department?: string;

@@ -20,7 +20,6 @@ import {
 
 export class ResultsComponent implements OnInit, OnChanges {
 
-  @Input('id') id:number;
   @Input('query') query:string;
 
   errorMessage: string;
@@ -31,7 +30,7 @@ export class ResultsComponent implements OnInit, OnChanges {
   submitted: boolean = false;
   querySuccessful: boolean = true;
 
-  personList: DataTableElement[] = [];
+  personList: ReturnQuery[] = [];
 
   @ViewChild('mydatatable') table: DataTable;
 
@@ -69,22 +68,15 @@ export class ResultsComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Gets the list based on the current new values
-   */
-  refreshList() {
-    this.getList('/api/queries/' + this.id);
-  }
-
-  /**
    * Handles the queryService observable, gets the List from an api
    * @param {string} api: api url to get the list from
    */
-  getList(api : string) {
-    this.queryService.getList(api)
+  refreshList() {
+    this.queryService.getList(this.query)
       .subscribe(
         data => {
-          this.querySuccessful = data.results.length !== 0;
-          this.personList = <DataTableElement[]> data.results;
+          this.querySuccessful = data.length !== 0;
+          this.personList = data;
           this.submitted = true;
         },
         error =>  {this.errorMessage = <any>error; console.log(error);},
@@ -104,7 +96,7 @@ export class ResultsComponent implements OnInit, OnChanges {
    * Returns the top four keywords
    * @param {DataTableElement} : person to get keywords from
    */
-  getTopFourKeywords(person: DataTableElement) {
+  getTopFourKeywords(person: ReturnQuery) {
     return person.keywords;
   }
 
@@ -121,6 +113,7 @@ export class ResultsComponent implements OnInit, OnChanges {
    * Takes the button press event and navigates to the correct place
    */
   expandedButtonPress(index: number) {
+    console.log(index, this.personList[index]);
     this.navigateToProfile(this.personList[index].link);
   }
 
@@ -142,5 +135,3 @@ export class ResultsComponent implements OnInit, OnChanges {
 
 }
 
-interface DataTableElement extends ReturnQuery {
-}
