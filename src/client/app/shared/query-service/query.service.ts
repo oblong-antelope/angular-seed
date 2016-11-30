@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Config } from '../index';
-import { FormQuery,
-         ReturnListQuery,
+import { ReturnListQuery,
          ReturnLinkQuery,
-         ResearchSummary,
          Profile
         } from '../../models/index';
 
@@ -55,18 +53,6 @@ export class QueryService {
 
   /**
    * Returns an Observable for the HTTP GET request for the JSON resource.
-   * @param {string} api : The location of the resource
-   * @return {ResearchSummary} THe Observable for the http request
-   */
-  getResearchSummary(api: string): Observable<ResearchSummary> {
-    return this.http.get(this.genUri(api))
-                    .map((res:Response) => res.json())
-                    .catch(this.handleError);
-  }
-
-
-  /**
-   * Returns an Observable for the HTTP GET request for the JSON resource.
    * @param {string} api : The location fo the resource
    * @return {Profile} The Observable for the http request.
    */
@@ -74,26 +60,6 @@ export class QueryService {
     return this.http.get(this.genUri(api))
                     .map((res:Response) => res.json())
                     .catch(this.handleError);
-  }
-
-    /**
-   * Returns an Observable for the HTTP GET request for the JSON resource.
-   * @param {string} api : The location fo the resource
-   * @return {Profile} The Observable for the http request.
-   */
-  getSomeData(api: string) : Observable<any> {
-    return this.http.get(api)
-                    .do((res) => console.log(res))
-                    .map((res:Response) => res.text())
-                    .catch(this.handleError);
-  }
-
-  /**
-   * Returns an Observable for the HTTP GET request for the JSON resource.
-   * @return {any} The Observable for the http request
-   */
-  getExpertiseWebData() : Observable<any> {
-    return Observable.of({});
   }
 
   /**

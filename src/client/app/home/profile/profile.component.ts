@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Profile } from '../../models/index';
 import { QueryService } from '../../shared/index';
 
@@ -12,19 +12,15 @@ import { QueryService } from '../../shared/index';
   templateUrl: 'profile.component.html',
   styleUrls: ['profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnChanges {
 
   @Input('id') id: string = '';
 
   errorMessage: string;
 
   profile: Profile = {
-     name: '',
-     department: '',
-     email: '',
+     name: {first: '', last: ''},
      keywords: {},
-     papers: [],
-     awards: []
   };
 
   /**
@@ -41,8 +37,22 @@ export class ProfileComponent implements OnInit {
    * Uses the ActivatedRoute to get the url parameters and data
    */
   ngOnInit() {
+    this.updateProfile();
+  }
+
+  /**
+   * Updates profile when we change the id
+   */
+  ngOnChanges(changes: any) {
+    this.updateProfile();
+  }
+
+  /**
+   * Updates the profile from the server with current id.
+   */
+  updateProfile() {
     if(this.id !== '') {
-      this.getProfile('/api/person/' + this.id + '/full');
+      this.getProfile('/api/people/' + this.id);
     }
   }
 
@@ -64,6 +74,13 @@ export class ProfileComponent implements OnInit {
    */
   getProfileKeywords() {
     return Object.keys(this.profile.keywords);
+  }
+
+  /**
+   * Returns the keys of the publications profile
+   */
+  getPublications() {
+    return Object.keys(this.profile.publications);
   }
 
   /**

@@ -19,23 +19,23 @@ export interface ReturnLinkQuery {
 
 export interface Profile {
   name: Name;
-  department: string;
-  campus: string;
-  faculty: string;
-  building: string;
-  room: string;
-  email: string;
-  website: string;
+  department?: string;
+  campus?: string;
+  faculty?: string;
+  building?: string;
+  room?: string;
+  email?: string;
+  website?: string;
   keywords: Object;
-  publications: string[];
+  publications?: string[];
 }
 
 export interface Name {
   first : string;
   last : string;
-  title : string;
-  initials: string;
-  alias: string;
+  title? : string;
+  initials? : string;
+  alias? : string;
 }
 
 export interface Publication {
