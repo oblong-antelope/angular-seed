@@ -9,12 +9,17 @@ import { RouterModule } from '@angular/router';
 import { ToolbarComponent } from './toolbar/index';
 import { SearchBarComponent } from './search-bar/index';
 import { QueryService } from './query-service/index';
-import { WordCloudComponent } from './word-cloud/index';
+import { LoadingBarComponent } from './loading-bar/index';
 
 /**
  * Directives
  */
 import { BackButtonDirective } from './back-button/index';
+
+/**
+ * Providers 
+ */
+
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
  */
@@ -22,12 +27,12 @@ import { BackButtonDirective } from './back-button/index';
   imports: [CommonModule, FormsModule, RouterModule],
   declarations: [ToolbarComponent,
                  SearchBarComponent,
-                 WordCloudComponent,
+                 LoadingBarComponent,
                  BackButtonDirective],
   exports: [ToolbarComponent,
             SearchBarComponent,
-            WordCloudComponent,
             BackButtonDirective,
+            LoadingBarComponent,
             CommonModule,
             FormsModule,
             RouterModule]

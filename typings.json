@@ -1,5 +1,9 @@
 {
   "globalDependencies": {
+    "d3.cloud.layout": "registry:dt/d3.cloud.layout#0.0.0+20160317120654",
     "plotly.js": "registry:dt/plotly.js#0.0.0+20160724062714"
+  },
+  "dependencies": {
+    "d3": "registry:npm/d3#3.0.0+20160723033700"
   }
 }

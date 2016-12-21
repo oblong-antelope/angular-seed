@@ -5,7 +5,9 @@
             <sd-search-bar [query]="results_query"></sd-search-bar>
         </div>
         <div class ="graph">
-            <sd-graph (pointClick)="onGraphPointClick($event)"></sd-graph>
+            <sd-graph [content]="graph_context"
+                      (pointClick)="onGraphPointClick($event)">
+            </sd-graph>
         </div>
     </div>
     <div class="right-container" [hidden]="!right_open" #rightContainer>

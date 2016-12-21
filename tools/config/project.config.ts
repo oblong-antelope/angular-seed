@@ -30,7 +30,6 @@ export class ProjectConfig extends SeedConfig {
       ...this.APP_ASSETS,
       //{src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
       {src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs'},
-      // {src: 'plotly-latest.min.js', inject:'libs'},
       {src: `node_modules/bootstrap/dist/css/bootstrap.min.css`, inject: true, vendor: true},
       {src: `node_modules/angular2-data-table/release/datatable.css`, inject: true, vendor: false},
       {src: `node_modules/angular2-data-table/release/material.css`, inject: true, vendor: false},

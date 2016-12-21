@@ -2,6 +2,8 @@
     Go Back To Results
 </div>
 
+<sd-loading-bar *ngIf="loading"></sd-loading-bar>
+
 <div *ngIf="profile === undefined" >
     <p>Person profile could not be shown</p>
 </div>
@@ -29,12 +31,23 @@
         </div>
     </div>
     <!--Keywords-->
-    <div class="row">
-        <label for="displayKeywords" class="col-sm-2 col-form-label">Keywords</label>
-        <div class="col-sm-10">
-            <li *ngFor="let word of getProfileKeywords()">{{word}}: {{profile.keywords[word]}}</li>
-        </div>
+    <label for="displayKeywords" class="col-form-label">Keywords
+        <a (click)="editKeywordsLinks()">Add Keywords</a>
+    </label>
+    <div class="keywordinput">
+        <form *ngIf="keywordInput" (ngSubmit)="submitNewKeyword($event)" #queryform="ngForm">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="{{placeholder}}" 
+                        [(ngModel)]="keywordInputKeyword" name="query" id="query">
+                <span class="input-group-btn" id="query">
+                    <button class="btn btn-secondary glyphicon glyphicon-search" type="submit"></button>
+                </span>
+            </div>
+        </form>
     </div>
+    <!--<sd-word-cloud *ngIf="hasProfileKeywords()" [words]="profile.keywords"></sd-word-cloud>            -->
+    <li *ngFor="let word of keywordList">{{word}}: {{profile.keywords[word]}}</li>
+
     <!--Papers-->
     <div class="row">
         <label for="displayPapers" class="col-sm-2 col-form-label">Papers</label>
@@ -44,4 +57,3 @@
     </div>
 </div>
 
-<!--<sd-word-cloud [words]="profile.keywords" *ngIf="profile.keywords !== {}"></sd-word-cloud>-->

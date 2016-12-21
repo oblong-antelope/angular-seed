@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { DataSet } from './models';
 
@@ -13,9 +13,13 @@ import 'rxjs/add/operator/do';  // for debugging
 @Injectable()
 export class GraphService {
 
-  API = 'https://oblong-relentless.herokuapp.com' ;
+  OtherAPI = 'https://oblong-relentless.herokuapp.com' ;
+  ProfileAPI = 'https://oblong-onslaught.herokuapp.com' ;
 
-  /**
+  // headers = new Headers({ 'Content-Type': 'application/json'});
+  // options = new RequestOptions({ headers: this.headers });
+
+  /** 
    * Creates a new NameListService with the injected Http.
    * @param {Http} http - The injected Http.
    * @constructor
@@ -23,14 +27,37 @@ export class GraphService {
   constructor(private http: Http) {}
 
   /**
+   * Splitter to ensure the correct api is called
+   */
+  getData(query: Object) {
+    if(Object.keys(query).length === 0 && query.constructor === Object) {
+      console.log('Other data');
+      return this.getOtherData();
+    } else {
+      console.log('Profile Data');
+      return this.getProfileData(query);
+    }
+  }
+
+  /**
    * Returns an Observable for the HTTP POST request
-   * @param {FormQuery} query - the query string to send to the REST Server
+   * @param {Object} query - the query string to send to the REST Server
    * @return {DataSet} The Observable for the HTTP request.
    */
-  getData(query: any): Observable<DataSet> {
-    let headers = new Headers({ 'Content-Type': 'text/plain'});
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.API, JSON.stringify(query), options)
+  getProfileData(query: Object): Observable<DataSet> {
+    return this.http.post(this.ProfileAPI, JSON.stringify(query))//, this.options)
+                    .map((res: Response) => res.json())
+                    .catch(this.handleError);
+  }
+
+  /**
+   * Returns an Observable for the HTTP POST request
+   * @param {Object} query - the query string to send to the REST Server
+   * @return {DataSet} The Observable for the HTTP request.
+   */
+  getOtherData(): Observable<DataSet> {
+    console.log('Getting other data', this.OtherAPI, JSON.stringify({}));
+    return this.http.post(this.OtherAPI, JSON.stringify({}))//, this.options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }

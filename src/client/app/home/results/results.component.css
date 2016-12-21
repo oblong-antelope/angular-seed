@@ -33,6 +33,13 @@ body{
   margin:0;
   position: relative;
 }
+
+.loading-gif{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .datatable-row-detail {
   height: 100%;
   word-wrap: normal;
@@ -40,7 +47,7 @@ body{
 
 .datatable {
   text-align: left;
-  width: 85%;
+  width: 90%;
   margin: 0 auto;
 }
 

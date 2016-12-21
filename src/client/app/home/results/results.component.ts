@@ -28,6 +28,7 @@ export class ResultsComponent implements OnInit, OnChanges {
   timeout: any = 100;
 
   submitted: boolean = false;
+  loading: boolean = false;
   querySuccessful: boolean = true;
 
   personList: ReturnQuery[] = [];
@@ -72,12 +73,14 @@ export class ResultsComponent implements OnInit, OnChanges {
    * @param {string} api: api url to get the list from
    */
   refreshList() {
+    this.loading = true;
     this.queryService.getList(this.query)
       .subscribe(
         data => {
           this.querySuccessful = data.length !== 0;
           this.personList = data;
           this.submitted = true;
+          this.loading = false;
         },
         error =>  {this.errorMessage = <any>error; console.log(error);},
         () => console.log('Results List Request Complete')
@@ -112,8 +115,8 @@ export class ResultsComponent implements OnInit, OnChanges {
   /**
    * Takes the button press event and navigates to the correct place
    */
-  expandedButtonPress(index: number) {
-    console.log(index, this.personList[index]);
+  expandedButtonPress(row: any) {
+    let index = row.$$index;
     this.navigateToProfile(this.personList[index].link);
   }
 
@@ -121,7 +124,7 @@ export class ResultsComponent implements OnInit, OnChanges {
    * On the give more details button press, we will navigate to the profile component.
    */
   navigateToProfile(api: string) {
-    let vals:string[] = api.split('/');
+    let vals: string[] = api.split('/');
     this.router.navigate(['profile', {'id': vals[3]}]);
   }
 

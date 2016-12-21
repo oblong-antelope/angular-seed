@@ -16,7 +16,7 @@ export interface Profile {
   room?: string;
   email?: string;
   website?: string;
-  keywords: Object;
+  keywords: any;
   publications?: string[];
 }
 

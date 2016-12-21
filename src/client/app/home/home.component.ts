@@ -33,6 +33,11 @@ export class HomeComponent implements OnInit {
   profile_url_id:string = '';
 
   /**
+   * Graph Variables
+   */
+  graph_context: Object = {};
+
+  /**
    * View Variables
    */
   right_open:boolean = false;
@@ -90,6 +95,7 @@ export class HomeComponent implements OnInit {
     this.ar.params.subscribe(
       params => {
         this.profile_url_id = params['id'];
+        this.graph_context = {personIdx: this.profile_url_id};
       },
       error => this.routeErrorRedirect(error)
     );

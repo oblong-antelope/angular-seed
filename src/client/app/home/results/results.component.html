@@ -2,6 +2,7 @@
   <sd-search-bar [query]="query"></sd-search-bar>
 </div>
 
+<sd-loading-bar *ngIf="loading"></sd-loading-bar>
 <p *ngIf='!querySuccessful && submitted'>Search Was Not Successful, Please try another Search Term</p>
 
 <br>
@@ -24,7 +25,7 @@
               <h4>Faculty:</h4>
               <p>{{row.faculty}}</p>
               <button type="button" class="btn btn-default btn-arrow-right info-btn" 
-                                    (click)="expandedButtonPress(row.$$index)" >More Details</button>
+                                    (click)="expandedButtonPress(row)" >More Details</button>
             </div>
             <div class="col-sm-8">
               <h6>Keywords:</h6>
@@ -35,7 +36,7 @@
       </template>
     </datatable-row-detail-template>
 
-    <datatable-column name="" width="20">
+    <datatable-column name="" width="40">
       <template let-row="row">
         <strong>{{row.$$index}}</strong>
       </template>
@@ -47,7 +48,7 @@
       </template>
     </datatable-column>
 
-    <datatable-column name="Department" width="150">
+    <datatable-column name="Department" width="250">
       <template let-row="row" let-value="value">
         {{value}}
       </template>

@@ -1,4 +1,11 @@
-import { Component, ElementRef, ViewChild, OnInit, Renderer, EventEmitter, Output } from '@angular/core';
+import { Component,
+         ElementRef,
+         ViewChild,
+         OnInit,
+         Renderer,
+         EventEmitter,
+         Output,
+         Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { GraphService } from './graph.service';
 import { DataSet } from './models';
@@ -22,6 +29,8 @@ export class GraphComponent implements OnInit {
   data: DataSet;
 
   chart: any;
+
+  @Input('content') content: Object = {};
 
   @Output() pointClick: EventEmitter<Object> = new EventEmitter();
 
@@ -77,18 +86,24 @@ export class GraphComponent implements OnInit {
    * Saves the data into chart data parameter to bind to
    */
   getDataAndUpdateChart() {
-      this.graphService.getData({})
+      this.graphService.getData(this.content)
         .subscribe(
             data => {
-                data.datasets = data.datasets.slice(0, 1000);
+                console.log('Num Data Points:', data.datasets.length);
                 this.data = data;
-                console.log(data);
-                this.chart.data['datasets'] = this.data.datasets;
-                this.chart.update();
+                this.updateChart();
             },
             error => console.log(error),
             () => console.log('Request for graph data completed')
         );
+  }
+
+  /**
+   * Updates data in the chart, then updates the chart.
+   */
+  updateChart() {
+    this.chart.data['datasets'] = this.data.datasets;
+    this.chart.update();
   }
 
   /**
@@ -116,12 +131,18 @@ export class GraphComponent implements OnInit {
       return  d.datasets[e.datasetIndex].label;
   }
 
+
+  onHover(e:any) {
+      console.log(e);
+  }
+
   /**
    * Sets the options field of the chart
    */
   setOptions() {
       this.options = {
         onClick: (e:any, d:any) => this.chartOnClick(e, d, this.pointClick),
+        onHover: this.onHover,
         layout:{
             padding:20
         },
