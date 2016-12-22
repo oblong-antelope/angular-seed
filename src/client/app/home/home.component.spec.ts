@@ -22,7 +22,7 @@ export function main() {
         providers: [
           { provide: QueryService, useValue: new MockQueryService() }
         ]
-      })
+      });
     });
 
     /**it('should work',
