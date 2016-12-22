@@ -1,76 +1,48 @@
-import { Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-// import { RouterModule } from '@angular/router';
 import {
-  async
-} from '@angular/core/testing';
-import {
-  BaseRequestOptions,
-  ConnectionBackend,
-  Http,
-  // HttpModule
-} from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
+  async,
+  TestBed
+ } from '@angular/core/testing';
 
+import { Observable } from 'rxjs/Observable';
+
+import { HomeComponent } from './home.component';
 import { QueryService } from '../shared/index';
-import { SharedModule } from '../shared/shared.module';
-import { HomeModule } from './home.module';
-import { Angular2DataTableModule } from 'angular2-data-table/release/index';
-
-class FakeQueryService {
-  postForm(fq:any) { return fq; }
-  getList(api:string) { return api; }
-  getResearchSummary(api:string) { return api; }
-}
 
 export function main() {
   let fixture:any;
 
   describe('Home component', () => {
-    // setting module for testing
-    // Disable old forms
-    beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule,
-                  SharedModule,
-                  Angular2DataTableModule,
-                  HomeModule],
-        declarations: [TestComponent],
-        providers: [
-          BaseRequestOptions,
-          MockBackend,
-          //QueryService,
-          { provide: QueryService,    useClass: FakeQueryService },
-          { provide: Http, useFactory: function (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) {
-              return new Http(backend, defaultOptions);
-            },
-            deps: [MockBackend, BaseRequestOptions]
-          },
-        ]
-      }).compileComponents().then(() => {
-          fixture = TestBed.createComponent(TestComponent);
-          fixture.detectChanges();
-      });
-    }));
 
-    // it('should work 2', () => {
-    //   expect(1).toEqual(1);
-    // });
+    beforeEach(() => {
+
+      TestBed.configureTestingModule({
+        imports: [FormsModule],
+        declarations: [HomeComponent],
+        providers: [
+          { provide: QueryService, useValue: new MockQueryService() }
+        ]
+      })
+    });
 
     /**it('should work',
       async(() => {
         TestBed
           .compileComponents()
           .then(() => {
-            let fixture = TestBed.createComponent(TestComponent);
+            let fixture = TestBed.createComponent(HomeComponent);
+            let homeInstance = fixture.debugElement.componentInstance;
+            let homeDOMEl = fixture.debugElement.nativeElement;
+            let mockNameListService = <MockNameListService>fixture.debugElement.injector.get(NameListService);
+            let nameListServiceSpy = spyOn(mockNameListService, 'get').and.callThrough();
+
+            mockNameListService.returnValue = ['1', '2', '3'];
+
             fixture.detectChanges();
 
-            let homeInstance = fixture.debugElement.children[0].componentInstance;
-            //let homeDOMEl = fixture.debugElement.children[0].nativeElement;
-
-            expect(homeInstance.queryService).toEqual(jasmine.any(QueryService));
-            //expect(homeDOMEl.querySelectorAll('li').length).toEqual(0);
+            expect(homeInstance.nameListService).toEqual(jasmine.any(MockNameListService));
+            expect(homeDOMEl.querySelectorAll('li').length).toEqual(3);
+            expect(nameListServiceSpy.calls.count()).toBe(1);
 
 
             // Need to find way of testing the sendQuery function
@@ -82,6 +54,8 @@ export function main() {
             // expect(homeDOMEl.querySelectorAll('li').length).toEqual(1);
             // expect(homeDOMEl.querySelectorAll('li')[0].textContent).toEqual('Minko');
 
+            expect(homeDOMEl.querySelectorAll('li').length).toEqual(4);
+            expect(homeDOMEl.querySelectorAll('li')[3].textContent).toEqual('Minko');
           });
 
       })); **/
@@ -89,8 +63,14 @@ export function main() {
   });
 }
 
-@Component({
-  selector: 'test-cmp',
-  template: '<sd-home></sd-home>'
-})
-class TestComponent { }
+class MockQueryService {
+
+  returnValue: string[];
+
+  get(): Observable<string[]> {
+    return Observable.create((observer: any) => {
+      observer.next(this.returnValue);
+      observer.complete();
+    });
+  }
+}

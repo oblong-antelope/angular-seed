@@ -11,7 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css'],
 })
-
 export class HomeComponent implements OnInit {
 
 
@@ -135,7 +134,6 @@ export class HomeComponent implements OnInit {
         this.renderer.setElementStyle(this.left.nativeElement, 'width', '100%');
     }
   }
-
   /**
    * Any errors in routing will cause a redirect back to home page.
    */

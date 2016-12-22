@@ -1,6 +1,7 @@
 import { join } from 'path';
 
 import { SeedConfig } from './seed.config';
+import { ExtendPackages } from './seed.config.interfaces';
 
 /**
  * This class extends the basic seed configuration, allowing for project specific overrides. A few examples can be found
@@ -42,6 +43,15 @@ export class ProjectConfig extends SeedConfig {
         main: 'release/index.js',
         defaultExtension : 'js'
     };
+
+    // Add packages (e.g. ng2-translate)
+    // let additionalPackages: ExtendPackages[] = [{
+    //   name: 'ng2-translate',
+    //   // Path to the package's bundle
+    //   path: 'node_modules/ng2-translate/bundles/ng2-translate.umd.js'
+    // }];
+    //
+    // this.addPackagesBundles(additionalPackages);
 
     /* Add to or override NPM module configurations: */
     // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });

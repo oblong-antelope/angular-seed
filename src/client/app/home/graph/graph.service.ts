@@ -31,10 +31,8 @@ export class GraphService {
    */
   getData(query: Object) {
     if(Object.keys(query).length === 0 && query.constructor === Object) {
-      console.log('Other data');
       return this.getOtherData();
     } else {
-      console.log('Profile Data');
       return this.getProfileData(query);
     }
   }
@@ -45,6 +43,7 @@ export class GraphService {
    * @return {DataSet} The Observable for the HTTP request.
    */
   getProfileData(query: Object): Observable<DataSet> {
+    console.log('Getting Data From', this.ProfileAPI, JSON.stringify(query));
     return this.http.post(this.ProfileAPI, JSON.stringify(query))//, this.options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
@@ -56,7 +55,7 @@ export class GraphService {
    * @return {DataSet} The Observable for the HTTP request.
    */
   getOtherData(): Observable<DataSet> {
-    console.log('Getting other data', this.OtherAPI, JSON.stringify({}));
+    console.log('Getting Data From', this.OtherAPI);
     return this.http.post(this.OtherAPI, JSON.stringify({}))//, this.options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
