@@ -4,7 +4,7 @@ import { MockBackend } from '@angular/http/testing';
 import { Observable } from 'rxjs/Observable';
 
 import { QueryService } from './query.service';
-import { FormQuery, ReturnLinkQuery, ReturnQuery } from '../../models/index';
+import { ReturnQuery, Profile } from '../../models/index';
 
 export function main() {
   describe('QueryService Service', () => {
@@ -13,13 +13,13 @@ export function main() {
 
     //Function Response Responses
     let getListResponse: any;
-    let postFormResponse: any;
+    let getProfileResponse: any;
 
     //Mock objects for use in testing
     let mockUri: string;
-    let mockFormQuery: FormQuery;
+    let mockQuery: string;
     let mockReturnQuery: ReturnQuery[];
-    let mockReturnLinkQuery: ReturnLinkQuery;
+    let mockReturnProfile: Profile;
 
     beforeEach(() => {
       // Setup Injector
@@ -39,19 +39,19 @@ export function main() {
 
       //Mock Objects
       mockUri = 'api/test';
-      mockFormQuery = new FormQuery('name', 'expertise1', 'collaborator');
-      mockReturnLinkQuery = {success: true, results:'api/query/someuri'};
-      mockReturnQuery = [{name:'name', research_summary: 'anotherurl.co.uk', full_profile:'Someurl.co.uk'}];
+      mockQuery = 'query1';
+      mockReturnQuery = [{name: {first:'name', last:'last'}, link:'/api/people/1'}];
+      mockReturnProfile = {name: {first:'name', last:'last'}, keywords: {}};
 
       let connection: any;
       mockBackend.connections.subscribe((c: any) => connection = c);
 
       //Response for getList(string: api)
-      getListResponse = queryService.getList(mockUri);
+      getListResponse = queryService.getList(mockQuery);
       connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(mockReturnQuery) })));
 
-      postFormResponse = queryService.postQuery(mockFormQuery);
-      connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(mockReturnLinkQuery)})));
+      getProfileResponse = queryService.getProfile(mockUri);
+      connection.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(mockReturnProfile)})));
     });
 
     it('should return an Observable when getList called', () => {
@@ -59,19 +59,19 @@ export function main() {
     });
 
     it('should resolve to list of names when getList called', () => {
-      let list: ReturnQuery;
-      getListResponse.subscribe((data: ReturnQuery) => list = data);
+      let list: ReturnQuery[];
+      getListResponse.subscribe((data: ReturnQuery[]) => list = data);
       expect(list).toEqual(mockReturnQuery);
     });
 
-    it('should return an Observable when postForm called', () => {
-      expect(postFormResponse).toEqual(jasmine.any(Observable));
+    it('should return an Observable when getProfile called', () => {
+      expect(getProfileResponse).toEqual(jasmine.any(Observable));
     });
 
-    it('should resolve a LinkQuery object when postForm called', () => {
-      let links: ReturnLinkQuery;
-      postFormResponse.subscribe((data: ReturnLinkQuery) => links = data);
-      expect(links).toEqual(mockReturnLinkQuery);
+    it('should resolve a Profile object when getProfile called', () => {
+      let links: Profile;
+      getProfileResponse.subscribe((data: Profile) => links = data);
+      expect(links).toEqual(mockReturnProfile);
     });
 
   });

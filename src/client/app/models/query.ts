@@ -1,10 +1,10 @@
 export interface ReturnQuery {
   name: Name;
   link: string; // /api/people/id
-  keywords: string[];
-  email: string;
-  faculty: string;
-  department: string;
+  keywords?: string[];
+  email?: string;
+  faculty?: string;
+  department?: string;
 }
 
 export interface Profile {

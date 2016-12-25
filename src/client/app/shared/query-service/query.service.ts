@@ -71,3 +71,26 @@ export class QueryService {
   }
 }
 
+
+/**
+ * A Mockery of the Query Serivce for testing
+ */
+export class MockQueryService {
+
+  returnGetList: ReturnQuery[];
+  returnGetProfile: Profile;
+
+  getList(query: string): Observable<ReturnQuery[]> { 
+    return Observable.create((observer: any) => {
+      observer.next(this.returnGetList);
+      observer.complete();
+    });
+  }
+
+  getProfile(api: string) : Observable<Profile> {
+    return Observable.create((observer: any) => {
+      observer.next(this.returnGetProfile);
+      observer.complete();
+    });
+}
+

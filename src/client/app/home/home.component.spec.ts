@@ -7,7 +7,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 
 import { HomeComponent } from './home.component';
-import { QueryService } from '../shared/index';
+import { QueryService, MockQueryService } from '../shared/index';
 
 export function main() {
   let fixture:any;
@@ -61,16 +61,4 @@ export function main() {
       })); **/
 
   });
-}
-
-class MockQueryService {
-
-  returnValue: string[];
-
-  get(): Observable<string[]> {
-    return Observable.create((observer: any) => {
-      observer.next(this.returnValue);
-      observer.complete();
-    });
-  }
 }
