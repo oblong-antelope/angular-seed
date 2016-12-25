@@ -37,7 +37,7 @@
     <div class="keywordinput">
         <form *ngIf="keywordInput" (ngSubmit)="submitNewKeyword($event)" #queryform="ngForm">
             <div class="input-group input-group-sm">
-                <input type="text" class="form-control" placeholder="{{placeholder}}" 
+                <input type="text" class="form-control" placeholder="keyword" 
                         [(ngModel)]="keywordInputKeyword" name="query" id="query">
                 <span class="input-group-btn" id="query">
                     <button class="btn btn-secondary glyphicon glyphicon-search" type="submit"></button>
