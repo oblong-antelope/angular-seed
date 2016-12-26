@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { Profile } from '../../models/index';
 import { QueryService } from '../../shared/index';
-
+import { KeywordGridModalComponent } from './modal/keyword-grid-modal.component';
 
 /**
  * This class represents the lazy loaded AboutComponent.
@@ -19,14 +19,16 @@ export class ProfileComponent implements OnInit, OnChanges {
   errorMessage: string;
   loading: boolean = false;
   arrived: boolean = false;
-  keywordInput: boolean = false;
-  keywordInputKeyword: string = '';
-  keywordList: string[] = [];
+  modalOpen: boolean = false;
+  keywordList: Object[] = [];
+  displayKeywordList: string[] = [];
 
   profile: Profile = {
      name: {first: '', last: ''},
      keywords: {},
   };
+
+  @ViewChild('myModal') modal: KeywordGridModalComponent;
 
   /**
    * Creates an instance of the ProfileComponent with the injected
@@ -74,7 +76,7 @@ export class ProfileComponent implements OnInit, OnChanges {
             this.profile = profile;
             this.loading = false;
             this.arrived = true;
-            this.getProfileKeywords();
+            this.sortProfileKeywords();
           },
           error => {this.errorMessage = <any>error; console.log(error);},
           () => console.log('Profile Request Complete')
@@ -89,9 +91,9 @@ export class ProfileComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Returns the keys of the keywords profile
+   * Returns the sorted keys of the keywords profile
    */
-  getProfileKeywords() {
+  sortProfileKeywords() {
     let sorted: Object[] = [];
     sorted = Object.keys(this.profile.keywords).map((k) => {
               return {word: k, value:this.profile.keywords[k]};
@@ -99,7 +101,8 @@ export class ProfileComponent implements OnInit, OnChanges {
     sorted.sort((a:any, b:any) => {
       return b.value - a.value;
     });
-    this.keywordList = sorted.slice(0, 20).map((k:any)=> k.word);
+    this.keywordList = sorted;
+    this.displayKeywordList = sorted.slice(0, 20).map((k:any)=> k.word);
   }
 
   /**
@@ -120,16 +123,12 @@ export class ProfileComponent implements OnInit, OnChanges {
   }
 
   /**
-   * 
+   * Opens a modal to display all keywords in sorted order,
+   * and allow editing (if logged in)
    */
   editKeywordsLinks() {
     console.log('Edit Keywords pressed');
-    this.keywordInput = !this.keywordInput;
+    this.modalOpen = !this.modalOpen;
   }
 
-  submitNewKeyword() {
-    this.profile.keywords[this.keywordInputKeyword] = '1000';
-    this.getProfileKeywords();
-    this.keywordInputKeyword = '';
-  }
 }

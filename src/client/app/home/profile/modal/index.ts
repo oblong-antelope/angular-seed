@@ -1,1 +1,1 @@
-export * from './keyword-grid-modal.grid.component';
+export * from './keyword-grid-modal.component';

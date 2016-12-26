@@ -30,10 +30,11 @@ export class ProjectConfig extends SeedConfig {
     this.APP_ASSETS = [
       ...this.APP_ASSETS,
       //{src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
-      {src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs'},
+      {src: `node_modules/bootstrap/dist/js/bootstrap.min.js`, inject: 'libs'},
       {src: `node_modules/bootstrap/dist/css/bootstrap.min.css`, inject: true, vendor: true},
       {src: `node_modules/angular2-data-table/release/datatable.css`, inject: true, vendor: false},
       {src: `node_modules/angular2-data-table/release/material.css`, inject: true, vendor: false},
+      {src: `node_modules/ng2-bs3-modal/bundles/ng2-bs3-modal.js`, inject: true, vendor:false}
     ];
 
     this.SYSTEM_CONFIG_DEV.paths['angular2-data-table'] =
@@ -43,6 +44,9 @@ export class ProjectConfig extends SeedConfig {
         main: 'release/index.js',
         defaultExtension : 'js'
     };
+
+    this.SYSTEM_CONFIG_DEV.paths['ng2-bs3-modal'] =
+      `node_modules/ng2-bs3-modal`;
 
     // Add packages (e.g. ng2-translate)
     // let additionalPackages: ExtendPackages[] = [{

@@ -92,5 +92,6 @@ export class MockQueryService {
       observer.next(this.returnGetProfile);
       observer.complete();
     });
+  }
 }
 

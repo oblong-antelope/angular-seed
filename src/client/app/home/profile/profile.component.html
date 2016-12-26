@@ -32,21 +32,9 @@
     </div>
     <!--Keywords-->
     <label for="displayKeywords" class="col-form-label">Keywords
-        <a (click)="editKeywordsLinks()">Add Keywords</a>
+        <a (click)="editKeywordsLinks()">Edit Keywords</a>
     </label>
-    <div class="keywordinput">
-        <form *ngIf="keywordInput" (ngSubmit)="submitNewKeyword($event)" #queryform="ngForm">
-            <div class="input-group input-group-sm">
-                <input type="text" class="form-control" placeholder="keyword" 
-                        [(ngModel)]="keywordInputKeyword" name="query" id="query">
-                <span class="input-group-btn" id="query">
-                    <button class="btn btn-secondary glyphicon glyphicon-search" type="submit"></button>
-                </span>
-            </div>
-        </form>
-    </div>
-    <!--<sd-word-cloud *ngIf="hasProfileKeywords()" [words]="profile.keywords"></sd-word-cloud>            -->
-    <li *ngFor="let word of keywordList">{{word}}: {{profile.keywords[word]}}</li>
+    <li *ngFor="let word of displayKeywordList">{{word}}: {{profile.keywords[word]}}</li>
 
     <!--Papers-->
     <div class="row">
@@ -56,4 +44,9 @@
         </div>
     </div>
 </div>
+
+<sd-keyword-grid-modal #myModal 
+            [keywords]="keywordList" 
+            [(open)]='modalOpen'>
+</sd-keyword-grid-modal>
 
