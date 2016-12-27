@@ -43,7 +43,7 @@
   "license": "MIT",
   "engines": {
     "node": "6.6.0",
-    "npm":"3.10.8"
+    "npm": "3.10.8"
   },
   "devDependencies": {
     "@angular/compiler-cli": "~2.3.1",
@@ -172,7 +172,9 @@
     "remap-istanbul": "^0.7.0",
     "rxjs": "5.0.0-rc.4",
     "systemjs": "0.19.39",
+    "ts-node": "^1.7.3",
     "tslint": "^4.0.0",
+    "typescript-register": "^1.1.0",
     "zone.js": "^0.7.2"
   }
 }
