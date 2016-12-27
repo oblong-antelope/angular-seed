@@ -160,7 +160,7 @@
     "gulp-tslint": "7.0.1",
     "gulp-typescript": "^3.0.2",
     "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7",
+    "gulp-util": "^3.0.8",
     "gulp-watch": "^4.3.10",
     "highcharts": "^5.0.2",
     "intl": "^1.2.5",
