@@ -46,7 +46,8 @@
 </div>
 
 <sd-keyword-grid-modal #myModal 
-            [keywords]="keywordList" 
+            [keywords]="keywordList"
+            (keywordsSubmit)="onEditKeyword($event)"
             [(open)]='modalOpen'>
 </sd-keyword-grid-modal>
 

@@ -131,4 +131,22 @@ export class ProfileComponent implements OnInit, OnChanges {
     this.modalOpen = !this.modalOpen;
   }
 
+  /**
+   * Handler when a new keyword is submitted or removed
+   * @param {any} e - {keyword: string, edit: string}
+   */
+  onEditKeyword(e: any) {
+    console.log(e);
+    if(e.edit === 'new') {
+      this.profile.keywords[e.keyword] = e.value;
+      this.sortProfileKeywords();
+    }
+
+    if(e.edit === 'remove') {
+      let idx = this.keywordList.indexOf(e.keyword);
+      if( idx !== -1) {
+        this.keywordList.splice(idx);
+      }
+    }
+  }
 }
