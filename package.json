@@ -41,6 +41,10 @@
   },
   "author": "Minko Gechev <mgechev>",
   "license": "MIT",
+  "engines": {
+    "node": "6.6.0",
+    "npm":"3.10.8"
+  },
   "devDependencies": {
     "@angular/compiler-cli": "~2.3.1",
     "@angular/platform-server": "~2.3.1",
