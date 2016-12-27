@@ -95,7 +95,7 @@
     "gulp-tslint": "7.0.1",
     "gulp-typescript": "^3.0.2",
     "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7",
+    "gulp-util": "^3.0.8",
     "gulp-watch": "^4.3.10",
     "is-ci": "^1.0.9",
     "isstream": "^0.1.2",
@@ -121,7 +121,7 @@
     "systemjs-builder": "0.15.33",
     "tildify": "^1.2.0",
     "traceur": "^0.0.111",
-    "ts-node": "^1.4.3",
+    "ts-node": "^1.7.3",
     "typescript": "~2.0.9",
     "walk": "^2.3.9",
     "yargs": "^6.0.0"
