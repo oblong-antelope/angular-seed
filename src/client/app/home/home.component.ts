@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  tagline:string = 'The search tool to find academics staff and researchers';
 
   /**
    * Routing Variables

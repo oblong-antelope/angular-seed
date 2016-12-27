@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 /**
  * Components
  */
-import { ToolbarComponent } from './toolbar/index';
 import { SearchBarComponent } from './search-bar/index';
 import { QueryService } from './query-service/index';
 import { LoadingBarComponent } from './loading-bar/index';
@@ -25,12 +24,10 @@ import { BackButtonDirective } from './back-button/index';
  */
 @NgModule({
   imports: [CommonModule, FormsModule, RouterModule],
-  declarations: [ToolbarComponent,
-                 SearchBarComponent,
+  declarations: [SearchBarComponent,
                  LoadingBarComponent,
                  BackButtonDirective],
-  exports: [ToolbarComponent,
-            SearchBarComponent,
+  exports: [SearchBarComponent,
             BackButtonDirective,
             LoadingBarComponent,
             CommonModule,

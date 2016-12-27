@@ -3,9 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 
-// import {
-//   async
-// } from '@angular/core/testing';
+import {
+  async
+} from '@angular/core/testing';
 import {
   Route
 } from '@angular/router';
@@ -15,7 +15,6 @@ import {
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
-import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 
 export function main() {
 
@@ -28,7 +27,7 @@ export function main() {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [FormsModule, RouterTestingModule.withRoutes(config)],
-        declarations: [TestComponent, ToolbarComponent,AppComponent,
+        declarations: [TestComponent, AppComponent,
           HomeComponent, AboutComponent],
         providers: [
           { provide: APP_BASE_HREF, useValue: '/' }
@@ -36,17 +35,17 @@ export function main() {
       });
     });
 
-    // it('should build without a problem',
-    //   async(() => {
-    //     TestBed
-    //       .compileComponents()
-    //       .then(() => {
-    //         let fixture = TestBed.createComponent(TestComponent);
-    //         let compiled = fixture.nativeElement;
-    //
-    //         expect(compiled).toBeTruthy();
-    //       });
-    //   }));
+    it('should build without a problem',
+      async(() => {
+        TestBed
+          .compileComponents()
+          .then(() => {
+            let fixture = TestBed.createComponent(TestComponent);
+            let compiled = fixture.nativeElement;
+
+            expect(compiled).toBeTruthy();
+          });
+      }));
   });
 }
 
