@@ -3,6 +3,10 @@
     "tslint",
     "build.test",
     "karma.run"
-  ]
+  ],
+
+  "serve.prod.no_build" : [
+    "server.prod"
+  ] 
 }
 

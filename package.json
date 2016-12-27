@@ -28,6 +28,7 @@
     "serve.e2e": "gulp serve.e2e --color",
     "serve.prod": "gulp serve.prod --color --config-env prod",
     "serve.prod.exp": "gulp serve.prod.exp --color --env-config prod",
+    "serve.prod_no_build": "gulp serve.prod.no_build --color --config-env prod",
     "start": "gulp serve.dev --color",
     "start.deving": "gulp start.deving --color",
     "tasks.list": "gulp --tasks-simple --color",
@@ -39,7 +40,7 @@
     "compodoc": "node_modules/.bin/compodoc -p src/client/tsconfig.json",
     "serve.compodoc": "node_modules/.bin/compodoc -s"
   },
-  "author": "Minko Gechev <mgechev>",
+  "author": "Mickey Li <mhl787156>",
   "license": "MIT",
   "engines": {
     "node": "6.6.0",
