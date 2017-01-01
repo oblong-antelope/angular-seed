@@ -372,7 +372,7 @@ th {
 @font-face {
   font-family: Glyphicons Halflings;
   src: url(../fonts/glyphicons-halflings-regular.eot);
-  src: url(../fonts/glyphicons-halflings-regular.eot?#iefix) format("embedded-opentype"),url(../fonts/glyphicons-halflings-regular.woff2) format("woff2"),url(../fonts/glyphicons-halflings-regular.woff) format("woff"),url(../fonts/glyphicons-halflings-regular.ttf) format("truetype"),url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format("svg");
+  src: url(../fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'),url(../fonts/glyphicons-halflings-regular.woff2) format('woff2'),url(../fonts/glyphicons-halflings-regular.woff) format('woff'),url(../fonts/glyphicons-halflings-regular.ttf) format('truetype'),url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg');
 }
 
 .glyphicon {
@@ -1925,7 +1925,7 @@ blockquote small {
 blockquote .small:before,
 blockquote footer:before,
 blockquote small:before {
-  content: "\2014 \00A0";
+  content: '\2014 \00A0';
 }
 
 .blockquote-reverse,
@@ -1943,7 +1943,7 @@ blockquote.pull-right {
 blockquote.pull-right .small:before,
 blockquote.pull-right footer:before,
 blockquote.pull-right small:before {
-  content: "";
+  content: '';
 }
 
 .blockquote-reverse .small:after,
@@ -1952,7 +1952,7 @@ blockquote.pull-right small:before {
 blockquote.pull-right .small:after,
 blockquote.pull-right footer:after,
 blockquote.pull-right small:after {
-  content: "\00A0 \2014";
+  content: '\00A0 \2014';
 }
 
 address {
@@ -7589,7 +7589,7 @@ button.close {
   line-height: 1;
 }
 
-@media (-webkit-transform-3d),(transform-3d) {
+@media (-webkit-transform-3d),all and (transform-3d) {
   .carousel-inner>.item {
     transition: -webkit-transform .6s ease-in-out;
     transition: transform .6s ease-in-out;
@@ -7678,7 +7678,7 @@ button.close {
 
 .carousel-control.left {
   background-image: linear-gradient(90deg,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001));
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#80000000",endColorstr="#00000000",GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000',endColorstr='#00000000',GradientType=1);
   background-repeat: repeat-x;
 }
 
@@ -7686,7 +7686,7 @@ button.close {
   right: 0;
   left: auto;
   background-image: linear-gradient(90deg,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5));
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00000000",endColorstr="#80000000",GradientType=1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000',endColorstr='#80000000',GradientType=1);
   background-repeat: repeat-x;
 }
 
@@ -7731,11 +7731,11 @@ button.close {
 }
 
 .carousel-control .icon-prev:before {
-  content: "\2039";
+  content: '\2039';
 }
 
 .carousel-control .icon-next:before {
-  content: "\203a";
+  content: '\203a';
 }
 
 .carousel-indicators {

@@ -28,6 +28,7 @@ export class GraphService {
 
   /**
    * Splitter to ensure the correct api is called
+   * @param {Object} query - the query object to determine the correct api is called
    */
   getData(query: Object) {
     if(Object.keys(query).length === 0 && query.constructor === Object) {
