@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
-import { Profile } from '../../models/index';
-import { QueryService } from '../../shared/index';
+import { Profile } from '../models/index';
+import { QueryService } from '../shared/index';
 import { KeywordGridModalComponent } from './modal/keyword-grid-modal.component';
 
 /**

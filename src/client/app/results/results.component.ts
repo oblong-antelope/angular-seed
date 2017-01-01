@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { QueryService } from '../../shared/index';
-import { ReturnQuery } from '../../models/index';
+import { QueryService } from '../shared/index';
+import { ReturnQuery } from '../models/index';
 import {
   TableOptions,
   ColumnMode,

@@ -5,8 +5,6 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { AboutModule } from './about/about.module';
-import { UserModule } from './user/user.module';
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -14,8 +12,6 @@ import { SharedModule } from './shared/shared.module';
   imports: [BrowserModule,
             HttpModule,
             AppRoutingModule,
-            AboutModule,
-            UserModule,
             HomeModule,
             SharedModule.forRoot()],
   declarations: [AppComponent],

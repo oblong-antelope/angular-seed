@@ -4,28 +4,24 @@ import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-routing.module';
 
 import { SharedModule } from '../shared/shared.module';
-import { GraphComponent } from './graph/graph.component';
-import { ProfileComponent } from './profile/profile.component';
-import { KeywordGridModalComponent } from './profile/modal/keyword-grid-modal.component';
-import { ResultsComponent } from './results/results.component';
+import { UserModule } from '../user/user.module';
+import { ProfileModule } from '../profile/profile.module';
+import { ResultsModule } from '../results/results.module';
+import { GraphModule } from '../graph/graph.module';
 
 import { QueryService } from '../shared/query-service/index';
-import { GraphService } from './graph/graph.service';
-
-import { Angular2DataTableModule } from 'angular2-data-table';
 
 
 @NgModule({
   imports: [CommonModule,
             SharedModule,
-            HomeRoutingModule,
-            Angular2DataTableModule],
-  declarations: [HomeComponent,
-                 GraphComponent,
-                 KeywordGridModalComponent,
-                 ProfileComponent,
-                 ResultsComponent],
-  exports: [HomeComponent, GraphComponent, ResultsComponent],
-  providers: [QueryService, GraphService]
+            UserModule,
+            ProfileModule,
+            ResultsModule,
+            GraphModule,
+            HomeRoutingModule],
+  declarations: [HomeComponent],
+  exports: [HomeComponent],
+  providers: [QueryService]
 })
 export class HomeModule { }
