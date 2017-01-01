@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
               padding: 0 16px;
             }`]
 })
-export class ProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit {
 
   display: string = 'Profile Component';
 

@@ -18,6 +18,19 @@ import { HomeComponent } from './home.component';
         component: HomeComponent
       },
       {
+        path: 'user',
+        children:[
+          {
+            path: 'login',
+            component: HomeComponent
+          },
+          {
+            path: 'signup',
+            component: HomeComponent
+          }
+        ]
+      },
+      {
         path: '**',
         component: HomeComponent
       }

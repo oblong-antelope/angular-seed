@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild, Renderer, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoginModalComponent, SignupModalComponent } from '../user/index';
 
 /**
  * This class represents the lazy loaded home
@@ -38,6 +39,12 @@ export class HomeComponent implements OnInit {
   graph_context: Object = {};
 
   /**
+   * User Account Modal Variables
+   */
+  @ViewChild('loginModal') login_modal : LoginModalComponent;
+  @ViewChild('signinModal') signin_modal : SignupModalComponent;
+
+  /**
    * View Variables
    */
   right_open:boolean = false;
@@ -68,6 +75,19 @@ export class HomeComponent implements OnInit {
       this.initHome();
     }
     this.openRightIfChecked();
+  }
+
+  /**
+   * Runs after the View has Initialised
+   * For displaying the modals
+   */
+  ngAfterInit() {
+    let url:string = this.router.url;
+    if(url.includes('/login')) {
+      this.login_modal.open();
+    } else if (url.includes('/signin')) {
+      this.signin_modal.open();
+    }
   }
 
   /**

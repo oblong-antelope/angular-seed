@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
-import { SignupComponent } from './signup/signup.component';
+import { UserProfileComponent } from './user.profile/user.profile.component';
 
 @NgModule({
   imports: [
@@ -11,18 +9,10 @@ import { SignupComponent } from './signup/signup.component';
         path: 'user',
         children:[
           {
-            path: 'login',
-            component: LoginComponent
-          },
-          {
-            path: 'signup',
-            component: SignupComponent
-          },
-          {
             path: ':id',
             children:[{
               path: 'profile',
-              component: ProfileComponent
+              component: UserProfileComponent
             }]
           }
         ]
