@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { HomeModule } from './home/home.module';
+import { UserModule } from './user/user.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -13,6 +14,7 @@ import { SharedModule } from './shared/shared.module';
             HttpModule,
             AppRoutingModule,
             HomeModule,
+            UserModule,
             SharedModule.forRoot()],
   declarations: [AppComponent],
   providers: [{

@@ -12,7 +12,7 @@ import { LoginModalComponent, SignupModalComponent } from '../user/index';
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit{
 
   tagline:string = 'The search tool to find academics staff and researchers';
 
@@ -37,12 +37,6 @@ export class HomeComponent implements OnInit {
    * Graph Variables
    */
   graph_context: Object = {};
-
-  /**
-   * User Account Modal Variables
-   */
-  @ViewChild('loginModal') login_modal : LoginModalComponent;
-  @ViewChild('signinModal') signin_modal : SignupModalComponent;
 
   /**
    * View Variables
@@ -75,19 +69,6 @@ export class HomeComponent implements OnInit {
       this.initHome();
     }
     this.openRightIfChecked();
-  }
-
-  /**
-   * Runs after the View has Initialised
-   * For displaying the modals
-   */
-  ngAfterInit() {
-    let url:string = this.router.url;
-    if(url.includes('/login')) {
-      this.login_modal.open();
-    } else if (url.includes('/signin')) {
-      this.signin_modal.open();
-    }
   }
 
   /**
@@ -131,11 +112,10 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Toggles the right menu
+   * Opens the login Modal
    */
-  toggleRight() {
-    this.right_open = !this.right_open;
-    this.openRightIfChecked();
+  onLoginButtonPress() {
+    this.router.navigate([{outlets: { modal: 'login' }}]);
   }
 
   /**

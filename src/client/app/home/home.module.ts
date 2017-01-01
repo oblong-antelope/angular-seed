@@ -15,11 +15,11 @@ import { QueryService } from '../shared/query-service/index';
 @NgModule({
   imports: [CommonModule,
             SharedModule,
+            HomeRoutingModule,
             UserModule,
             ProfileModule,
             ResultsModule,
-            GraphModule,
-            HomeRoutingModule],
+            GraphModule],
   declarations: [HomeComponent],
   exports: [HomeComponent],
   providers: [QueryService]

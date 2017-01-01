@@ -34,7 +34,7 @@ export class ProjectConfig extends SeedConfig {
       {src: `node_modules/bootstrap/dist/css/bootstrap.min.css`, inject: true, vendor: true},
       {src: `node_modules/angular2-data-table/release/datatable.css`, inject: true, vendor: false},
       {src: `node_modules/angular2-data-table/release/material.css`, inject: true, vendor: false},
-      {src: `node_modules/ng2-bs3-modal/bundles/ng2-bs3-modal.js`, inject: true, vendor:false}
+      {src: `node_modules/ng2-bs3-modal/bundles/ng2-bs3-modal.js`, inject: true, vendor:false},
     ];
 
     this.SYSTEM_CONFIG_DEV.paths['angular2-data-table'] =
@@ -47,6 +47,15 @@ export class ProjectConfig extends SeedConfig {
 
     this.SYSTEM_CONFIG_DEV.paths['ng2-bs3-modal'] =
       `node_modules/ng2-bs3-modal`;
+
+    // this.addPackageBundles({
+    //   name:'@angular/material',
+    //   path:'node_modules/@angular/material/material.umd.js',
+    //   packageMeta:{
+    //     main: 'index.js',
+    //     defaultExtension: 'js'
+    //   }
+    // });
 
     // Add packages (e.g. ng2-translate)
     // let additionalPackages: ExtendPackages[] = [{

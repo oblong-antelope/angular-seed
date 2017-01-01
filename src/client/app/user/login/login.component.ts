@@ -1,4 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Form } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 /**
@@ -7,48 +9,46 @@ import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 @Component({
   moduleId: module.id,
   selector: 'sd-login-modal',
-  template: `
-              <modal #loginModal [size]="'lg'"
-                            (onOpen)="onOpen()" 
-                            (onClose)="onClose()" 
-                            (onDismiss)="onDismiss()">
-                    <modal-header [show-close]="true">
-                        <h4 class="modal-title">Login</h4>
-                    </modal-header>
-                    <modal-body>
-                    </modal-body>
-                    <modal-footer>
-                    </modal-footer>
-                </modal>
-            `,
+  templateUrl: './login.component.html',
   styles: [`:host {
               display: block;
               padding: 0 16px;
             }`]
 })
-export class LoginModalComponent  {
+export class LoginModalComponent implements AfterViewInit {
 
   @ViewChild('loginModal') modal : ModalComponent;
+  @ViewChild('modalForm') form : Form;
+
+  /**
+   * Form Variables
+   */
+  email: string = '';
+  password: string = '';
 
   /**
    * Creates an instance of UserComponent
    */
-  constructor() {}
+  constructor(private router: Router) {}
 
-  open() {
+  ngAfterViewInit() {
       this.modal.open();
-  }
-
-  onOpen() {
-      console.log('login open modal');
   }
 
   onClose() {
       console.log('login close modal');
+      this.closeModal();
   }
 
   onDismiss() {
       console.log('login dismiss modal');
+      this.closeModal();
+  }
+
+  closeModal() {
+    // Providing a `null` value to the named outlet
+    // clears the contents of the named outlet
+    this.router.navigate([{ outlets: { modal: null }}]);
   }
 
 }
