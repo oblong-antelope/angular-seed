@@ -1,4 +1,4 @@
-<modal #loginModal [size]="'sm''" (onClose)="onClose()" (onDismiss)="onDismiss()">
+<modal #loginModal [size]="'sm'" (onClose)="onClose()" (onDismiss)="onDismiss()">
     <form [formGroup]="loginForm" (ngSubmit)="submitLogin(loginForm.value)">
         <modal-header [show-close]="true">
             <h4 class="modal-title">Login</h4>
