@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
               padding: 0 16px;
             }`]
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent {
 
   display: string = 'Profile Component';
 
@@ -27,12 +27,5 @@ export class UserProfileComponent implements OnInit {
               private router: Router,
               private ar: ActivatedRoute) {}
 
-  /**
-   * Runs on View Init
-   * Initialises the correct view dependant on the url
-   */
-  ngOnInit() {
-    
-  }
 
 }

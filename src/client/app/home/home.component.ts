@@ -1,6 +1,5 @@
 import { Component, ElementRef, ViewChild, Renderer, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginModalComponent, SignupModalComponent } from '../user/index';
 
 /**
  * This class represents the lazy loaded home
@@ -12,7 +11,7 @@ import { LoginModalComponent, SignupModalComponent } from '../user/index';
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css'],
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
   tagline:string = 'The search tool to find academics staff and researchers';
 

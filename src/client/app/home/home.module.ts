@@ -15,8 +15,8 @@ import { QueryService } from '../shared/query-service/index';
 @NgModule({
   imports: [CommonModule,
             SharedModule,
-            HomeRoutingModule,
             UserModule,
+            HomeRoutingModule,
             ProfileModule,
             ResultsModule,
             GraphModule],

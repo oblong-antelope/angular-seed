@@ -1,20 +1,22 @@
 import { Component, ElementRef, ViewChild, Renderer, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { UserService } from '../user-service/index';
 
 /**
- * This class represents the lazy loaded UserComponent.
+ * This class represents the lazy loaded LogoutModalComponent.
  */
 @Component({
   moduleId: module.id,
-  selector: 'sd-signup-modal',
-  template: ` <modal #signupModal [size]="'lg'"
+  selector: 'sd-logout-modal',
+  template: ` <modal #logoutModal [size]="'lg'"
                             (onClose)="onClose()" 
                             (onDismiss)="onDismiss()">
                   <modal-header [show-close]="true">
-                      <h4 class="modal-title">Sign Up</h4>
+                      <h4 class="modal-title">Logout</h4>
                   </modal-header>
                   <modal-body>
+                    <p>You have logged out</p>
                   </modal-body>
                   <modal-footer>
                   </modal-footer>
@@ -24,16 +26,17 @@ import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
               padding: 0 16px;
             }`]
 })
-export class SignupModalComponent implements AfterViewInit {
+export class LogoutModalComponent implements AfterViewInit {
 
-  @ViewChild('signupModal') modal : ModalComponent;
+  @ViewChild('logoutModal') modal : ModalComponent;
 
   /**
-   * Creates an instance of UserComponent
+   * Creates an instance of LogoutModalComponent
    */
-  constructor(private router: Router) {}
+  constructor(private router: Router, private us: UserService) {}
 
   ngAfterViewInit() {
+      this.us.logout();
       this.modal.open();
   }
 
