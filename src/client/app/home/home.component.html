@@ -2,8 +2,10 @@
     <div class="left-container" #leftContainer>
         <!--<button class="btn btn-primary btn-toggle btn-sm" (click)="toggleRight()">Toggle Right Bar</button>-->
         <div *ngIf="home_route">
-            <div class="logo">
-                <img src="../../assets/logo_full.svg" alt="Oblong Icon" class="img" width="1000" height="500">
+            <div>
+                <a class="logo" [routerLink]="['/']" [routerLinkActive]="['router-link-active']" title="Welcome to Oblong!">
+                    <img src="../../assets/logo_full.svg" alt="Oblong Icon" class="img" width="1000" height="500">
+                </a>
             </div>
             <button class="btn btn-primary btn-lg btn-login" (click)="onLoginButtonPress()">Login</button>
             <div class="search">
@@ -13,12 +15,8 @@
                 <h3>{{tagline}}</h3>
             </div>
         </div>
-        <div class="logo-corner" *ngIf="!home_route">
-            <a [routerLink]="['/']" [routerLinkActive]="['router-link-active']" 
-               [routerLinkActiveOptions]="{exact:true}" title="Return to Home page">
-                <img src="../../assets/logo.svg" alt="Oblong Icon" 
-                        class="img-corner" width="1000" height="500">
-            </a>
+        <div class="logo-corner">
+            <sd-user-nav-menu></sd-user-nav-menu>
         </div>
         <div class ="graph">
             <sd-graph [content]="graph_context"

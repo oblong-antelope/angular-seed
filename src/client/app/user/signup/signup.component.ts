@@ -10,7 +10,7 @@ import { UserService } from '../user-service/index';
 @Component({
   moduleId: module.id,
   selector: 'sd-signup-modal',
-  templateUrl: 'signup.component.html',
+  templateUrl: './signup.component.html',
   styles: [`:host {
               display: block;
               padding: 0 16px;

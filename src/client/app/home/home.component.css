@@ -63,14 +63,6 @@
   height: auto;
 }
 
-.img-corner {
-  display: block;
-  max-width:125px;
-  max-height:80px;
-  width: auto;
-  height: auto;
-}
-
 .search {
   width: 70%;
   position: fixed;

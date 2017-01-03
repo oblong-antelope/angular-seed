@@ -11,7 +11,6 @@ import { GraphModule } from '../graph/graph.module';
 
 import { QueryService } from '../shared/query-service/index';
 
-
 @NgModule({
   imports: [CommonModule,
             SharedModule,

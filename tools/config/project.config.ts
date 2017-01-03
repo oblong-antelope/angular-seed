@@ -24,6 +24,10 @@ export class ProjectConfig extends SeedConfig {
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
       // {src: 'plotly/index.js', inject: 'libs'},
+      { src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs' },
+      { src: 'bootstrap/dist/css/bootstrap.min.css', inject: true }, // inject into css section
+      { src: 'bootstrap/dist/css/bootstrap-theme.min.css', inject: true }, // inject into css section
+      { src: 'bootstrap/dist/css/bootstrap-theme.min.css.map', inject: true }, // inject into css section
     ];
 
     // Add `local` third-party libraries to be injected/bundled.
@@ -48,6 +52,30 @@ export class ProjectConfig extends SeedConfig {
     this.SYSTEM_CONFIG_DEV.paths['ng2-bs3-modal'] =
       `node_modules/ng2-bs3-modal`;
 
+    let additionalPackages: ExtendPackages[] = [
+        // required for dev build 
+        {
+          name:'ng2-bootstrap',
+          path:'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.min.js'
+        },
+
+        // required for prod build
+        {
+          name:'ng2-bootstrap/*',
+          path:'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.min.js'
+        },
+
+        // mandatory dependency for ng2-bootstrap datepicker 
+        {
+          name:'moment',
+          path:'node_modules/moment',
+          packageMeta:{
+            main: 'moment.js',
+            defaultExtension: 'js'
+          }
+        }
+      ];
+    this.addPackagesBundles(additionalPackages);
     // this.addPackageBundles({
     //   name:'@angular/material',
     //   path:'node_modules/@angular/material/material.umd.js',

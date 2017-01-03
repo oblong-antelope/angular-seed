@@ -166,6 +166,7 @@
     "highcharts": "^5.0.2",
     "intl": "^1.2.5",
     "jquery": "^3.1.1",
+    "ng2-bootstrap": "^1.1.16-11",
     "ng2-bs3-modal": "^0.10.4",
     "open": "0.0.5",
     "protractor": "^4.0.9",
