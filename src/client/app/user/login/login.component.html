@@ -4,6 +4,9 @@
             <h4 class="modal-title">Login</h4>
         </modal-header>
         <modal-body>
+            <p class="has-danger" *ngIf="invalidResponse">
+                Login has failed, your email or password may be invalid
+            </p>
             <div class="form-group" 
                  [ngClass]="{'has-error':!loginForm.controls['email'].valid && loginForm.controls['email'].touched}">
                 <label for="email">Email</label>
@@ -23,6 +26,7 @@
         <modal-footer>
             <button type="button" class="btn btn-default" (click)="modal.dismiss()">Cancel</button>
             <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+            <img *ngIf="loading" src="../../assets/circle-loader.gif" alt="Loading" style="width:15px;height:15px;">
         </modal-footer>
     </form>
 </modal>

@@ -47,6 +47,19 @@
         <modal-footer>
             <button type="button" class="btn btn-default" (click)="modal.dismiss()">Cancel</button>
             <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Signup</button>
+            <img *ngIf="loading" src="../../assets/circle-loader.gif" alt="Loading" style="width:15px;height:15px;">
         </modal-footer>
     </form>
+</modal>
+
+<modal #successModal (onClose)="closeModal()" (onDismiss)="closeModal()">
+    <modal-header>
+        <h4 class="modal-title">Successful Signup!</h4>
+    </modal-header>
+    <modal-body>
+        Thank you for signing up!
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="modal.dismiss()">Continue</button>
+    </modal-footer>
 </modal>

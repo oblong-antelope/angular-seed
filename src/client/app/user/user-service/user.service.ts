@@ -63,7 +63,7 @@ export class UserService {
           });
   }
 
-    /**
+  /**
    * Returns an observable of a boolean detailing a successful logout or not.
    * The details object is created to tell the server who to logout and invalidate.
    * On a successful logout, the user jwt and userid are cleared
@@ -87,6 +87,20 @@ export class UserService {
   }
 
   /**
+   * Returns an observable of a boolean detailing a successful signup or not.
+   * @param {Object} details - the signup details to be sent to the server
+   * @return {Observable<boolean>} The Boolean Observable to be returned and subscribed to.
+   */
+  signup(details: Object): Observable<boolean> {
+    // return Observable.of(true);
+    return this.submitNewUser('details')
+          .map ( (data) => {
+            console.log(data);
+            return data.success;
+          });
+  }
+
+  /**
    * Returns an Observable for the HTTP POST request
    * @param {Object} details - the user action details sent to the server
    * @return {any} The Observable Object for the HTTP request.
@@ -94,19 +108,21 @@ export class UserService {
   private submitUserAction(details: Object): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.genUri('/api/login'), details, options)
+    return this.http.post(this.genUri('/api/useraction'), details, options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }
 
   /**
-   * Returns an Observable for the HTTP GET request for the JSON resource.
-   * @param {string} api : The location fo the resource
-   * @return {Profile} The Observable for the http request.
+   * Returns an Observable for the HTTP POST request
+   * @param {Object} details - the user action details sent to the server
+   * @return {any} The Observable Object for the HTTP request.
    */
-  private getProfile(api: string) : Observable<Profile> {
-    return this.http.get(this.genUri(api))
-                    .map((res:Response) => res.json())
+  private submitNewUser(details: Object): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post(this.genUri('/api/newuser'), details, options)
+                    .map((res: Response) => res.json())
                     .catch(this.handleError);
   }
 

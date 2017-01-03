@@ -19,12 +19,15 @@ import { UserService } from '../user-service/index';
 export class SignupModalComponent implements OnInit, AfterViewInit {
 
   @ViewChild('signupModal') modal : ModalComponent;
+  @ViewChild('successModal') smodal : ModalComponent;
 
   /**
    * Form Variables
    */
   signupForm : FormGroup;
   titleOptions : string[] = ['Mr', 'Ms', 'Mrs', 'Dr', 'Prof'];
+
+  loading: boolean = false;
 
    /**
    * Creates an instance of UserComponent
@@ -40,7 +43,7 @@ export class SignupModalComponent implements OnInit, AfterViewInit {
    */
   ngOnInit() {
     this.signupForm = this.fb.group({
-      title: ['', Validators.required],
+      title: [''],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', Validators.required],
@@ -67,7 +70,18 @@ export class SignupModalComponent implements OnInit, AfterViewInit {
    * Submits the signup details to the backend.
    */
   submitSignup(value: any) {
-      console.log(value);
+      console.log(value, this.signupForm);
+      this.loading = true;
+      this.userService.signup(value)
+        .subscribe(
+            success => {
+                this.loading = false;
+                this.modal.close();
+                this.smodal.open();
+            },
+            error => console.log(error),
+            () => console.log('Signup Request Complete')
+        );
   }
 
   /**

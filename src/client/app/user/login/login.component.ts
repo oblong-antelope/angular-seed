@@ -28,10 +28,7 @@ export class LoginModalComponent implements OnInit, AfterViewInit {
   /**
    * Form Variables
    */
-  email: string = '';
-  password: string = '';
-
-  submitted: boolean = false;
+  loading: boolean = false;
   invalidResponse: boolean = false;
 
   /**
@@ -84,13 +81,16 @@ export class LoginModalComponent implements OnInit, AfterViewInit {
    * Submits the login details to the backend to be verified
    */
   submitLogin(value : any) {
-    this.submitted = true;
+    this.loading = true;
     this.userService.login(value)
       .subscribe(
         success => {
           this.invalidResponse = !success;
+          this.loading = false;
           if(success) {
             this.navigateToProfile();
+          } else {
+            this.loginForm.setValue({'password': ''});
           }
         },
         error => console.log(error),
