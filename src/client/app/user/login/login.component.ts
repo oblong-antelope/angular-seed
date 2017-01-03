@@ -23,7 +23,6 @@ import { UserService } from '../user-service/index';
 export class LoginModalComponent implements OnInit, AfterViewInit {
 
   @ViewChild('loginModal') modal : ModalComponent;
-  // @ViewChild('modalForm') form : Form;
   loginForm : FormGroup;
 
   /**
@@ -85,7 +84,6 @@ export class LoginModalComponent implements OnInit, AfterViewInit {
    * Submits the login details to the backend to be verified
    */
   submitLogin(value : any) {
-    console.log(value);
     this.submitted = true;
     this.userService.login(value)
       .subscribe(

@@ -1,6 +1,8 @@
-import { Component, ElementRef, ViewChild, Renderer, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, Renderer, OnInit, AfterViewInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { UserService } from '../user-service/index';
 
 /**
  * This class represents the lazy loaded UserComponent.
@@ -8,48 +10,95 @@ import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 @Component({
   moduleId: module.id,
   selector: 'sd-signup-modal',
-  template: ` <modal #signupModal [size]="'lg'"
-                            (onClose)="onClose()" 
-                            (onDismiss)="onDismiss()">
-                  <modal-header [show-close]="true">
-                      <h4 class="modal-title">Sign Up</h4>
-                  </modal-header>
-                  <modal-body>
-                  </modal-body>
-                  <modal-footer>
-                  </modal-footer>
-              </modal>`,
+  templateUrl: 'signup.component.html',
   styles: [`:host {
               display: block;
               padding: 0 16px;
             }`]
 })
-export class SignupModalComponent implements AfterViewInit {
+export class SignupModalComponent implements OnInit, AfterViewInit {
 
   @ViewChild('signupModal') modal : ModalComponent;
 
   /**
+   * Form Variables
+   */
+  signupForm : FormGroup;
+  titleOptions : string[] = ['Mr', 'Ms', 'Mrs', 'Dr', 'Prof'];
+
+   /**
    * Creates an instance of UserComponent
    */
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private fb: FormBuilder,
+              private userService: UserService) {}
 
+  /**
+   * Executed when the component is initialised.
+   * The form is initialised with Validators
+   * If the user is already logged in, we go straight to the profile page.
+   */
+  ngOnInit() {
+    this.signupForm = this.fb.group({
+      title: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+ /**
+  * Exectued once the view has been initialised,
+  * The modal is immediately opened
+  */
   ngAfterViewInit() {
       this.modal.open();
   }
 
+  /**
+   * Navigate To the Login Page After A Successful signup
+   */
+  navigateToLogin() {
+      this.router.navigate([{outlets: {modal: 'login'}}]);
+  }
+
+  /**
+   * Submits the signup details to the backend.
+   */
+  submitSignup(value: any) {
+      console.log(value);
+  }
+
+  /**
+   * Checks if the given field is errored or not
+   * @param {string} field - the name of the field to be checked
+   * @return {boolean} - returns true if there is an error
+   */
+  fieldError(field: string) : boolean {
+      return !this.signupForm.controls[field].valid
+                && this.signupForm.controls[field].touched;
+  }
+
+  /**
+   * Handler on closing of the modal
+   */
   onClose() {
-      console.log('signup close modal');
+      console.log('login close modal');
       this.closeModal();
   }
 
+  /**
+   * Handler on dismiss of the modal
+   */
   onDismiss() {
-      console.log('signup dismiss modal');
+      console.log('login dismiss modal');
       this.closeModal();
   }
 
   closeModal() {
     // Providing a `null` value to the named outlet
     // clears the contents of the named outlet
-    this.router.navigate([{ outlets: { modal: null }}]);
+    this.router.navigate([{ outlets: { modal: 'login' }}]);
   }
 }

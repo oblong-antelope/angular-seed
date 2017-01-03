@@ -1,0 +1,52 @@
+<modal #signupModal (onClose)="onClose()" (onDismiss)="onDismiss()">
+    <form [formGroup]="signupForm" (ngSubmit)="submitSignup(signupForm.value)">
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">Signup</h4>
+        </modal-header>
+        <modal-body>
+
+            <!--Title-->
+            <div class="form-group" 
+                 [ngClass]="{'has-error':!signupForm.controls['title'].valid && signupForm.controls['title'].touched}">
+                <label for="title">Title</label>
+                <select class="form-control" [formControl]="signupForm.controls['title']">
+                    <option *ngFor="let t of titleOptions">{{t}}</option>
+                </select>
+            </div>
+
+            <!--Name-->
+            <div class="row">
+                <div class="form-group col-sm-6" 
+                    [ngClass]="{'has-error':fieldError('firstname')}">
+                    <label for="firstname">Firstname</label>
+                    <input id="firstname" type="text" class="form-control" [formControl]="signupForm.controls['firstname']">
+                </div>
+                <div class="form-group col-sm-6" 
+                    [ngClass]="{'has-error':!signupForm.controls['email'].valid && signupForm.controls['email'].touched}">
+                    <label for="lastname">Lastname</label>
+                    <input ìd="lastname" type="text" class="form-control" [formControl]="signupForm.controls['lastname']">
+                </div>
+            </div>
+            
+            <!--Email-->
+            <div class="form-group" 
+                 [ngClass]="{'has-error':fieldError('email')}">
+                <label for="email">Email</label>
+                <input id="email" type="email" class="form-control" [formControl]="signupForm.controls['email']">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+           
+            <!--Password-->
+            <div class="form-group" 
+                 [ngClass]="{'has-error':!signupForm.controls['password'].valid && signupForm.controls['password'].touched}">
+                <label for="password">Password</label>
+                <input id="password" type="password" class="form-control" [formControl]="signupForm.controls['password']">
+            </div>
+
+        </modal-body>
+        <modal-footer>
+            <button type="button" class="btn btn-default" (click)="modal.dismiss()">Cancel</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Signup</button>
+        </modal-footer>
+    </form>
+</modal>
