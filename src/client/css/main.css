@@ -65,3 +65,8 @@ button:hover {
 
 [hidden] { display: none !important;}
 
+.popover {
+  max-width: 100%;
+  background-color: dodgerblue
+}
+

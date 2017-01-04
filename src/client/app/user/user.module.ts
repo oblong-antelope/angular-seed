@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
-import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { DropdownModule, PopoverModule } from 'ng2-bootstrap';
 
 import { UserService } from './user-service/user.service';
 
@@ -20,6 +20,7 @@ import { UserRoutingModule } from './user-routing.module';
             FormsModule,
             ReactiveFormsModule,
             UserRoutingModule,
+            PopoverModule.forRoot(),
             DropdownModule.forRoot(),
             SharedModule],
   declarations: [LoginModalComponent,
