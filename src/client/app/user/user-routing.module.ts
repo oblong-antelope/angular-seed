@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthGuard } from './auth-guard/auth-guard.service';
 import { LoginModalComponent } from './login/login.component';
 import { LogoutModalComponent } from './logout/logout.component';
 import { SignupModalComponent } from './signup/signup.component';
@@ -28,7 +29,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
         children: [{
           path: 'profile',
           component: UserProfileComponent
-        }]
+        }],
+        canActivate: [AuthGuard]
       }
     ])
   ],

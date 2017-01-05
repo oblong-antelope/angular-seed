@@ -78,6 +78,12 @@ export class ProjectConfig extends SeedConfig {
             main: 'moment.js',
             defaultExtension: 'js'
           }
+        },
+
+        //required for angular2 jwt
+        {
+          name:'angular2-jwt',
+          path:'node_modules/angular2-jwt/angular2-jwt.js'
         }
       ];
     this.addPackagesBundles(additionalPackages);

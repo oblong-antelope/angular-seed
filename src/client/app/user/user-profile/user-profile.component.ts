@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
               padding: 0 16px;
             }`]
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit {
 
   display: string = 'Profile Component';
 
@@ -27,5 +27,19 @@ export class UserProfileComponent {
               private router: Router,
               private ar: ActivatedRoute) {}
 
+  /**
+   * Immediately navigates to the existing profile page for a person.
+   * May need to call function to get some data on the profile as 
+   * id != backendlookupid TODO
+   */
+  ngOnInit() {
+    this.ar.params.subscribe(
+      params => {
+        let id = params['id'];
+        this.router.navigate(['profile', {id: id}]);
+      },
+      error => this.router.navigate(['/'])
+    );
+  }
 
 }

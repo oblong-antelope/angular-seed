@@ -5,6 +5,7 @@ import { Config } from '../../shared/index';
 import { ReturnQuery,
          Profile
         } from '../../models/index';
+import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
@@ -23,7 +24,7 @@ export class UserService {
    * @param {Http} http - The injected Http.
    * @constructor
    */
-  constructor(private http: Http) {}
+  constructor(private http: Http, private auth: AuthHttp) {}
 
   /**
    * Returns true if the user is logged in 
@@ -31,8 +32,7 @@ export class UserService {
    * @return {boolean} Whether the user is logged in
    */
   isLoggedIn(): boolean {
-    let jwt = localStorage.getItem('jwt');
-    return jwt !== undefined && jwt !== '' && jwt !== null;
+    return tokenNotExpired();
   }
 
   /**
@@ -51,14 +51,14 @@ export class UserService {
    * @return {Observable<boolean>} The Boolean Observable to be returned and subscribed to.
    */
   login(details: any): Observable<boolean> {
-    return this.submitUserAction('login', details)
+    return this.requestLogin(details)
           .map( (data) => {
-            console.log(data);
+            console.log('somedata', data);
             if(data.success) {
               localStorage.setItem('jwt', data.jwt);
               localStorage.setItem('userId', data.userId);
             }
-            return data.success;
+            return data.success || false;
           });
   }
 
@@ -66,14 +66,10 @@ export class UserService {
    * Returns an observable of a boolean detailing a successful logout or not.
    * The details object is created to tell the server who to logout and invalidate.
    * On a successful logout, the user jwt and userid are cleared
-   * @param {any} details - the login details to be sent to the server
    * @return {Observable<boolean>} The Boolean Observable to be returned and subscribed to.
    */
   logout(): Observable<boolean> {
-    let details = {
-      userid: localStorage.getItem('userId')
-    };
-    return this.submitUserAction('logout', details)
+    return this.requestLogin(this.getId())
           .map( (data) => {
             console.log(data);
             if(data.success) {
@@ -103,10 +99,21 @@ export class UserService {
    * @param {Object} details - the user action details sent to the server
    * @return {any} The Observable Object for the HTTP request.
    */
-  private submitUserAction(action:string, details: Object): Observable<any> {
+  private requestLogin(details: Object): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.genUri('/api/' + action), details, options)
+    return this.http.post(this.genUri('/api/login'), JSON.stringify(details), options)
+                    .map((res: Response) => res.json())
+                    .catch(this.handleError);
+  }
+
+  /**
+   * Returns an Observable for the Authenticated HTTP POST request to logout
+   * @param {string} userId - the user to logout
+   * @return {any} The Observable Object returned from the request.
+   */
+  private requestLogout(userId: string): Observable<any> {
+    return this.auth.post(this.genUri('/api/login'), JSON.stringify({usedId: userId}))
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }
@@ -119,7 +126,7 @@ export class UserService {
   private submitNewUser(details: Object): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.genUri('/api/newuser'), details, options)
+    return this.http.post(this.genUri('/api/newuser'), JSON.stringify(details), options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }

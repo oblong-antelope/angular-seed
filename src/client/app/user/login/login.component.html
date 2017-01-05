@@ -4,9 +4,9 @@
             <h4 class="modal-title">Login</h4>
         </modal-header>
         <modal-body>
-            <p class="has-danger" *ngIf="invalidResponse">
-                Login has failed, your email or password may be invalid
-            </p>
+            <alert type="warning" *ngIf="invalidResponse">
+                <strong>Falied Login!</strong> Please check you have entered your email and password correctly.
+            </alert>
             <div class="form-group" 
                  [ngClass]="{'has-error':!loginForm.controls['email'].valid && loginForm.controls['email'].touched}">
                 <label for="email">Email</label>

@@ -67,7 +67,7 @@ export class LoginModalComponent implements OnInit, AfterViewInit {
    */
   navigateToProfile() {
     let id = this.userService.getId();
-    this.router.navigate(['/user', id, '/profile']);
+    this.router.navigate(['/user', {id: id}, '/profile']);
   }
 
   /**
@@ -93,7 +93,11 @@ export class LoginModalComponent implements OnInit, AfterViewInit {
             this.loginForm.setValue({'password': ''});
           }
         },
-        error => console.log(error),
+        error => {
+          console.log('error', error);
+          this.invalidResponse = true;
+          this.loading = false;
+        },
         () => console.log('Login Request Complete')
       );
   }
