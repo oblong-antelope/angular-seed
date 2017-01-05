@@ -42,7 +42,7 @@ export class ResultsComponent implements OnInit, OnChanges {
     rowHeight: 50,
     detailRowHeight: 200,
     scrollbarV: true,
-    scrollbarH: false
+    scrollbarH: true
   });
 
   /**

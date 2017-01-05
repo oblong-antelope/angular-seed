@@ -51,8 +51,7 @@ export class UserService {
    * @return {Observable<boolean>} The Boolean Observable to be returned and subscribed to.
    */
   login(details: any): Observable<boolean> {
-    details['action'] = 'login';
-    return this.submitUserAction(details)
+    return this.submitUserAction('login', details)
           .map( (data) => {
             console.log(data);
             if(data.success) {
@@ -72,10 +71,9 @@ export class UserService {
    */
   logout(): Observable<boolean> {
     let details = {
-      action: 'logout',
       userid: localStorage.getItem('userId')
     };
-    return this.submitUserAction(details)
+    return this.submitUserAction('logout', details)
           .map( (data) => {
             console.log(data);
             if(data.success) {
@@ -105,10 +103,10 @@ export class UserService {
    * @param {Object} details - the user action details sent to the server
    * @return {any} The Observable Object for the HTTP request.
    */
-  private submitUserAction(details: Object): Observable<any> {
+  private submitUserAction(action:string, details: Object): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.genUri('/api/useraction'), details, options)
+    return this.http.post(this.genUri('/api/' + action), details, options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }

@@ -1,0 +1,38 @@
+<!--Main Display Modal-->
+<modal #myModal [size]="'lg'"
+                (onClose)="onClose()" 
+                (onDismiss)="onClose()">
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Profile Insight</h4>
+        <p>These keywords were gained through text mining of academic literature</p>
+    </modal-header>
+    <modal-body>
+        <div class="chart-container" [hidden]="!isTab(0)">
+            <canvas #keyworddisplay></canvas>
+        </div>
+        <div class="grid-container" *ngIf="isTab(1)">
+            <p>Other display</p>
+        </div>
+    </modal-body>
+    <modal-footer>
+        <div class="btn-group" role="group" style="float: left;" aria-label="...">
+            <button type="button" class="btn btn-default" (click)="displayTab=0">Chart View</button>
+            <button type="button" class="btn btn-default" (click)="displayTab=1">Grid View</button>
+        </div>
+        <button type="button" class="btn btn-primary btn-add-kword" (click)="openAddKeyword()">Add Keyword</button>
+        <button type="button" class="btn btn-primary" (click)="modal.close()">Ok</button>
+    </modal-footer>
+</modal>
+
+<!--Add Word Modal-->
+<modal #keywordModal [size]="'sm'">
+    <modal-header [show-close]="false">
+        <h4 class="modal-title">Add A Keyword</h4>
+    </modal-header>
+    <modal-body>
+        <input type="text" class="form-control" [(ngModel)]="newkeyword">
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" (click)="submitNewKeyword()">Submit</button>
+    </modal-footer>
+</modal>

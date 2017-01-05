@@ -9,7 +9,7 @@
 
 <datatable
     #mydatatable
-    class='material expandable '
+    class='material expandable'
     [rows]='personList'
     (onPageChange)="paged($event)"
     (onRowClick)="toggleExpandRow($event.row)"
@@ -24,7 +24,7 @@
               <p>{{row.email}}</p>
               <h4>Faculty:</h4>
               <p>{{row.faculty}}</p>
-              <button type="button" class="btn btn-default btn-arrow-right info-btn" 
+              <button type="button" class="btn btn-primary btn-arrow-right info-btn" 
                                     (click)="expandedButtonPress(row)" >More Details</button>
             </div>
             <div class="col-sm-8">
@@ -42,13 +42,13 @@
       </template>
     </datatable-column>
 
-    <datatable-column name="Name" width="150">
+    <datatable-column name="Name" width="160">
       <template let-value="value">
         <strong>{{value.first}} {{value.last}}</strong>
       </template>
     </datatable-column>
 
-    <datatable-column name="Department" width="250">
+    <datatable-column name="Department" width=300>
       <template let-row="row" let-value="value">
         {{value}}
       </template>

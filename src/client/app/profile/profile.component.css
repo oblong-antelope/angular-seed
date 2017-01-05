@@ -3,6 +3,10 @@
   padding: 12px 16px;
 }
 
+.container {
+  width: 100%;
+}
+
 .top-bar {
   position:absolute;
   top:0;

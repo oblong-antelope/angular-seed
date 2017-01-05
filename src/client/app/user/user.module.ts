@@ -9,7 +9,7 @@ import { UserService } from './user-service/user.service';
 
 import { LoginModalComponent } from './login/login.component';
 import { LogoutModalComponent } from './logout/logout.component';
-import { UserProfileComponent } from './user.profile/user.profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SignupModalComponent } from './signup/signup.component';
 import { UserNavMenuComponent } from './user-nav-menu/user-nav-menu.component';
 

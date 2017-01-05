@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { Profile } from '../models/index';
 import { QueryService } from '../shared/index';
+import { UserService } from '../user/index';
 import { KeywordGridModalComponent } from './modal/keyword-grid-modal.component';
 
 /**
@@ -19,8 +20,8 @@ export class ProfileComponent implements OnInit, OnChanges {
   errorMessage: string;
   loading: boolean = false;
   arrived: boolean = false;
-  modalOpen: boolean = false;
   keywordList: Object[] = [];
+  sortedKeywordList: string[] = [];
   displayKeywordList: string[] = [];
 
   profile: Profile = {
@@ -28,16 +29,19 @@ export class ProfileComponent implements OnInit, OnChanges {
      keywords: {},
   };
 
+  totalValue: number = 1;
+
   @ViewChild('myModal') modal: KeywordGridModalComponent;
 
   /**
    * Creates an instance of the ProfileComponent with the injected
    * QueryService
    * 
-   * @param {Router} router - The injected routing provider
+   * @param {QueryService} queryService - The injected QueryService
    * @param {QueryService} queryService - The injected QueryService
    */
-  constructor(private queryService: QueryService) {
+  constructor(private queryService: QueryService,
+              private userService: UserService) {
   }
 
   /**
@@ -45,7 +49,7 @@ export class ProfileComponent implements OnInit, OnChanges {
    * Uses the ActivatedRoute to get the url parameters and data
    */
   ngOnInit() {
-    this.updateProfile();
+    // this.updateProfile();
   }
 
   /**
@@ -53,6 +57,23 @@ export class ProfileComponent implements OnInit, OnChanges {
    */
   ngOnChanges(changes: any) {
     this.updateProfile();
+  }
+
+  /**
+   * Returns true if a user is currently logged in
+   */
+  idloggedin() {
+    return this.userService.isLoggedIn();
+  }
+
+  /**
+   * Returns true iff a user is currently logged in,
+   * and the currently viewed profile is theres
+   * Check this is true before allowing keyword editing
+   */
+  isloggedinusersprofile() {
+    return this.userService.isLoggedIn() &&
+              this.userService.getId() === this.id;
   }
 
   /**
@@ -102,7 +123,11 @@ export class ProfileComponent implements OnInit, OnChanges {
       return b.value - a.value;
     });
     this.keywordList = sorted;
-    this.displayKeywordList = sorted.slice(0, 20).map((k:any)=> k.word);
+    this.sortedKeywordList = sorted.slice(0, 20).map((k:any)=> {
+              this.totalValue += k.value;
+              return k.word;
+            });
+    this.displayKeywordList = this.getRandom(this.sortedKeywordList, 6);
   }
 
   /**
@@ -126,9 +151,8 @@ export class ProfileComponent implements OnInit, OnChanges {
    * Opens a modal to display all keywords in sorted order,
    * and allow editing (if logged in)
    */
-  editKeywordsLinks() {
-    console.log('Edit Keywords pressed');
-    this.modalOpen = !this.modalOpen;
+  openMoreModal() {
+    this.modal.open();
   }
 
   /**
@@ -148,5 +172,30 @@ export class ProfileComponent implements OnInit, OnChanges {
         this.keywordList.splice(idx);
       }
     }
+  }
+
+  /**
+   * Samples n values from an array.
+   */
+  getRandom(arr: any[], n: number) {
+    var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+    if (n > len)
+        throw new RangeError('getRandom: more elements taken than available');
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len;
+    }
+    return result;
+  }
+
+  /**
+   * Maps values to sigmoid to make visuals look better...
+   */
+  sigmoid(n: number) {
+    let v = 100 * 1 / (1 + Math.exp( -75 * n / this.totalValue ));
+    return Math.floor(v - 50);
   }
 }

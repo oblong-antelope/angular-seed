@@ -10,7 +10,7 @@ declare var Chart:any;
 @Component({
   moduleId: module.id,
   selector: 'sd-keyword-grid-modal',
-  styles: [`.container {
+  styles: [`.chart-container {
                 height: 90%;
                 width: 90%;
             }
@@ -23,48 +23,9 @@ declare var Chart:any;
                 margin-left: 20px;
             }
             `],
- template: `<modal #myModal [size]="'lg'"
-                            [backdrop]="'static'"
-                            [keyboard]=false
-                            (onOpen)="onOpen()" 
-                            (onClose)="onClose()" 
-                            (onDismiss)="onClose()">
-                <modal-header [show-close]="true">
-                    <h4 class="modal-title">Your Keywords</h4>
-                </modal-header>
-                <modal-body>
-                    <div class="container" *ngIf="keywords.length !== 0">
-                        <canvas #keyworddisplay></canvas>
-                    </div>
-                </modal-body>
-                <modal-footer>
-                    <div class="btn-group" role="group" style="float: left;" aria-label="...">
-                        <button type="button" class="btn btn-default">Chart View</button>
-                        <button type="button" class="btn btn-default">Grid View</button>
-                    </div>
-                    <button type="button" class="btn btn-primary btn-add-kword" (click)="addKeyword()">Add Keyword</button>
-                    <button type="button" class="btn btn-primary" (click)="modal.close()">Ok</button>
-                </modal-footer>
-            </modal>
-            
-            <modal #keywordModal [size]="'sm'"
-                                 [backdrop]="'static'"
-                                 [keyboard]=false>
-                <modal-header [show-close]="true">
-                    <h4 class="modal-title">Add A Keyword</h4>
-                </modal-header>
-                <modal-body>
-                      <input type="text" class="form-control" [(ngModel)]="newkeyword">
-                </modal-body>
-                <modal-footer>
-                    <button type="button" class="btn btn-primary" (click)="submitNewKeyword()">Submit</button>
-                </modal-footer>
-            </modal>`
+ templateUrl: './keyword-grid.modal.component.html'
 })
 export class KeywordGridModalComponent implements OnInit, OnChanges {
-    @Input('open') open:boolean = false;
-    @Output('openChange') openChange: EventEmitter<boolean> = new EventEmitter();
-
     @Input('keywords') keywords: any[] = [];
     @Output('keywordsSubmit') keywordsSubmit: EventEmitter<any> = new EventEmitter();
 
@@ -85,42 +46,62 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
     options: any = {};
     @ViewChild('keyworddisplay') chartelem: ElementRef;
 
+    displayTab: number = 0;
+
+    /**
+     * Generate the bar chart on init
+     */
     ngOnInit() {
-        this.resetBarDisplay();
+        this.genBarChart();
     }
 
+    /**
+     * Whenever the keywords are updated,
+     * regenerate the bar chart
+     */
     ngOnChanges(changes:any) {
-        if(changes.open !== undefined) {
-            if(!changes.open.previousValue && changes.open.currentValue) {
-                this.modal.open();
-            }
-            if(changes.open.previousValue && !changes.open.currentValue) {
-                this.modal.close();
-            }
-        }
-
         if(changes.keywords !== undefined) {
             if(this.chart !== undefined) {
                 this.chart.destroy();
             }
-            this.resetBarDisplay();
+            this.genBarChart();
         }
     }
 
-    onOpen() {
-        this.open = true;
-        this.openChange.emit(this.open);
+    /**
+     * Opens the modal
+     */
+    open() {
+        this.modal.open();
     }
 
+    /**
+     * Handler for an onclose event
+     */
     onClose() {
-        this.open = false;
-        this.openChange.emit(this.open);
+        return;
     }
 
-    addKeyword() {
+    /**
+     * Returns true if n is the current tab.
+     */
+    isTab(n:number) {
+        return this.displayTab === n;
+    }
+
+    //New Keyword Modal Controls
+
+    /**
+     * Opens up the add keyword dialogue
+     */
+    openAddKeyword() {
         this.keywordmodal.open();
     }
 
+    /**
+     * Submits a new keyword
+     * emits the event back to parent element
+     */
     submitNewKeyword() {
         console.log(this.newkeyword);
         this.keywordsSubmit.emit({
@@ -131,13 +112,27 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
         this.keywordmodal.close();
     }
 
-    resetBarDisplay() {
+    //Bar Chart Displays
+    /**
+     * Generates a new Bar Chart Display
+     */
+    genBarChart() {
         this.numdatapoints = Math.floor(this.keywords.length * 1 / 4);
         if(this.keywords.length === 0 || this.chartelem === undefined) {
             return;
         }
+        this.chart = new Chart(this.chartelem.nativeElement, {
+                type : this.type,
+                options: this.genBarOptions(),
+                data: this.genBarData()
+        });
+    }
 
-        let options = {
+    /**
+     * Generates the bar chart options
+     */
+    genBarOptions() {
+        return {
             legend: {
                 display: false
             },
@@ -155,7 +150,12 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
                 }
             }
         };
+    }
 
+    /**
+     * Generates the bar chart data.
+     */
+    genBarData() {
         let threshold = this.keywords[0].value * (1/4);
         let otherValues = 0.5;
         let displaydata: number[] = [];
@@ -177,11 +177,6 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
             labels: displaylabels,
             datasets: [{label:'', data: displaydata}]
         };
-
-        this.chart = new Chart(this.chartelem.nativeElement, {
-                type : this.type,
-                options: options,
-                data: data
-        });
+        return data;
     }
 }

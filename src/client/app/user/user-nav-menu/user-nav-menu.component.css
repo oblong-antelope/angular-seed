@@ -2,6 +2,7 @@
     display: block;
     padding: 0 16px;
     position: fixed;
+    cursor: pointer;
 }
 
 .img-corner {

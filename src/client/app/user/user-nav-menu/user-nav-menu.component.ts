@@ -23,7 +23,6 @@ export class UserNavMenuComponent implements AfterViewInit {
 
 
     ngAfterViewInit() {
-        console.log('poptemplate', this.pop);
         setTimeout(() => this.showPop(), 500);
         setTimeout(() => this.hidePop(), 3000);
     }

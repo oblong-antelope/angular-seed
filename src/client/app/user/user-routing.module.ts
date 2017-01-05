@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { LoginModalComponent } from './login/login.component';
 import { LogoutModalComponent } from './logout/logout.component';
 import { SignupModalComponent } from './signup/signup.component';
-import { UserProfileComponent } from './user.profile/user.profile.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   imports: [
@@ -22,6 +22,13 @@ import { UserProfileComponent } from './user.profile/user.profile.component';
         path: 'signup',
         component: SignupModalComponent,
         outlet: 'modal'
+      },
+      {
+        path: 'user/:id',
+        children: [{
+          path: 'profile',
+          component: UserProfileComponent
+        }]
       }
     ])
   ],

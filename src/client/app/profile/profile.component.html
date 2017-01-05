@@ -30,24 +30,37 @@
         <p>{{profile.email}}</p>
         </div>
     </div>
+    
     <!--Keywords-->
-    <label for="displayKeywords" class="col-form-label">Keywords
-        <a (click)="editKeywordsLinks()">Edit Keywords</a>
-    </label>
-    <li *ngFor="let word of displayKeywordList">{{word}}: {{profile.keywords[word]}}</li>
+    <label for="displayKeywords" class="col-form-label">Keyword Sample</label>
+    <div *ngFor="let word of displayKeywordList">
+        - {{word}}
+        <progressbar class="progress"
+                [value]="sigmoid(profile.keywords[word])"
+                max="100">
+                {{profile.keywords[word]}}
+        </progressbar>
+    </div>
 
-    <!--Papers-->
-    <div class="row">
-        <label for="displayPapers" class="col-sm-2 col-form-label">Papers</label>
-        <div class="col-sm-10 word-wrap">
-            <!--<li *ngFor="let paper of getPublications">{{paper}}</li>-->
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default"
+                        (click)="openMoreModal()">More Insight</button>
         </div>
     </div>
+
+
+    <!--Papers-->
+    <!--<div class="row">
+        <label for="displayPapers" class="col-sm-2 col-form-label">Papers</label>
+        <div class="col-sm-10 word-wrap">
+            <li *ngFor="let paper of getPublications">{{paper}}</li>
+        </div>
+    </div>-->
 </div>
 
 <sd-keyword-grid-modal #myModal 
             [keywords]="keywordList"
-            (keywordsSubmit)="onEditKeyword($event)"
-            [(open)]='modalOpen'>
+            (keywordsSubmit)="onEditKeyword($event)">
 </sd-keyword-grid-modal>
 

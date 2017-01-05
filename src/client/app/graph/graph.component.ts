@@ -89,7 +89,6 @@ export class GraphComponent implements OnInit {
       this.graphService.getData(this.content)
         .subscribe(
             data => {
-                console.log('Num Data Points:', data.datasets.length);
                 this.data = data;
                 this.updateChart();
             },
@@ -118,7 +117,6 @@ export class GraphComponent implements OnInit {
             person: personClicked,
         });
         let vals:string[] = personClicked.idx.split('/');
-        console.log(vals);
         this.router.navigate(['profile', {'id': vals[3]}]);
       }
   }
@@ -132,8 +130,11 @@ export class GraphComponent implements OnInit {
   }
 
 
+  /**
+   * Handler for on hover handler.
+   */
   onHover(e:any) {
-      console.log(e);
+    //   console.log(e);
   }
 
   /**

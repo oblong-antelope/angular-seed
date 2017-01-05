@@ -26,7 +26,6 @@ export class SearchBarComponent {
    * Submit handler for the input group
    */
   onSubmit() {
-    console.log(this.query);
     if(this.query !== '') {
       this.search(this.query);
     }
