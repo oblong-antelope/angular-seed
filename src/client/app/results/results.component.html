@@ -7,15 +7,21 @@
 
 <br>
 
-<datatable
+<ngx-datatable
     #mydatatable
     class='material expandable'
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="50"
+    [detailRowHeight]="200"
+    [scrollbarV]="true"
+    [scrollbarH]="true"
     [rows]='personList'
     (onPageChange)="paged($event)"
-    (onRowClick)="toggleExpandRow($event.row)"
-    [options]='options'>
+    (onRowClick)="toggleExpandRow($event.row)">
 
-    <datatable-row-detail-template>
+    <ngx-datatable-row-detail>
       <template let-row="row">
         <div class="container">
           <div class="row">
@@ -34,24 +40,24 @@
           </div>
         </div>
       </template>
-    </datatable-row-detail-template>
+    </ngx-datatable-row-detail>
 
-    <datatable-column name="" width="40">
+    <ngx-datatable-column name="" width="40">
       <template let-row="row">
         <strong>{{row.$$index}}</strong>
       </template>
-    </datatable-column>
+    </ngx-datatable-column>
 
-    <datatable-column name="Name" width="160">
+    <ngx-datatable-column name="Name" width="160">
       <template let-value="value">
         <strong>{{value.first}} {{value.last}}</strong>
       </template>
-    </datatable-column>
+    </ngx-datatable-column>
 
-    <datatable-column name="Department" width=300>
+    <ngx-datatable-column name="Department" width=300>
       <template let-row="row" let-value="value">
         {{value}}
       </template>
-    </datatable-column>
-  </datatable>
+    </ngx-datatable-column>
+  </ngx-datatable>
   

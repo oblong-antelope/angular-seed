@@ -27,7 +27,7 @@
   height: inherit;
   width : 50%;
   border-left: thick ridge darkslategrey;
-  padding: 10px;
+  padding: 0;
   overflow-y: scroll;
 }
 

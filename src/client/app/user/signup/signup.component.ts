@@ -70,7 +70,7 @@ export class SignupModalComponent implements OnInit, AfterViewInit {
    * Submits the signup details to the backend.
    */
   submitSignup(value: any) {
-      console.log(value, this.signupForm);
+      console.log(value);
       this.loading = true;
       this.userService.signup(value)
         .subscribe(

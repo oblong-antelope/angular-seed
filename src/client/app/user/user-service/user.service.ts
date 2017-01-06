@@ -17,7 +17,7 @@ import 'rxjs/add/operator/do';  // for debugging
 @Injectable()
 export class UserService {
 
-  API = Config.API;
+  API = 'https://oblong-login.herokuapp.com';
 
   /**
    * Creates a new UserService with the injected Http.
@@ -32,7 +32,7 @@ export class UserService {
    * @return {boolean} Whether the user is logged in
    */
   isLoggedIn(): boolean {
-    return tokenNotExpired();
+    return tokenNotExpired('jwt');
   }
 
   /**
@@ -41,7 +41,27 @@ export class UserService {
    * @return {string} The User Id if logged in.
    */
   getId(): string {
-    return this.isLoggedIn() ? localStorage.getItem('userId'): '';
+    let k:any = localStorage.getItem('tokendata');
+    return this.isLoggedIn() && k ? JSON.parse(k)['userid'] : '';
+  }
+
+  /**
+   * Returns the user's Token data which includes title, firstname 
+   * lastname and userid
+   * @return {Object} The user's names + id.
+   */
+  getTokendata(): Object {
+    let k:any = localStorage.getItem('tokendata');
+    return this.isLoggedIn() && k ? JSON.parse(k) : {};
+  }
+
+  /**
+   * Return the Jwt of the logged in user if logged in
+   * otherwise and empty string.
+   * @return {string} The User's Jwt if logged in.
+   */
+  getJwt(): string {
+    return this.isLoggedIn() ? localStorage.getItem('jwt'): '';
   }
 
   /**
@@ -56,7 +76,7 @@ export class UserService {
             console.log('somedata', data);
             if(data.success) {
               localStorage.setItem('jwt', data.jwt);
-              localStorage.setItem('userId', data.userId);
+              localStorage.setItem('tokendata', JSON.stringify(data.tokendata));
             }
             return data.success || false;
           });
@@ -69,7 +89,11 @@ export class UserService {
    * @return {Observable<boolean>} The Boolean Observable to be returned and subscribed to.
    */
   logout(): Observable<boolean> {
-    return this.requestLogin(this.getId())
+    let details = {
+      jwt: this.getJwt(),
+      userid: this.getId(),
+    };
+    return this.requestLogout(details)
           .map( (data) => {
             console.log(data);
             if(data.success) {
@@ -86,8 +110,7 @@ export class UserService {
    * @return {Observable<boolean>} The Boolean Observable to be returned and subscribed to.
    */
   signup(details: Object): Observable<boolean> {
-    // return Observable.of(true);
-    return this.submitNewUser('details')
+    return this.submitNewUser(details)
           .map ( (data) => {
             console.log(data);
             return data.success;
@@ -109,11 +132,11 @@ export class UserService {
 
   /**
    * Returns an Observable for the Authenticated HTTP POST request to logout
-   * @param {string} userId - the user to logout
+   * @param {details} Object - the user and jwt to logout
    * @return {any} The Observable Object returned from the request.
    */
-  private requestLogout(userId: string): Observable<any> {
-    return this.auth.post(this.genUri('/api/login'), JSON.stringify({usedId: userId}))
+  private requestLogout(details: Object): Observable<any> {
+    return this.auth.post(this.genUri('/api/logout'), JSON.stringify(details))
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }
@@ -126,6 +149,7 @@ export class UserService {
   private submitNewUser(details: Object): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
+    console.log('about to send', details);
     return this.http.post(this.genUri('/api/newuser'), JSON.stringify(details), options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);

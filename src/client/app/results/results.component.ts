@@ -2,11 +2,7 @@ import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@
 import { Router } from '@angular/router';
 import { QueryService } from '../shared/index';
 import { ReturnQuery } from '../models/index';
-import {
-  TableOptions,
-  ColumnMode,
-  DataTable,
-} from 'angular2-data-table/release/index';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 /**
  * This class represents the lazy loaded ResultsComponent.
@@ -33,17 +29,7 @@ export class ResultsComponent implements OnInit, OnChanges {
 
   personList: ReturnQuery[] = [];
 
-  @ViewChild('mydatatable') table: DataTable;
-
-  options = new TableOptions({
-    columnMode: ColumnMode.force,
-    headerHeight: 50,
-    footerHeight: 50,
-    rowHeight: 50,
-    detailRowHeight: 200,
-    scrollbarV: true,
-    scrollbarH: true
-  });
+  @ViewChild('mydatatable') table : DatatableComponent;
 
   /**
    * Creates an instance of the resultsComponent with the injected
@@ -58,7 +44,8 @@ export class ResultsComponent implements OnInit, OnChanges {
    * Initialise the form OnInit
    */
   ngOnInit() {
-      this.refreshList();
+      console.log(this.table);
+      // this.refreshList();
   }
 
   /**

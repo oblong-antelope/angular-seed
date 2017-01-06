@@ -8721,6 +8721,7 @@ button:hover {
   -ms-flex-pack: center;
   justify-content: center;
   position: relative;
+  -webkit-transform: translateZ(0);
 }
 
 .datatable [hidden] {
@@ -8743,6 +8744,7 @@ button:hover {
 
 .datatable.scroll-horz .datatable-body {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .datatable.fixed-header .datatable-header .datatable-header-inner {
@@ -8790,6 +8792,11 @@ button:hover {
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+}
+
+.datatable .datatable-body-cell:focus,
+.datatable .datatable-header-cell:focus {
+  outline: none;
 }
 
 .datatable .datatable-row-left,
@@ -8942,6 +8949,80 @@ button:hover {
   background: #eee;
 }
 
+.datatable.material.multi-click-selection .datatable-body-row.active,
+.datatable.material.multi-click-selection .datatable-body-row.active .datatable-row-group,
+.datatable.material.multi-selection .datatable-body-row.active,
+.datatable.material.multi-selection .datatable-body-row.active .datatable-row-group,
+.datatable.material.single-selection .datatable-body-row.active,
+.datatable.material.single-selection .datatable-body-row.active .datatable-row-group {
+  background-color: #304ffe;
+  color: #fff;
+}
+
+.datatable.material.multi-click-selection .datatable-body-row.active:hover,
+.datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-row-group,
+.datatable.material.multi-selection .datatable-body-row.active:hover,
+.datatable.material.multi-selection .datatable-body-row.active:hover .datatable-row-group,
+.datatable.material.single-selection .datatable-body-row.active:hover,
+.datatable.material.single-selection .datatable-body-row.active:hover .datatable-row-group {
+  background-color: #193ae4;
+  color: #fff;
+}
+
+.datatable.material.multi-click-selection .datatable-body-row.active:focus,
+.datatable.material.multi-click-selection .datatable-body-row.active:focus .datatable-row-group,
+.datatable.material.multi-selection .datatable-body-row.active:focus,
+.datatable.material.multi-selection .datatable-body-row.active:focus .datatable-row-group,
+.datatable.material.single-selection .datatable-body-row.active:focus,
+.datatable.material.single-selection .datatable-body-row.active:focus .datatable-row-group {
+  background-color: #2041ef;
+  color: #fff;
+}
+
+.datatable.material:not(.cell-selection) .datatable-body-row:hover,
+.datatable.material:not(.cell-selection) .datatable-body-row:hover .datatable-row-group {
+  background-color: #eee;
+  transition-property: background;
+  transition-duration: .3s;
+  transition-timing-function: linear;
+}
+
+.datatable.material:not(.cell-selection) .datatable-body-row:focus,
+.datatable.material:not(.cell-selection) .datatable-body-row:focus .datatable-row-group {
+  background-color: #ddd;
+}
+
+.datatable.material.cell-selection .datatable-body-cell:hover,
+.datatable.material.cell-selection .datatable-body-cell:hover .datatable-row-group {
+  background-color: #eee;
+  transition-property: background;
+  transition-duration: .3s;
+  transition-timing-function: linear;
+}
+
+.datatable.material.cell-selection .datatable-body-cell:focus,
+.datatable.material.cell-selection .datatable-body-cell:focus .datatable-row-group {
+  background-color: #ddd;
+}
+
+.datatable.material.cell-selection .datatable-body-cell.active,
+.datatable.material.cell-selection .datatable-body-cell.active .datatable-row-group {
+  background-color: #304ffe;
+  color: #fff;
+}
+
+.datatable.material.cell-selection .datatable-body-cell.active:hover,
+.datatable.material.cell-selection .datatable-body-cell.active:hover .datatable-row-group {
+  background-color: #193ae4;
+  color: #fff;
+}
+
+.datatable.material.cell-selection .datatable-body-cell.active:focus,
+.datatable.material.cell-selection .datatable-body-cell.active:focus .datatable-row-group {
+  background-color: #2041ef;
+  color: #fff;
+}
+
 .datatable.material .empty-row {
   height: 50px;
 }
@@ -9005,37 +9086,6 @@ button:hover {
   vertical-align: top;
   border-top: 0;
   transition: width .3s ease;
-}
-
-.datatable.material .datatable-body .datatable-body-row:hover,
-.datatable.material .datatable-body .datatable-body-row:hover .datatable-row-group {
-  background-color: #eee;
-  transition-property: background;
-  transition-duration: .3s;
-  transition-timing-function: linear;
-}
-
-.datatable.material .datatable-body .datatable-body-row:focus,
-.datatable.material .datatable-body .datatable-body-row:focus .datatable-row-group {
-  background-color: #ddd;
-}
-
-.datatable.material .datatable-body .datatable-body-row.active,
-.datatable.material .datatable-body .datatable-body-row.active .datatable-row-group {
-  background-color: #304ffe;
-  color: #fff;
-}
-
-.datatable.material .datatable-body .datatable-body-row.active:hover,
-.datatable.material .datatable-body .datatable-body-row.active:hover .datatable-row-group {
-  background-color: #193ae4;
-  color: #fff;
-}
-
-.datatable.material .datatable-body .datatable-body-row.active:focus,
-.datatable.material .datatable-body .datatable-body-row.active:focus .datatable-row-group {
-  background-color: #2041ef;
-  color: #fff;
 }
 
 .datatable.material .datatable-body .progress-linear {
@@ -9130,6 +9180,54 @@ button:hover {
   font-size: 20px;
   line-height: 20px;
   padding: 0 3px;
+}
+
+.datatable-checkbox {
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  vertical-align: middle;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 10px 0;
+}
+
+.datatable-checkbox input[type=checkbox] {
+  position: relative;
+  margin: 0 1rem 0 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.datatable-checkbox input[type=checkbox]:before {
+  transition: all .3s ease-in-out;
+  content: "";
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #f2f2f2;
+}
+
+.datatable-checkbox input[type=checkbox]:checked:before {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  height: .5rem;
+  border-color: #009688;
+  border-top-style: none;
+  border-right-style: none;
+}
+
+.datatable-checkbox input[type=checkbox]:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1rem;
+  height: 1rem;
+  background: #fff;
+  cursor: pointer;
 }
 
 @-webkit-keyframes query {

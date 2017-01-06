@@ -81,7 +81,7 @@ export class UserNavMenuComponent implements AfterViewInit {
         this.pop.hide();
         if(this.userService.isLoggedIn()) {
             let id = this.userService.getId();
-            this.router.navigate(['/user'+id+'/profile']);
+            this.router.navigate(['user/', id, 'profile']);
         }
     }
 }

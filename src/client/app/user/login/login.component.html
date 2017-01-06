@@ -10,7 +10,7 @@
             <div class="form-group" 
                  [ngClass]="{'has-error':!loginForm.controls['email'].valid && loginForm.controls['email'].touched}">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" [formControl]="loginForm.controls['email']">
+                <input autofocus type="email" class="form-control" [formControl]="loginForm.controls['email']">
             </div>
             <div class="form-group" 
                  [ngClass]="{'has-error':!loginForm.controls['password'].valid && loginForm.controls['password'].touched}">

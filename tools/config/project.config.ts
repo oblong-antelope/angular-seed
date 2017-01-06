@@ -41,30 +41,19 @@ export class ProjectConfig extends SeedConfig {
       //{src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
       {src: `node_modules/bootstrap/dist/js/bootstrap.min.js`, inject: 'libs'},
       {src: `node_modules/bootstrap/dist/css/bootstrap.min.css`, inject: true, vendor: true},
-      {src: `node_modules/angular2-data-table/release/datatable.css`, inject: true, vendor: false},
-      {src: `node_modules/angular2-data-table/release/material.css`, inject: true, vendor: false},
+      {src: `node_modules/@swimlane/ngx-datatable/release/datatable.css`, inject: true, vendor: false},
+      {src: `node_modules/@swimlane/ngx-datatable/release/material.css`, inject: true, vendor: false},
       {src: `node_modules/ng2-bs3-modal/bundles/ng2-bs3-modal.js`, inject: true, vendor:false},
     ];
 
-    this.SYSTEM_CONFIG_DEV.paths['angular2-data-table'] =
-      `node_modules/angular2-data-table/release/index`;
-
-    this.SYSTEM_BUILDER_CONFIG.packages['angular2-data-table'] = {
-        main: 'release/index.js',
-        defaultExtension : 'js'
-    };
-
-    this.SYSTEM_CONFIG_DEV.paths['ng2-bs3-modal'] =
-      `node_modules/ng2-bs3-modal`;
-
     let additionalPackages: ExtendPackages[] = [
-        // required for dev build 
+        // required for bootstrap dev build 
         {
           name:'ng2-bootstrap',
           path:'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.min.js'
         },
 
-        // required for prod build
+        // required for bootstrap prod build
         {
           name:'ng2-bootstrap/*',
           path:'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.min.js'
@@ -84,6 +73,31 @@ export class ProjectConfig extends SeedConfig {
         {
           name:'angular2-jwt',
           path:'node_modules/angular2-jwt/angular2-jwt.js'
+        },
+
+        //data table
+        {
+          name: '@swimlane/ngx-datatable',
+          path:  `node_modules/@swimlane/ngx-datatable/release/index.js`,
+          packageMeta: {
+             main: 'release/index.js',
+             defaultExtension : 'js'
+          }
+        },
+
+        {
+          name: '@swimlane/ngx-datatable/*',
+          path:  `node_modules/@swimlane/ngx-datatable/release/index.js`,
+          packageMeta: {
+             main: 'release/index.js',
+             defaultExtension : 'js'
+          }
+        },
+
+        //modal
+        {
+          name: 'ng2-bs3-modal',
+          path: `node_modules/ng2-bs3-modal/ng2-bs3-modal.js`
         }
       ];
     this.addPackagesBundles(additionalPackages);

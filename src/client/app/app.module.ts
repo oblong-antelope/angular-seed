@@ -13,7 +13,7 @@ import { SharedModule } from './shared/shared.module';
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
           tokenName: 'jwt',
-          tokenGetter: (() => localStorage.getItem('jwt')),
+          tokenGetter: () => localStorage.getItem('jwt'),
           globalHeaders: [{'Content-Type':'application/json'}],
      }), http, options);
 }

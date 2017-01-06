@@ -36,17 +36,23 @@ export class LogoutModalComponent implements AfterViewInit {
   constructor(private router: Router, private us: UserService) {}
 
   ngAfterViewInit() {
-      this.us.logout();
-      this.modal.open();
+      this.us.logout()
+            .subscribe(
+                success => {
+                    if(success) {
+                        this.modal.open();
+                    }
+                },
+                error => console.log(error),
+                () => console.log('Logout Request Completed')
+            );
   }
 
   onClose() {
-      console.log('signup close modal');
       this.closeModal();
   }
 
   onDismiss() {
-      console.log('signup dismiss modal');
       this.closeModal();
   }
 
@@ -54,5 +60,6 @@ export class LogoutModalComponent implements AfterViewInit {
     // Providing a `null` value to the named outlet
     // clears the contents of the named outlet
     this.router.navigate([{ outlets: { modal: null }}]);
+    this.router.navigate(['/']);
   }
 }

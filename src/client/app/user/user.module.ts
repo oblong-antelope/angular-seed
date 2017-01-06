@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { DropdownModule, PopoverModule, AlertModule } from 'ng2-bootstrap';
 
+import { AuthGuard } from './auth-guard/auth-guard.service';
 import { UserService } from './user-service/user.service';
 
 import { LoginModalComponent } from './login/login.component';
@@ -29,7 +30,7 @@ import { UserRoutingModule } from './user-routing.module';
                  UserProfileComponent,
                  SignupModalComponent,
                  UserNavMenuComponent],
-  providers: [UserService],
+  providers: [UserService, AuthGuard],
   exports: [UserNavMenuComponent]
 })
 export class UserModule { }

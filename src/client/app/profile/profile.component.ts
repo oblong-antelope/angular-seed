@@ -127,7 +127,8 @@ export class ProfileComponent implements OnInit, OnChanges {
               this.totalValue += k.value;
               return k.word;
             });
-    this.displayKeywordList = this.getRandom(this.sortedKeywordList, 6);
+    this.displayKeywordList
+      = this.getRandom(this.sortedKeywordList, Math.min(6, this.sortedKeywordList.length));
   }
 
   /**
