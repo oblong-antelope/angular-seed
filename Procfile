@@ -1,1 +1,1 @@
-web: npm run serve.prod.exp -- --port $PORT
+web: npm run serve.prod_no_build -- --port $PORT
