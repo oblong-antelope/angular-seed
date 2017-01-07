@@ -1,1 +1,1 @@
-web: http-server ./dist/prod -p $PORT -U -a localhost
+web: npm run http-server ./dist/prod -p $PORT
