@@ -19,28 +19,18 @@ export class UserNavMenuComponent implements AfterViewInit {
     /**
      * Creates an instance of the UserNavMenuComponent.
      */
-    constructor(private router: Router, private userService: UserService) {}
+    constructor(private router: Router,
+                private userService: UserService) {}
 
 
+    /**
+     * Run after the view has initialised,
+     * If we are on the home page, popup should show by default
+     */
     ngAfterViewInit() {
-        setTimeout(() => this.showPop(), 500);
-        setTimeout(() => this.hidePop(), 3000);
-    }
-
-    /**
-     * Shows the popover for the initial show
-     */
-    showPop() {
-        this.pop.popoverTitle = 'The User Menu';
-        this.pop.show();
-    }
-
-    /**
-     * Hides the popover for the initial show
-     */
-    hidePop() {
-        this.pop.popoverTitle = '';
-        this.pop.hide();
+        if(this.router.url === '/') {
+            setTimeout(() => this.pop.show(), 1000);
+        }
     }
 
     /**

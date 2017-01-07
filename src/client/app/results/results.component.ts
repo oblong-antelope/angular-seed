@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { QueryService } from '../shared/index';
 import { ReturnQuery } from '../models/index';
@@ -14,7 +14,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
   styleUrls: ['results.component.css'],
 })
 
-export class ResultsComponent implements OnInit, OnChanges {
+export class ResultsComponent implements OnChanges {
 
   @Input('query') query:string;
 
@@ -39,14 +39,6 @@ export class ResultsComponent implements OnInit, OnChanges {
    * @param {Router} router - The inected Router
    */
   constructor(private queryService: QueryService, private router: Router) {}
-
-  /**
-   * Initialise the form OnInit
-   */
-  ngOnInit() {
-      console.log(this.table);
-      // this.refreshList();
-  }
 
   /**
    * Handler on input changes
