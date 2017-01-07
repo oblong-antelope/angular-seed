@@ -1,1 +1,1 @@
-web: http-server ./dist/prod -p -U $PORT
+web: http-server ./dist/prod -p $PORT -U -a localhost
