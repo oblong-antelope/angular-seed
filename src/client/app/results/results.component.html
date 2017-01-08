@@ -19,22 +19,22 @@
     [scrollbarH]="true"
     [rows]='personList'
     (onPageChange)="paged($event)"
-    (onRowClick)="toggleExpandRow($event.row)">
+    (activate)="toggleExpandRow($event.row)">
 
     <ngx-datatable-row-detail>
-      <template let-row="row">
-        <div class="container">
+      <template let-row="row" ngx-datatable-row-detail-template>
+        <div class="row-detail container">
           <div class="row">
-            <div class="col-sm-4">
-              <h4>Email:</h4>
-              <p>{{row.email}}</p>
-              <h4>Faculty:</h4>
-              <p>{{row.faculty}}</p>
+            <div class="col-sm-5">
+              <p><strong>{{row.name.title}}</strong> {{row.name.first}} {{row.name.last}}</p> 
+              <p>{{row.department}}</p>
               <button type="button" class="btn btn-primary btn-arrow-right info-btn" 
-                                    (click)="expandedButtonPress(row)" >More Details</button>
+                      (click)="expandedButtonPress(row)">
+                More Details
+              </button>
             </div>
-            <div class="col-sm-8">
-              <h6>Keywords:</h6>
+            <div class="col-sm-7">
+              <h6>Top Keywords:</h6>
               <li *ngFor="let word of row.keywords">{{word}}</li>
             </div>
           </div>
@@ -42,20 +42,20 @@
       </template>
     </ngx-datatable-row-detail>
 
-    <ngx-datatable-column name="" width="40">
-      <template let-row="row">
+    <ngx-datatable-column name="" width="50">
+      <template let-row="row" ngx-datatable-cell-template>
         <strong>{{row.$$index}}</strong>
       </template>
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Name" width="160">
-      <template let-value="value">
-        <strong>{{value.name.first}} {{value.name.last}}</strong> ({{value.name.title}})
+      <template let-value="value" ngx-datatable-cell-template>
+        <strong>{{value.first}} {{value.last}}</strong>
       </template>
     </ngx-datatable-column>
 
     <ngx-datatable-column name="Department" width=300>
-      <template let-row="row" let-value="value">
+      <template let-row="row" let-value="value" ngx-datatable-cell-template>
         {{value}}
       </template>
     </ngx-datatable-column>

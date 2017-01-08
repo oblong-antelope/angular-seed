@@ -40,9 +40,10 @@ body{
   margin-right: auto;
 }
 
-.datatable-row-detail {
-  height: 100%;
+.row-detail {
+  width: 100%;
   word-wrap: normal;
+  white-space: normal;
 }
 
 .datatable {

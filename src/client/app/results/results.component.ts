@@ -88,6 +88,7 @@ export class ResultsComponent implements OnChanges {
    * @param {ReturnQuery} row: the row to toggle
    */
   toggleExpandRow(row: any) {
+    console.log(row);
     this.table.toggleExpandRow(row);
   }
 

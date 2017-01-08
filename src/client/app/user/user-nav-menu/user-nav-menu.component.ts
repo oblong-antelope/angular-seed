@@ -14,6 +14,8 @@ import { PopoverDirective } from 'ng2-bootstrap';
 })
 export class UserNavMenuComponent implements AfterViewInit {
 
+    ishome : boolean = false;
+
     @ViewChild(PopoverDirective) pop :PopoverDirective;
 
     /**
@@ -29,6 +31,7 @@ export class UserNavMenuComponent implements AfterViewInit {
      */
     ngAfterViewInit() {
         if(this.router.url === '/') {
+            this.ishome = true;
             setTimeout(() => this.pop.show(), 1000);
         }
     }
