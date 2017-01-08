@@ -50,7 +50,7 @@
 
     <ngx-datatable-column name="Name" width="160">
       <template let-value="value">
-        <strong>{{value.first}} {{value.last}}</strong>
+        <strong>{{value.name.first}} {{value.name.last}}</strong> ({{value.name.title}})
       </template>
     </ngx-datatable-column>
 

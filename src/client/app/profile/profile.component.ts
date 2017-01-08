@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { Profile } from '../models/index';
 import { QueryService } from '../shared/index';
 import { UserService } from '../user/index';
-import { KeywordGridModalComponent } from './modal/keyword-grid-modal.component';
+import { KeywordGridModalComponent,
+         AddKeywordModalComponent,
+         PublicationsModalComponent } from './modal/index';
 
 /**
  * This class represents the lazy loaded AboutComponent.
@@ -13,7 +15,7 @@ import { KeywordGridModalComponent } from './modal/keyword-grid-modal.component'
   templateUrl: 'profile.component.html',
   styleUrls: ['profile.component.css']
 })
-export class ProfileComponent implements OnInit, OnChanges {
+export class ProfileComponent implements OnChanges {
 
   @Input('id') id: string = '';
 
@@ -31,7 +33,12 @@ export class ProfileComponent implements OnInit, OnChanges {
 
   totalValue: number = 1;
 
-  @ViewChild('myModal') modal: KeywordGridModalComponent;
+  /**
+   * All The Modals
+   */
+  @ViewChild('keywordGridModal') keywordGridModal: KeywordGridModalComponent;
+  @ViewChild('addKeywordModal') addKeywordModal: AddKeywordModalComponent;
+  @ViewChild('publicationsModal') publicationsModal: PublicationsModalComponent;
 
   /**
    * Creates an instance of the ProfileComponent with the injected
@@ -45,14 +52,6 @@ export class ProfileComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Initialises the id and gets the profile.
-   * Uses the ActivatedRoute to get the url parameters and data
-   */
-  ngOnInit() {
-    // this.updateProfile();
-  }
-
-  /**
    * Updates profile when we change the id
    */
   ngOnChanges(changes: any) {
@@ -62,7 +61,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   /**
    * Returns true if a user is currently logged in
    */
-  idloggedin() {
+  isloggedin() {
     return this.userService.isLoggedIn();
   }
 
@@ -71,8 +70,8 @@ export class ProfileComponent implements OnInit, OnChanges {
    * and the currently viewed profile is theres
    * Check this is true before allowing keyword editing
    */
-  isloggedinusersprofile() {
-    return this.userService.isLoggedIn() &&
+  iscurrentuser() {
+    return this.isloggedin() &&
               this.userService.getId() === this.id;
   }
 
@@ -128,17 +127,14 @@ export class ProfileComponent implements OnInit, OnChanges {
               return k.word;
             });
     this.displayKeywordList
-      = this.getRandom(this.sortedKeywordList, Math.min(6, this.sortedKeywordList.length));
+      = this.getRandom(this.sortedKeywordList, Math.min(5, this.sortedKeywordList.length));
   }
 
   /**
-   * Returns the keys of the publications profile
+   * Returns the number of publications profile
    */
-  getPublications() {
-    console.log(this.profile.publications);
-    // let pubs: string[] = Object.keys(this.profile.publications);
-    // console.log(pubs);
-    return ['publication1', 'publication2'];
+  getNumPublications() {
+    return this.profile.publications ? this.profile.publications.length : 0;
   }
 
   /**
@@ -149,31 +145,60 @@ export class ProfileComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Opens a modal to display all keywords in sorted order,
-   * and allow editing (if logged in)
+   * MODAL HANDLING
    */
-  openMoreModal() {
-    this.modal.open();
+
+
+  /**
+   * Opens the Edit modal
+   */
+  openEditModal() {
+    return;
   }
 
   /**
-   * Handler when a new keyword is submitted or removed
-   * @param {any} e - {keyword: string, edit: string}
+   * Opens the contact modal
    */
-  onEditKeyword(e: any) {
-    console.log(e);
-    if(e.edit === 'new') {
-      this.profile.keywords[e.keyword] = e.value;
-      this.sortProfileKeywords();
-    }
-
-    if(e.edit === 'remove') {
-      let idx = this.keywordList.indexOf(e.keyword);
-      if( idx !== -1) {
-        this.keywordList.splice(idx);
-      }
-    }
+  openContactModal() {
+    return;
   }
+
+  /**
+   * Opens the publications modal
+   */
+  openPublicationsModal() {
+    this.publicationsModal.open();
+  }
+
+  /**
+   * Opens the add Keyword Modal
+   */
+  openAddKeywordModal() {
+    this.addKeywordModal.open();
+  }
+
+  /**
+   * Handler for the adding of a keyword
+   */
+  onAddKeyword(word: string) {
+    this.profile.keywords[word] = 200;
+    this.sortProfileKeywords();
+  }
+
+
+  /**
+   * Opens a modal to display all keywords in sorted order,
+   * and allow editing (if logged in)
+   */
+  openKeywordGridModal() {
+    this.keywordGridModal.open();
+  }
+
+
+  /**
+   * UTILS
+   */
+
 
   /**
    * Samples n values from an array.

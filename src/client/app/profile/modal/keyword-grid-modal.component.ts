@@ -27,15 +27,8 @@ declare var Chart:any;
 })
 export class KeywordGridModalComponent implements OnInit, OnChanges {
     @Input('keywords') keywords: any[] = [];
-    @Output('keywordsSubmit') keywordsSubmit: EventEmitter<any> = new EventEmitter();
 
     @ViewChild('myModal') modal: ModalComponent;
-
-    /**
-     * Keyword Modal Properties
-     */
-    @ViewChild('keywordModal') keywordmodal: ModalComponent;
-    newkeyword: string = '';
 
     /**
     * Chart Properties
@@ -89,28 +82,6 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
         return this.displayTab === n;
     }
 
-    //New Keyword Modal Controls
-
-    /**
-     * Opens up the add keyword dialogue
-     */
-    openAddKeyword() {
-        this.keywordmodal.open();
-    }
-
-    /**
-     * Submits a new keyword
-     * emits the event back to parent element
-     */
-    submitNewKeyword() {
-        console.log(this.newkeyword);
-        this.keywordsSubmit.emit({
-            keyword: this.newkeyword,
-            edit: 'new',
-            value: this.keywords[0].value
-        });
-        this.keywordmodal.close();
-    }
 
     //Bar Chart Displays
     /**

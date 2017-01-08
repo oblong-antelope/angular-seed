@@ -19,20 +19,6 @@
             <button type="button" class="btn btn-default" (click)="displayTab=0">Chart View</button>
             <button type="button" class="btn btn-default" (click)="displayTab=1">Grid View</button>
         </div>
-        <button type="button" class="btn btn-primary btn-add-kword" (click)="openAddKeyword()">Add Keyword</button>
         <button type="button" class="btn btn-primary" (click)="modal.close()">Ok</button>
-    </modal-footer>
-</modal>
-
-<!--Add Word Modal-->
-<modal #keywordModal [size]="'sm'">
-    <modal-header [show-close]="false">
-        <h4 class="modal-title">Add A Keyword</h4>
-    </modal-header>
-    <modal-body>
-        <input type="text" class="form-control" [(ngModel)]="newkeyword">
-    </modal-body>
-    <modal-footer>
-        <button type="button" class="btn btn-primary" (click)="submitNewKeyword()">Submit</button>
     </modal-footer>
 </modal>
