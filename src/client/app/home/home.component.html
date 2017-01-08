@@ -1,11 +1,9 @@
 <div class="container">
-    <div class="left-container" #leftContainer>
+    <div class="left-container unselectable" #leftContainer>
         <!--<button class="btn btn-primary btn-toggle btn-sm" (click)="toggleRight()">Toggle Right Bar</button>-->
         <div *ngIf="home_route">
-            <div>
-                <a class="logo" [routerLink]="['/']" [routerLinkActive]="['router-link-active']" title="Welcome to Oblong!">
-                    <img src="../../assets/logo_full.svg" alt="Oblong Icon" class="img" width="1000" height="500">
-                </a>
+            <div class="logo">
+                <img src="../../assets/logo_full.svg" alt="Oblong Icon" class="img" width="1000" height="500">
             </div>
             <!--<button class="btn btn-primary btn-lg btn-login" (click)="onLoginButtonPress()">Login</button>-->
             <div class="search">

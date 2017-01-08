@@ -74,3 +74,8 @@ button:hover {
   background-color: #1c1c8c
 }
 
+.unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
