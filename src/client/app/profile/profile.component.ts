@@ -4,7 +4,8 @@ import { QueryService } from '../shared/index';
 import { UserService } from '../user/index';
 import { KeywordGridModalComponent,
          AddKeywordModalComponent,
-         PublicationsModalComponent } from './modal/index';
+         PublicationsModalComponent,
+         EditProfileModalComponent } from './modal/index';
 
 /**
  * This class represents the lazy loaded AboutComponent.
@@ -39,6 +40,7 @@ export class ProfileComponent implements OnChanges {
   @ViewChild('keywordGridModal') keywordGridModal: KeywordGridModalComponent;
   @ViewChild('addKeywordModal') addKeywordModal: AddKeywordModalComponent;
   @ViewChild('publicationsModal') publicationsModal: PublicationsModalComponent;
+  @ViewChild('editProfileModal') editProfileModal: EditProfileModalComponent;
 
   /**
    * Creates an instance of the ProfileComponent with the injected
@@ -153,7 +155,7 @@ export class ProfileComponent implements OnChanges {
    * Opens the Edit modal
    */
   openEditModal() {
-    return;
+    this.editProfileModal.open();
   }
 
   /**

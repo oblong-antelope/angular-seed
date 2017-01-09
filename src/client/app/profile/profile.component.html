@@ -12,10 +12,10 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li *ngIf="!iscurrentuser()">
-                <a href="#" (click)="openContactModal()">Contact</a>
+                <a (click)="openContactModal()">Contact</a>
             </li>
             <li *ngIf="iscurrentuser()">
-                <a href="#" (click)="openEditModal()">Edit</a>
+                <a (click)="openEditModal()">Edit</a>
             </li>
         </ul>
 
@@ -93,3 +93,4 @@
 
 <sd-publications-modal #publicationsModal [publications]="profile.publications"></sd-publications-modal>
 
+<sd-edit-profile-modal #editProfileModal [profile]="profile"></sd-edit-profile-modal>

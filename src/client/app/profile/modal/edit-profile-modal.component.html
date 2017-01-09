@@ -1,0 +1,71 @@
+<modal #editModal (onOpen)="onOpen()" (onClose)="close()" (onDismiss)="close()">
+    <form [formGroup]="editForm" (ngSubmit)="save(editForm.value)">
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">Edit Profile</h4>
+        </modal-header>
+        <modal-body>
+            <!--Name-->
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label for="title">Title</label>
+                    <input id="title" type="text" class="form-control" [formControl]="editForm.controls['title']">
+                </div>
+                <div class="form-group col-sm-4"> 
+                    <label for="firstname">Firstname</label>
+                    <input id="firstname" type="text" class="form-control" [formControl]="editForm.controls['firstname']">
+                </div>
+                <div class="form-group col-sm-4">
+                    <label for="lastname">Lastname</label>
+                    <input id="lastname" type="text" class="form-control" [formControl]="editForm.controls['lastname']">
+                </div>
+            </div>
+
+            <!--Department-->
+            <div class="form-group">
+                <label for="department">Deparment</label>
+                <input id="department" type="text" class="form-control" [formControl]="editForm.controls['department']">
+            </div>
+
+
+            <!--Faculty-->
+            <div class="form-group">
+                <label for="faculty">Faculty</label>
+                <input id="faculty" type="text" class="form-control" [formControl]="editForm.controls['faculty']">
+            </div>
+
+            <!--Email-->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" class="form-control" [formControl]="editForm.controls['email']">
+            </div>
+
+            
+            <!--Website-->
+            <div class="form-group">
+                <label for="website">Website</label>
+                <input id="website" type="text" class="form-control" [formControl]="editForm.controls['website']">
+            </div>
+
+        </modal-body>
+        <modal-footer>
+            <button type="button" class="btn btn-default" (click)="close()">Cancel</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!editForm.dirty">Save</button>
+            <img *ngIf="loading" src="../../assets/circle-loader.gif" alt="Loading" style="width:15px;height:15px;">
+        </modal-footer>
+    </form>
+</modal>
+
+<modal #confirmModal (onClose)="onConfirmModalContinue()" (onDismiss)="onConfirmModalContinue()">
+    <modal-header>
+        <h4 class="modal-title">Unsaved Changes</h4>
+    </modal-header>
+    <modal-body>
+        You have made some changes, and have not saved
+        If you continue, those changes will be lost.
+        Cancel or click away to continue editing
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" (click)="onConfirmModalContinue()">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onConfirmModalClose()">Continue</button>
+    </modal-footer>
+</modal>

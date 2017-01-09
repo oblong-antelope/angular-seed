@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ProgressbarModule } from 'ng2-bootstrap';
 
@@ -9,14 +10,21 @@ import { ProfileComponent } from './profile.component';
 import { KeywordGridModalComponent } from './modal/keyword-grid-modal.component';
 import { AddKeywordModalComponent } from './modal/add-keyword.modal.component';
 import { PublicationsModalComponent } from './modal/publications.modal.component';
+import { EditProfileModalComponent } from './modal/edit-profile-modal.component';
 
 
 @NgModule({
-  imports: [CommonModule, SharedModule, UserModule, ProgressbarModule.forRoot()],
+  imports: [CommonModule,
+            SharedModule,
+            FormsModule,
+            ReactiveFormsModule,
+            UserModule,
+            ProgressbarModule.forRoot()],
   declarations: [ProfileComponent,
                  KeywordGridModalComponent,
                  AddKeywordModalComponent,
-                 PublicationsModalComponent],
+                 PublicationsModalComponent,
+                 EditProfileModalComponent],
   exports: [ProfileComponent]
 })
 export class ProfileModule {}
