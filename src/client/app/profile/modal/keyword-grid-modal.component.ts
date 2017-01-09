@@ -42,6 +42,19 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
     displayTab: number = 0;
 
     /**
+     * Grid Properties
+     */
+    rows: any[] = [];
+
+    temp: any[] = [];
+
+    columns = [
+        { prop: 'Keyword' },
+        { name: 'Edit' },
+        { name: 'Confirm' }
+    ];
+
+    /**
      * Generate the bar chart on init
      */
     ngOnInit() {
@@ -54,6 +67,7 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
      */
     ngOnChanges(changes:any) {
         if(changes.keywords !== undefined) {
+            this.genRowValues();
             if(this.chart !== undefined) {
                 this.chart.destroy();
             }
@@ -82,6 +96,29 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
         return this.displayTab === n;
     }
 
+    // Grid Keywords
+    genRowValues() {
+         let rows = this.keywords.map(obj => {
+            return {'keyword': obj.word, 'edit':0, submit:'false'};
+        });
+
+        //cache list
+        this.temp = [...rows];
+
+        this.rows = rows;
+    }
+
+    updateDatatableFilter(event: any) {
+        let val = event.target.value;
+
+        // filter our data
+        let temp = this.temp.filter( (d) => {
+            return d.keyword.toLowerCase().indexOf(val) !== -1 || !val;
+        });
+
+        // update the rows
+        this.rows = temp;
+    }
 
     //Bar Chart Displays
     /**

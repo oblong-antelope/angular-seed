@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ProgressbarModule } from 'ng2-bootstrap';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { UserModule } from '../user/user.module';
 import { ProfileComponent } from './profile.component';
@@ -16,6 +17,7 @@ import { EditProfileModalComponent } from './modal/edit-profile-modal.component'
 @NgModule({
   imports: [CommonModule,
             SharedModule,
+            NgxDatatableModule,
             FormsModule,
             ReactiveFormsModule,
             UserModule,

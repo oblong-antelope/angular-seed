@@ -3,7 +3,8 @@
                 (onClose)="onClose()" 
                 (onDismiss)="onClose()">
     <modal-header [show-close]="true">
-        <h4 class="modal-title">Profile Insight</h4>
+        <h4 class="modal-title" *ngIf="isTab(0)">Profile Insight</h4>
+        <h4 class="modal-title" *ngIf="isTab(1)">Modify Keywords</h4>
         <p>These keywords were gained through text mining of academic literature</p>
     </modal-header>
     <modal-body>
@@ -11,13 +12,49 @@
             <canvas #keyworddisplay></canvas>
         </div>
         <div class="grid-container" *ngIf="isTab(1)">
-            <p>Other display</p>
+            <input
+                type='text'
+                class='form-control'
+                placeholder='Filter by Keywords...'
+                (keyup)='updateDatatableFilter($event)'
+            />
+             <ngx-datatable
+                class='material'
+                [columns]="columns"
+                [columnMode]="'force'"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [rowHeight]="'auto'"
+                [limit]="10"
+                [rows]='rows'>
+                <ngx-datatable-column name="Keyword">
+                    <template let-value="value" ngx-datatable-cell-template>
+                        <strong>{{value}}</strong>
+                    </template> 
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Edit">
+                    <template let-row="row" ngx-datatable-cell-template>
+                        <div class="form-group">
+                            <select class="form-control" id="exampleSelect1">
+                            <option value="0">Ok</option>
+                            <option value="1">Irrelevant</option>
+                            <option value="2">Garbage</option>
+                            </select>
+                        </div>
+                    </template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Confirm">
+                    <template let-row="row" ngx-datatable-cell-template>
+                        <button type="button" class="btn btn-default">Submit</button>
+                    </template>
+                </ngx-datatable-column>
+            </ngx-datatable>
         </div>
     </modal-body>
     <modal-footer>
         <div class="btn-group" role="group" style="float: left;" aria-label="...">
-            <button type="button" class="btn btn-default" (click)="displayTab=0">Chart View</button>
-            <button type="button" class="btn btn-default" (click)="displayTab=1">Grid View</button>
+            <button type="button" class="btn btn-default" (click)="displayTab=0">Profile Insight</button>
+            <button type="button" class="btn btn-default" (click)="displayTab=1">Modify Keywords</button>
         </div>
         <button type="button" class="btn btn-primary" (click)="modal.close()">Ok</button>
     </modal-footer>
