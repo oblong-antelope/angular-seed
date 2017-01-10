@@ -16,6 +16,24 @@
   padding: 0;
 }
 
+.colouredSquare {
+  float: left;
+  width: 20px;
+  height: 10px;
+  margin: 5px;
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.legend {
+    float: right;
+    margin-top: -200px;
+    margin-right: 0;
+    overflow: visible;
+    position: relative;
+    width: auto;
+    z-index: 100;
+}
+
 body{
   font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
   text-align: center;

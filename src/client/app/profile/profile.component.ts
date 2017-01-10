@@ -158,6 +158,11 @@ export class ProfileComponent implements OnChanges {
     this.editProfileModal.open();
   }
 
+  editModalUpdateProfile(newprof: Profile) {
+    console.log(newprof);
+    // this.profile = newprof;
+  }
+
   /**
    * Opens the contact modal
    */

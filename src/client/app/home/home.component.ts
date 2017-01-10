@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild, Renderer, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { QueryService } from '../shared/index';
 
 /**
  * This class represents the lazy loaded home
@@ -35,7 +36,8 @@ export class HomeComponent implements OnInit {
   /**
    * Graph Variables
    */
-  graph_context: Object = {};
+  graph_context: string = 'home';
+  graph_content: Object = {};
 
   /**
    * View Variables
@@ -52,7 +54,8 @@ export class HomeComponent implements OnInit {
    */
   constructor(private renderer:Renderer,
               private router: Router,
-              private ar: ActivatedRoute) {}
+              private ar: ActivatedRoute,
+              private qs: QueryService) {}
 
   /**
    * Runs on View Init
@@ -80,6 +83,9 @@ export class HomeComponent implements OnInit {
     this.ar.params.subscribe(
       params => {
         this.results_query = params['query'];
+        this.graph_context = 'results';
+        this.graph_content
+            = {api: this.qs.generateQueryEndpoint(this.results_query)};
       },
       error => this.routeErrorRedirect(error)
     );
@@ -95,7 +101,8 @@ export class HomeComponent implements OnInit {
     this.ar.params.subscribe(
       params => {
         this.profile_url_id = params['id'];
-        this.graph_context = {personIdx: this.profile_url_id};
+        this.graph_context = 'profile';
+        this.graph_content = {personIdx: this.profile_url_id};
       },
       error => this.routeErrorRedirect(error)
     );
@@ -108,6 +115,7 @@ export class HomeComponent implements OnInit {
   initHome() {
     this.home_route = true;
     this.right_open = false;
+    this.graph_context = 'home';
   }
 
   /**

@@ -2,6 +2,7 @@ import { Component,
          ElementRef,
          ViewChild,
          OnInit,
+         OnChanges,
          Renderer,
          EventEmitter,
          Output,
@@ -20,17 +21,30 @@ declare var Chart:any;
   selector: 'sd-graph',
   template: `<div class='container'>
                 <canvas #mychart></canvas>
+                <table class="table legend" *ngIf="data!==undefined && data.legend!==undefined">
+                    <tbody>
+                        <tr *ngFor="let item of data.legend">
+                            <td>
+                                <div class="colouredSquare" 
+                                    [ngStyle]="{background: item.colour}">
+                                </div>
+                            </td>
+                            <td>{{item.text}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>`,
   styleUrls: ['graph.component.css'],
 })
 
-export class GraphComponent implements OnInit {
+export class GraphComponent implements OnInit, OnChanges {
 
   data: DataSet;
 
   chart: any;
 
   @Input('content') content: Object = {};
+  @Input('context') context: string = 'home';
 
   @Output() pointClick: EventEmitter<Object> = new EventEmitter();
 
@@ -59,6 +73,13 @@ export class GraphComponent implements OnInit {
       this.setCanvasSize();
       this.setOptions();
       this.initChart();
+  }
+
+  /**
+   * Data is updated and chart is updated on every
+   * context switch
+   */
+  ngOnChanges() {
       this.getDataAndUpdateChart();
   }
 
@@ -86,13 +107,15 @@ export class GraphComponent implements OnInit {
    * Saves the data into chart data parameter to bind to
    */
   getDataAndUpdateChart() {
-      this.graphService.getData(this.content)
+      this.graphService.getData(this.context, this.content)
         .subscribe(
             data => {
                 this.data = data;
                 this.updateChart();
             },
-            error => console.log(error),
+            error => {
+                console.log('Graph data get errored', error);
+            },
             () => console.log('Request for graph data completed')
         );
   }
@@ -156,7 +179,7 @@ export class GraphComponent implements OnInit {
             intersect: false
         },
         legend:{
-            display:false
+            display: false,
         },
         scales: {
             xAxes: [{

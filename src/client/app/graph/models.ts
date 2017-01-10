@@ -1,5 +1,6 @@
 export interface DataSet {
     datasets: DataPoint[];
+    legend?: Object;
 }
 
 export interface DataPoint {

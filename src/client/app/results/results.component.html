@@ -4,6 +4,7 @@
 
 <sd-loading-bar *ngIf="loading"></sd-loading-bar>
 <p *ngIf='!querySuccessful && submitted'>Search Was Not Successful, Please try another Search Term</p>
+<p *ngIf='errorMessage !== "" && submitted'>An Error Occured {{errorMessage}}</p>
 
 <br>
 

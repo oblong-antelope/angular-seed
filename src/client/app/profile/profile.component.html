@@ -93,4 +93,5 @@
 
 <sd-publications-modal #publicationsModal [publications]="profile.publications"></sd-publications-modal>
 
-<sd-edit-profile-modal #editProfileModal [profile]="profile"></sd-edit-profile-modal>
+<sd-edit-profile-modal #editProfileModal [profile]="profile"
+                                    (onEdit)="editModalUpdateProfile($event)"></sd-edit-profile-modal>

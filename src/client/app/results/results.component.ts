@@ -18,7 +18,7 @@ export class ResultsComponent implements OnChanges {
 
   @Input('query') query:string;
 
-  errorMessage: string;
+  errorMessage: string = '';
 
   expanded: any = {};
   timeout: any = 100;
@@ -56,12 +56,13 @@ export class ResultsComponent implements OnChanges {
     this.queryService.getList(this.query)
       .subscribe(
         data => {
+          console.log('search results', data);
           this.querySuccessful = data.length !== 0;
           this.personList = data;
           this.submitted = true;
           this.loading = false;
         },
-        error =>  {this.errorMessage = <any>error; console.log(error);},
+        error =>  {this.errorMessage = <any>error; console.log(error); this.loading = false;},
         () => console.log('Results List Request Complete')
       );
   }

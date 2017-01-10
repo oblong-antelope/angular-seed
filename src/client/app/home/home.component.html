@@ -17,7 +17,8 @@
             <sd-user-nav-menu></sd-user-nav-menu>
         </div>
         <div class ="graph">
-            <sd-graph [content]="graph_context"
+            <sd-graph [context]="graph_context"
+                      [content]="graph_content"
                       (pointClick)="onGraphPointClick($event)">
             </sd-graph>
         </div>

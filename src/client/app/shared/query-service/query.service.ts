@@ -16,7 +16,7 @@ import 'rxjs/add/operator/do';  // for debugging
 @Injectable()
 export class QueryService {
 
-  API = Config.API;
+  API = Config.BACKEND_API;
 
   /**
    * Creates a new NameListService with the injected Http.
@@ -26,14 +26,21 @@ export class QueryService {
   constructor(private http: Http) {}
 
   /**
-   * Returns an Observable for the HTTP POST request
-   * @param {FormQuery} query - the query string to send to the REST Server
-   * @return {ReturnQuery[]} The Observable for the HTTP request.
+   * Generates the query endpoint for a given query
    */
-  getList(query: string): Observable<ReturnQuery[]> {
+  generateQueryEndpoint(query: string) : string {
+    return this.genUri('/api/people?query=' + query);
+  }
+
+  /**
+   * Returns an Observable for the HTTP GET request
+   * @param {string} query - the query string to send to the REST Server
+   * @return {any} The Observable for the HTTP request.
+   */
+  getList(query: string): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.genUri('/api/queries'), query, options)
+    return this.http.get(this.genUri('/api/people?query=' + query), options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }

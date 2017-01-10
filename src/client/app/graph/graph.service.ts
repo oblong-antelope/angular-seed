@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Config } from '../shared/index';
 import { DataSet } from './models';
 
 import 'rxjs/add/observable/throw';
@@ -13,8 +14,9 @@ import 'rxjs/add/operator/do';  // for debugging
 @Injectable()
 export class GraphService {
 
-  OtherAPI = 'https://oblong-relentless.herokuapp.com' ;
-  ProfileAPI = 'https://oblong-onslaught.herokuapp.com' ;
+  HomeAPI = Config.VIS_HOME_API;
+  SearchAPI = Config.VIS_SEARCH_API;
+  ProfileAPI = Config.VIS_PROFILE_API;
 
   // headers = new Headers({ 'Content-Type': 'application/json'});
   // options = new RequestOptions({ headers: this.headers });
@@ -30,11 +32,13 @@ export class GraphService {
    * Splitter to ensure the correct api is called
    * @param {Object} query - the query object to determine the correct api is called
    */
-  getData(query: Object) {
-    if(Object.keys(query).length === 0 && query.constructor === Object) {
-      return this.getOtherData();
-    } else {
+  getData(path:string, query: Object) {
+    if(path === 'profile') {
       return this.getProfileData(query);
+    } else if(path === 'results') {
+      return this.getSearchData(query);
+    } else {
+      return this.getHomeData();
     }
   }
 
@@ -45,8 +49,15 @@ export class GraphService {
    */
   getProfileData(query: Object): Observable<DataSet> {
     console.log('Getting Data From', this.ProfileAPI, JSON.stringify(query));
-    return this.http.post(this.ProfileAPI, JSON.stringify(query))//, this.options)
+    return this.http.post(this.ProfileAPI, JSON.stringify(query))
                     .map((res: Response) => res.json())
+                    .catch(this.handleError);
+  }
+
+  getSearchData(data: Object): Observable<DataSet> {
+    console.log('Getting Data From', this.SearchAPI, JSON.stringify(data));
+    return this.http.post(this.SearchAPI, JSON.stringify(data))
+                    .map((res:Response) => res.json())
                     .catch(this.handleError);
   }
 
@@ -55,9 +66,9 @@ export class GraphService {
    * @param {Object} query - the query string to send to the REST Server
    * @return {DataSet} The Observable for the HTTP request.
    */
-  getOtherData(): Observable<DataSet> {
-    console.log('Getting Data From', this.OtherAPI);
-    return this.http.post(this.OtherAPI, JSON.stringify({}))//, this.options)
+  getHomeData(): Observable<DataSet> {
+    console.log('Getting Data From', this.HomeAPI);
+    return this.http.post(this.HomeAPI, JSON.stringify({}))
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }
