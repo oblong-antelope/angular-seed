@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Config } from '../index';
-import { ReturnQuery,
+import { PaginatedReturnQuery,
          Profile
         } from '../../models/index';
 
@@ -35,12 +35,31 @@ export class QueryService {
   /**
    * Returns an Observable for the HTTP GET request
    * @param {string} query - the query string to send to the REST Server
-   * @return {any} The Observable for the HTTP request.
+   * @return {PaginatedReturnQuery} The Observable for the HTTP request.
    */
-  getList(query: string): Observable<any> {
+  getList(query: string, size: number): Observable<PaginatedReturnQuery> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
-    return this.http.get(this.genUri('/api/people?query=' + query), options)
+    return this.http.get(this.genUri('/api/people', [
+                                    {name: 'query', value: query},
+                                    {name: 'page_size', value: size}]),
+                                    options)
+                    .map((res: Response) => res.json())
+                    .catch(this.handleError);
+  }
+
+  /**
+   * Returns an Observable for the HTTP GET request
+   * @param {string} api - the api to call
+   * @return {PaginatedReturnQuery} The Observable for the HTTP request
+   */
+  getPagedList(page: number, size: number): Observable<PaginatedReturnQuery> {
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
+        return this.http.get(this.genUri('/api/people', [
+                                    {name: 'page', value: page},
+                                    {name: 'page_size', value: size}]),
+                                    options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }
@@ -73,32 +92,22 @@ export class QueryService {
    * @param {string} path - path to resource
    * @return {string} - full path including server address
    */
-  private genUri(path: string, query?: string) : string {
-    return this.API + path + (query === undefined ? '' : query);
+  private genUri(path: string, query?: Query[]) : string {
+    let uri = this.API + path + (query === undefined ? '' : '?');
+    if(query !==undefined) {
+      for(let i = 0; i < query.length; i++) {
+        uri += ( query[i].name + '=' + query[i].value );
+        if( i < query.length - 1 ) {
+          uri += '&';
+        }
+      }
+    }
+    return uri;
   }
 }
 
-
-/**
- * A Mockery of the Query Serivce for testing
- */
-export class MockQueryService {
-
-  returnGetList: ReturnQuery[];
-  returnGetProfile: Profile;
-
-  getList(query: string): Observable<ReturnQuery[]> {
-    return Observable.create((observer: any) => {
-      observer.next(this.returnGetList);
-      observer.complete();
-    });
-  }
-
-  getProfile(api: string) : Observable<Profile> {
-    return Observable.create((observer: any) => {
-      observer.next(this.returnGetProfile);
-      observer.complete();
-    });
-  }
+interface Query {
+  name: string;
+  value: any;
 }
 

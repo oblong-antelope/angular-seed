@@ -16,10 +16,15 @@
     [footerHeight]="50"
     [rowHeight]="50"
     [detailRowHeight]="200"
+    [externalPaging]="true"
+    [count]="totalRows"
+    [limit]="limit"
+    [offset]="currentPage"
     [scrollbarV]="true"
     [scrollbarH]="true"
-    [rows]='personList'
-    (onPageChange)="paged($event)"
+    [rows]='rows'
+    [cssClasses]='cssClasses'
+    (page)="paged($event)"
     (activate)="toggleExpandRow($event.row)">
 
     <ngx-datatable-row-detail>

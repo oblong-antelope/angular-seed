@@ -1,7 +1,7 @@
 import { Component, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { QueryService } from '../shared/index';
-import { ReturnQuery } from '../models/index';
+import { PaginatedReturnQuery, ShortProfile } from '../models/index';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 
 /**
@@ -27,7 +27,20 @@ export class ResultsComponent implements OnChanges {
   loading: boolean = false;
   querySuccessful: boolean = true;
 
-  personList: ReturnQuery[] = [];
+  data: PaginatedReturnQuery = {count: 0};
+
+  limit: number = 7;
+  currentPage: number = 0;
+  totalRows: number = 0;
+
+  rows: ShortProfile[] = [];
+
+  cssClasses = {
+    pagerLeftArrow: 'glyphicon  glyphicon-chevron-left',
+    pagerRightArrow: 'glyphicon glyphicon-chevron-right',
+    pagerPrevious: 'glyphicon glyphicon-fast-backward',
+    pagerNext: 'glyphicon glyphicon-fast-forward'
+  };
 
   @ViewChild('mydatatable') table : DatatableComponent;
 
@@ -53,12 +66,10 @@ export class ResultsComponent implements OnChanges {
    */
   refreshList() {
     this.loading = true;
-    this.queryService.getList(this.query)
+    this.queryService.getList(this.query, this.limit)
       .subscribe(
         data => {
-          console.log('search results', data);
-          this.querySuccessful = data.length !== 0;
-          this.personList = data;
+          this.updateState(data);
           this.submitted = true;
           this.loading = false;
         },
@@ -68,18 +79,30 @@ export class ResultsComponent implements OnChanges {
   }
 
   /**
+   * Takes the returned data from server and 
+   * updates the internal display's state with it.
+   */
+  updateState(data: PaginatedReturnQuery) {
+      console.log('search results', data);
+      this.querySuccessful = data.count !== 0;
+      this.data = data;
+      this.rows = data.this_page;
+      this.totalRows = data.count;
+  }
+
+  /**
    * Handles the queryService observable, gets the summary of a person from the api
    * @param {number} i: the index of the person to get within the personList
    */
-  getPersonSummary(api: string, i : number) {
-    console.log(this.personList[i]);
+  getPersonSummary(i : number) {
+    console.log(this.rows[i]);
   }
 
   /**
    * Returns the top four keywords
    * @param {DataTableElement} : person to get keywords from
    */
-  getTopFourKeywords(person: ReturnQuery) {
+  getTopFourKeywords(person: ShortProfile) {
     return person.keywords;
   }
 
@@ -98,7 +121,7 @@ export class ResultsComponent implements OnChanges {
    */
   expandedButtonPress(row: any) {
     let index = row.$$index;
-    this.navigateToProfile(this.personList[index].link);
+    this.navigateToProfile(this.rows[index].link);
   }
 
   /**
@@ -110,11 +133,23 @@ export class ResultsComponent implements OnChanges {
   }
 
 
+  /**
+   * Handler for any paging event of the list.
+   */
   paged(event : any) {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      console.log('paged!', event);
-    }, 100);
+    if(this.currentPage !== event.offset) {
+      let page = event.offset;
+      console.log(event);
+
+      this.queryService.getPagedList(page, this.limit)
+        .subscribe(
+          data => {
+            this.updateState(data);
+          },
+          error => console.log(error),
+          () => console.log('Pagination Query Completed')
+      );
+    }
   }
 
 }

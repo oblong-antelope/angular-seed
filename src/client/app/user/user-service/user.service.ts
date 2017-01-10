@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Config } from '../../shared/index';
-import { ReturnQuery,
+import { ShortProfile,
          Profile
         } from '../../models/index';
 import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
@@ -183,10 +183,10 @@ export class UserService {
  */
 export class MockQueryService {
 
-  returnGetList: ReturnQuery[];
+  returnGetList: ShortProfile[];
   returnGetProfile: Profile;
 
-  getList(query: string): Observable<ReturnQuery[]> {
+  getList(query: string): Observable<ShortProfile[]> {
     return Observable.create((observer: any) => {
       observer.next(this.returnGetList);
       observer.complete();

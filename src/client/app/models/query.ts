@@ -1,4 +1,11 @@
-export interface ReturnQuery {
+export interface PaginatedReturnQuery {
+  count: number;
+  this_page?: ShortProfile[];
+  next_page?: string;
+  previous_page?: string;
+}
+
+export interface ShortProfile {
   name: Name;
   link: string; // /api/people/id
   keywords?: string[];
@@ -32,5 +39,5 @@ export interface Publication {
   title: string;
   abstract: string;
   date: string;
-  authors: ReturnQuery[];
+  authors: ShortProfile[];
 }
