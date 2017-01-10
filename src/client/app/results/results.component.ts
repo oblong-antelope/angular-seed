@@ -112,7 +112,6 @@ export class ResultsComponent implements OnChanges {
    * @param {ReturnQuery} row: the row to toggle
    */
   toggleExpandRow(row: any) {
-    console.log(row);
     this.table.toggleExpandRow(row);
   }
 
@@ -129,7 +128,7 @@ export class ResultsComponent implements OnChanges {
    */
   navigateToProfile(api: string) {
     let vals: string[] = api.split('/');
-    this.router.navigate(['profile', {'id': vals[3]}]);
+    this.router.navigate(['profile', {'id': vals[4]}]);
   }
 
 

@@ -140,7 +140,7 @@ export class GraphComponent implements OnInit, OnChanges {
             person: personClicked,
         });
         let vals:string[] = personClicked.idx.split('/');
-        this.router.navigate(['profile', {'id': vals[3]}]);
+        this.router.navigate(['profile', {'id': vals[4]}]);
       }
   }
 
