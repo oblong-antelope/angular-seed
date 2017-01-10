@@ -3,6 +3,11 @@
   padding: 0 0;
 }
 
+h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .container {
   position: relative;
   float: left;
@@ -83,6 +88,9 @@
   text-align: center;
   margin:auto;
   background: white;
+  border-radius: 8px;
+  border-width: 2px;
+  padding: 5px;
 }
 
 .graph {
