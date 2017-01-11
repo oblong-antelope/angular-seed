@@ -21,7 +21,7 @@
                     <input id="firstname" type="text" class="form-control" [formControl]="signupForm.controls['firstname']">
                 </div>
                 <div class="form-group col-sm-6" 
-                    [ngClass]="{'has-error':!signupForm.controls['email'].valid && signupForm.controls['email'].touched}">
+                    [ngClass]="{'has-error':fieldError('lastname')}">
                     <label for="lastname">Lastname</label>
                     <input ìd="lastname" type="text" class="form-control" [formControl]="signupForm.controls['lastname']">
                 </div>
@@ -37,7 +37,7 @@
            
             <!--Password-->
             <div class="form-group" 
-                 [ngClass]="{'has-error':!signupForm.controls['password'].valid && signupForm.controls['password'].touched}">
+                 [ngClass]="{'has-error':fieldError('password')}">
                 <label for="password">Password</label>
                 <input id="password" type="password" class="form-control" [formControl]="signupForm.controls['password']">
             </div>
@@ -51,7 +51,7 @@
     </form>
 </modal>
 
-<modal #successModal (onClose)="closeModal()" (onDismiss)="closeModal()">
+<modal #successModal [size]="'sm'" (onClose)="closeModal()" (onDismiss)="closeModal()">
     <modal-header>
         <h4 class="modal-title">Successful Signup!</h4>
     </modal-header>

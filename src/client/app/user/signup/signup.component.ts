@@ -76,7 +76,7 @@ export class SignupModalComponent implements OnInit, AfterViewInit {
         .subscribe(
             success => {
                 this.loading = false;
-                this.modal.close();
+                // this.modal.close();
                 this.smodal.open();
             },
             error => console.log(error),

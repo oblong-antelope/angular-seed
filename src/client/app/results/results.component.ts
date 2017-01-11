@@ -29,7 +29,7 @@ export class ResultsComponent implements OnChanges {
 
   data: PaginatedReturnQuery = {count: 0};
 
-  limit: number = 7;
+  limit: number = 10;
   currentPage: number = 0;
   totalRows: number = 0;
 
@@ -83,6 +83,7 @@ export class ResultsComponent implements OnChanges {
    * updates the internal display's state with it.
    */
   updateState(data: PaginatedReturnQuery) {
+      console.log(data);
       this.querySuccessful = data.count !== 0;
       this.data = data;
       this.rows = data.this_page;
@@ -136,6 +137,8 @@ export class ResultsComponent implements OnChanges {
    */
   paged(event : any) {
     if(this.currentPage !== event.offset) {
+      console.log(event);
+      this.currentPage = event.offset;
       this.refreshList(event.offset);
     }
   }
