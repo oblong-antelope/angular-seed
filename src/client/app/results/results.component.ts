@@ -64,9 +64,9 @@ export class ResultsComponent implements OnChanges {
    * Handles the queryService observable, gets the List from an api
    * @param {string} api: api url to get the list from
    */
-  refreshList() {
+  refreshList(page:number=0) {
     this.loading = true;
-    this.queryService.getList(this.query, this.limit)
+    this.queryService.getPagedList(this.query, page, this.limit)
       .subscribe(
         data => {
           this.updateState(data);
@@ -74,7 +74,7 @@ export class ResultsComponent implements OnChanges {
           this.loading = false;
         },
         error =>  {this.errorMessage = <any>error; console.log(error); this.loading = false;},
-        () => console.log('Results List Request Complete')
+        () => console.log('Paginated Results List Request Complete')
       );
   }
 
@@ -83,7 +83,6 @@ export class ResultsComponent implements OnChanges {
    * updates the internal display's state with it.
    */
   updateState(data: PaginatedReturnQuery) {
-      console.log('search results', data);
       this.querySuccessful = data.count !== 0;
       this.data = data;
       this.rows = data.this_page;
@@ -137,17 +136,7 @@ export class ResultsComponent implements OnChanges {
    */
   paged(event : any) {
     if(this.currentPage !== event.offset) {
-      let page = event.offset;
-      console.log(event);
-
-      this.queryService.getPagedList(page, this.limit)
-        .subscribe(
-          data => {
-            this.updateState(data);
-          },
-          error => console.log(error),
-          () => console.log('Pagination Query Completed')
-      );
+      this.refreshList(event.offset);
     }
   }
 

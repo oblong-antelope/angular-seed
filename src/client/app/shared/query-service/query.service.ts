@@ -34,29 +34,18 @@ export class QueryService {
 
   /**
    * Returns an Observable for the HTTP GET request
-   * @param {string} query - the query string to send to the REST Server
-   * @return {PaginatedReturnQuery} The Observable for the HTTP request.
-   */
-  getList(query: string, size: number): Observable<PaginatedReturnQuery> {
-    let headers = new Headers({ 'Content-Type': 'application/json'});
-    let options = new RequestOptions({ headers: headers });
-    return this.http.get(this.genUri('/api/people', [
-                                    {name: 'query', value: query},
-                                    {name: 'page_size', value: size}]),
-                                    options)
-                    .map((res: Response) => res.json())
-                    .catch(this.handleError);
-  }
-
-  /**
-   * Returns an Observable for the HTTP GET request
-   * @param {string} api - the api to call
+   * @param {string} query - the query to submit
+   * @param {number} page - the page of pagination
+   * @param {size} size - the number to return per page 
    * @return {PaginatedReturnQuery} The Observable for the HTTP request
    */
-  getPagedList(page: number, size: number): Observable<PaginatedReturnQuery> {
+  getPagedList(query: string,
+               page: number,
+               size: number): Observable<PaginatedReturnQuery> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
         return this.http.get(this.genUri('/api/people', [
+                                    {name: 'query', value: query},
                                     {name: 'page', value: page},
                                     {name: 'page_size', value: size}]),
                                     options)

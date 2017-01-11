@@ -38,3 +38,7 @@ h2 {
 .word-wrap{
   word-wrap: normal;
 }
+
+.grab-cursor {
+  cursor: pointer;
+}

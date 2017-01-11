@@ -12,6 +12,7 @@ import { KeywordGridModalComponent } from './modal/keyword-grid-modal.component'
 import { AddKeywordModalComponent } from './modal/add-keyword.modal.component';
 import { PublicationsModalComponent } from './modal/publications.modal.component';
 import { EditProfileModalComponent } from './modal/edit-profile-modal.component';
+import { ContactModalComponent } from './modal/contact.modal.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { EditProfileModalComponent } from './modal/edit-profile-modal.component'
                  KeywordGridModalComponent,
                  AddKeywordModalComponent,
                  PublicationsModalComponent,
-                 EditProfileModalComponent],
+                 EditProfileModalComponent,
+                 ContactModalComponent],
   exports: [ProfileComponent]
 })
 export class ProfileModule {}

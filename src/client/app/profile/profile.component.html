@@ -11,10 +11,10 @@
             <h4 class="navbar-text" *ngIf="iscurrentuser()">Your Profile</h4>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li *ngIf="!iscurrentuser()">
+            <li class="active grab-cursor" *ngIf="!iscurrentuser()">
                 <a (click)="openContactModal()">Contact</a>
             </li>
-            <li *ngIf="iscurrentuser()">
+            <li class="active grab-cursor" *ngIf="iscurrentuser()">
                 <a (click)="openEditModal()">Edit</a>
             </li>
         </ul>
@@ -95,3 +95,5 @@
 
 <sd-edit-profile-modal #editProfileModal [profile]="profile"
                                     (onEdit)="editModalUpdateProfile($event)"></sd-edit-profile-modal>
+
+<sd-contact-modal #contactModal [profile]="profile"></sd-contact-modal>

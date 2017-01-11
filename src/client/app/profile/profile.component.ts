@@ -5,7 +5,8 @@ import { UserService } from '../user/index';
 import { KeywordGridModalComponent,
          AddKeywordModalComponent,
          PublicationsModalComponent,
-         EditProfileModalComponent } from './modal/index';
+         EditProfileModalComponent,
+         ContactModalComponent } from './modal/index';
 
 /**
  * This class represents the lazy loaded AboutComponent.
@@ -41,6 +42,7 @@ export class ProfileComponent implements OnChanges {
   @ViewChild('addKeywordModal') addKeywordModal: AddKeywordModalComponent;
   @ViewChild('publicationsModal') publicationsModal: PublicationsModalComponent;
   @ViewChild('editProfileModal') editProfileModal: EditProfileModalComponent;
+  @ViewChild('contactModal') contactModal: ContactModalComponent;
 
   /**
    * Creates an instance of the ProfileComponent with the injected
@@ -167,7 +169,7 @@ export class ProfileComponent implements OnChanges {
    * Opens the contact modal
    */
   openContactModal() {
-    return;
+    this.contactModal.open();
   }
 
   /**
