@@ -87,13 +87,14 @@ export class ResultsComponent implements OnChanges {
       console.log(data);
       this.querySuccessful = data.count !== 0;
       this.data = data;
-      this.rows = data.this_page;
+      if(this.data.count > 0) {
+        this.rows = data.this_page;
 
-      if(this.rows.length > 0) {
-        let vals = this.rows[0].link.split('/');
-        this.graphcontent.emit({ personIdx: parseInt(vals[4])});
+        if(this.rows.length > 0) {
+          let vals = this.rows[0].link.split('/');
+          this.graphcontent.emit({ personIdx: parseInt(vals[4])});
+        }
       }
-
       this.totalRows = data.count;
   }
 
