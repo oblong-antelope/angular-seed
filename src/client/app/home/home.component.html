@@ -25,7 +25,7 @@
     </div>
     <div class="right-container" [hidden]="!right_open" #rightContainer>
         <div class="results" *ngIf="results_route">
-            <sd-results [query]="results_query"></sd-results>
+            <sd-results [query]="results_query" (graphcontent)="submitGraphContent($event)"></sd-results>
         </div>
         <div class="profile" *ngIf="profile_route">
             <sd-profile [id]="profile_url_id"></sd-profile>

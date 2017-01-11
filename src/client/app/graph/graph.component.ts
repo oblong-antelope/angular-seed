@@ -80,6 +80,7 @@ export class GraphComponent implements OnInit, OnChanges {
    * context switch
    */
   ngOnChanges() {
+      console.log('graph content', this.content);
       this.getDataAndUpdateChart();
   }
 

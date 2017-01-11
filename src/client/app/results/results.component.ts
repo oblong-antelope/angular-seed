@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { QueryService } from '../shared/index';
 import { PaginatedReturnQuery, ShortProfile } from '../models/index';
@@ -17,6 +17,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 export class ResultsComponent implements OnChanges {
 
   @Input('query') query:string;
+  @Output('graphcontent') graphcontent: EventEmitter<Object> = new EventEmitter();
 
   errorMessage: string = '';
 
@@ -87,6 +88,12 @@ export class ResultsComponent implements OnChanges {
       this.querySuccessful = data.count !== 0;
       this.data = data;
       this.rows = data.this_page;
+
+      if(this.rows.length > 0) {
+        let vals = this.rows[0].link.split('/');
+        this.graphcontent.emit({ personIdx: parseInt(vals[4])});
+      }
+
       this.totalRows = data.count;
   }
 

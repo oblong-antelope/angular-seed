@@ -84,8 +84,7 @@ export class HomeComponent implements OnInit {
       params => {
         this.results_query = params['query'];
         this.graph_context = 'results';
-        this.graph_content
-            = {api: this.qs.generateQueryEndpoint(this.results_query)};
+        this.graph_content = {personIdx: []};
       },
       error => this.routeErrorRedirect(error)
     );
@@ -116,6 +115,10 @@ export class HomeComponent implements OnInit {
     this.home_route = true;
     this.right_open = false;
     this.graph_context = 'home';
+  }
+
+  submitGraphContent(e: Object) {
+    this.graph_content = e;
   }
 
   /**

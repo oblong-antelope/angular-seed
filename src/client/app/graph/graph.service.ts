@@ -56,11 +56,13 @@ export class GraphService {
                     .catch(this.handleError);
   }
 
+
+
   getSearchData(data: Object): Observable<DataSet> {
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
-    console.log('Getting Data From', this.SearchAPI, JSON.stringify(data));
-    return this.http.post(this.SearchAPI, JSON.stringify(data), options)
+    console.log('Getting Data From', this.ProfileAPI, JSON.stringify(data));
+    return this.http.post(this.ProfileAPI, JSON.stringify(data), options)
                     .map((res:Response) => res.json())
                     .catch(this.handleError);
   }
