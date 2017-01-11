@@ -33,7 +33,7 @@ export class ProfileComponent implements OnChanges {
      keywords: {},
   };
 
-  totalValue: number = 1;
+  totalValue: number = 100;
 
   /**
    * All The Modals
@@ -127,7 +127,6 @@ export class ProfileComponent implements OnChanges {
     });
     this.keywordList = sorted;
     this.sortedKeywordList = sorted.slice(0, 20).map((k:any)=> {
-              this.totalValue += k.value;
               return k.word;
             });
     this.displayKeywordList
@@ -265,8 +264,14 @@ export class ProfileComponent implements OnChanges {
   /**
    * Maps values to sigmoid to make visuals look better...
    */
-  sigmoid(n: number) {
-    let v = 100 * 1 / (1 + Math.exp( -75 * n / this.totalValue ));
-    return Math.floor(v - 50);
+  getValue(n: number) {
+    // let v = 100 * 1 / (1 + Math.exp( -75 * n / this.totalValue ));
+    // return Math.floor(v - 50);
+    return Math.floor(n);
   }
+
+  getKeyword(word: any) {
+    return Math.floor(this.profile.keywords[word]);
+  }
+
 }

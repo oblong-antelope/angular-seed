@@ -209,7 +209,7 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
      * Generates the bar chart data.
      */
     genBarData() {
-        let threshold = this.keywords[0].value * (1/4);
+        let threshold = this.keywords[0].value * (1/10);
         let otherValues = 0.5;
         let displaydata: number[] = [];
         let displaylabels: string[] = [];
@@ -222,9 +222,9 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
             }
         }
         displaylabels = displaylabels.slice(0, this.numdatapoints);
-        displaylabels.push('others..');
+        // displaylabels.push('others..');
         displaydata = displaydata.slice(0, this.numdatapoints);
-        displaydata.push(otherValues);
+        // displaydata.push(otherValues);
 
         let data = {
             labels: displaylabels,

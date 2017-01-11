@@ -4,17 +4,17 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" *ngIf="!iscurrentuser()">
-            <li class="active"><a sdBackButton><span class="glyphicon glyphicon-arrow-left"></span></a></li>
+            <li><a sdBackButton><span class="glyphicon glyphicon-arrow-left"></span></a></li>
             <li><p class="navbar-text">Back to previous page</p></li>
         </ul>
         <div class="nav navbar-nav navbar-left">
             <h4 class="navbar-text" *ngIf="iscurrentuser()">Your Profile</h4>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li class="active grab-cursor" *ngIf="!iscurrentuser()">
+            <li class="grab-cursor" *ngIf="!iscurrentuser()">
                 <a (click)="openContactModal()">Contact</a>
             </li>
-            <li class="active grab-cursor" *ngIf="iscurrentuser()">
+            <li class="grab-cursor" *ngIf="iscurrentuser()">
                 <a (click)="openEditModal()">Edit</a>
             </li>
         </ul>
@@ -51,9 +51,9 @@
     <div *ngFor="let word of displayKeywordList">
         - {{word}}
         <progressbar class="progress"
-                [value]="sigmoid(profile.keywords[word])"
+                [value]="getValue(profile.keywords[word])"
                 max="100">
-                {{profile.keywords[word]}}
+                {{getKeyword(word)}}
         </progressbar>
     </div>
 
