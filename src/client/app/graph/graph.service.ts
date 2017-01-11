@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Config } from '../shared/index';
 import { DataSet } from './models';
@@ -49,14 +49,18 @@ export class GraphService {
    */
   getProfileData(query: Object): Observable<DataSet> {
     console.log('Getting Data From', this.ProfileAPI, JSON.stringify(query));
-    return this.http.post(this.ProfileAPI, JSON.stringify(query))
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post(this.ProfileAPI, JSON.stringify(query), options)
                     .map((res: Response) => res.json())
                     .catch(this.handleError);
   }
 
   getSearchData(data: Object): Observable<DataSet> {
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
     console.log('Getting Data From', this.SearchAPI, JSON.stringify(data));
-    return this.http.post(this.SearchAPI, JSON.stringify(data))
+    return this.http.post(this.SearchAPI, JSON.stringify(data), options)
                     .map((res:Response) => res.json())
                     .catch(this.handleError);
   }
