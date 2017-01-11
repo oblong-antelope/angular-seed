@@ -35,17 +35,21 @@
                 <ngx-datatable-column name="Edit">
                     <template let-row="row" ngx-datatable-cell-template>
                         <div class="form-group">
-                            <select class="form-control" id="exampleSelect1">
-                            <option value="0">Ok</option>
-                            <option value="1">Irrelevant</option>
-                            <option value="2">Garbage</option>
+                            <select class="form-control" name="select" [ngModel]="row.edit" *ngIf="row.edit !== 3"(change)="selectChange(row, $event)" id="exampleSelect1">
+                                <option value="0">Ok</option>
+                                <option value="1">Irrelevant</option>
+                                <option value="2">Garbage</option>
                             </select>
+                            <p *ngIf="row.edit === 3">New Keyword</p>
                         </div>
                     </template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Confirm">
                     <template let-row="row" ngx-datatable-cell-template>
-                        <button type="button" class="btn btn-default">Submit</button>
+                        <div class="{display:'inline';}"*ngIf="row.edit !== 0">
+                            <button type="button" class="btn btn-default" (click)="submitRow(row)">Submit</button>
+                            <p [hidden]="!row.submit">Submitted</p>
+                        </div>
                     </template>
                 </ngx-datatable-column>
             </ngx-datatable>
@@ -54,8 +58,16 @@
     <modal-footer>
         <div class="btn-group" role="group" style="float: left;" aria-label="...">
             <button type="button" class="btn btn-default" (click)="displayTab=0">Profile Insight</button>
-            <button type="button" class="btn btn-default" (click)="displayTab=1">Modify Keywords</button>
         </div>
-        <button type="button" class="btn btn-primary" (click)="modal.close()">Ok</button>
+        <div class="btn-group" role="group" style="float: left;" aria-label="...">
+            <button type="button" class="btn btn-default" (click)="displayTab=1" *ngIf="loggedin">Modify Keywords</button>
+            <button type="button" class="btn btn-default" (click)="addKeyword()" *ngIf="isTab(1)">Add Keywords</button>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="modal.close()" *ngIf="isTab(0)">Ok</button>
+        <button type="button" class="btn btn-primary" (click)="saveEditKeywords()" [disabled]="!edited" *ngIf="isTab(1)">Save</button>
     </modal-footer>
 </modal>
+
+<sd-add-keyword-modal #addKeywordModal
+            (onAdd)="onAddKeyword($event)">
+</sd-add-keyword-modal>

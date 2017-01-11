@@ -21,7 +21,7 @@ declare var Chart:any;
   selector: 'sd-graph',
   template: `<div class='container'>
                 <canvas #mychart></canvas>
-                <table class="table legend" *ngIf="data!==undefined && data.legend!==undefined">
+                <!-- <table class="table legend" *ngIf="data!==undefined && data.legend!==undefined">
                     <tbody>
                         <tr *ngFor="let item of data.legend">
                             <td>
@@ -30,9 +30,9 @@ declare var Chart:any;
                                 </div>
                             </td>
                             <td>{{item.text}}</td>
-                        </tr>
+                        </tr>   
                     </tbody>
-                </table>
+                </table> -->
             </div>`,
   styleUrls: ['graph.component.css'],
 })

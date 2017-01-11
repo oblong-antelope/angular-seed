@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnChanges, OnInit,
          Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import { AddKeywordModalComponent } from '../modal/index';
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 
 declare var Chart:any;
@@ -27,8 +28,11 @@ declare var Chart:any;
 })
 export class KeywordGridModalComponent implements OnInit, OnChanges {
     @Input('keywords') keywords: any[] = [];
+    @Input('loggedin') loggedin: boolean = false;
+    @Output('onSubmit') onSubmit: EventEmitter<any> = new EventEmitter();
 
     @ViewChild('myModal') modal: ModalComponent;
+    @ViewChild('addKeywordModal') addKeywordModal: AddKeywordModalComponent;
 
     /**
     * Chart Properties
@@ -44,6 +48,8 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
     /**
      * Grid Properties
      */
+    edited: boolean = true;
+
     rows: any[] = [];
 
     temp: any[] = [];
@@ -97,9 +103,10 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
     }
 
     // Grid Keywords
+
     genRowValues() {
          let rows = this.keywords.map(obj => {
-            return {'keyword': obj.word, 'edit':0, submit:'false'};
+            return {'keyword': obj.word, 'edit':0, submit:false};
         });
 
         //cache list
@@ -118,6 +125,44 @@ export class KeywordGridModalComponent implements OnInit, OnChanges {
 
         // update the rows
         this.rows = temp;
+    }
+
+    addKeyword() {
+        this.addKeywordModal.open();
+    }
+
+    onAddKeyword(e: string) {
+        this.rows.unshift({
+            'keyword': e,
+            'edit': 3,
+            submit: false
+        });
+    }
+
+    selectChange(row: any, e:any) {
+        row.edit = e.target.value;
+    }
+
+    submitRow(row: any) {
+        row.submit = !row.submit;
+        this.edited = true;
+    }
+
+    saveEditKeywords() {
+        if(this.edited) {
+            let changedrows = this.rows.filter(val => val.submit)
+                    .map(val => {
+                        console.log(val);
+                        let action = 'new';
+                        if (val.edit === '1') {action='irrelevant';};
+                        if (val.edit === '2') {action='garbage';};
+                        if (val.edit === '3') {action='new';};
+                        return {word: val.keyword, action: action};
+                    });
+            console.log(changedrows);
+            this.onSubmit.emit(changedrows);
+        }
+        this.modal.close();
     }
 
     //Bar Chart Displays

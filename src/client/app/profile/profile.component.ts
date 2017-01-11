@@ -160,9 +160,13 @@ export class ProfileComponent implements OnChanges {
     this.editProfileModal.open();
   }
 
-  editModalUpdateProfile(newprof: Profile) {
-    console.log(newprof);
-    // this.profile = newprof;
+  editModalUpdateProfile(newprof: any) {
+    if(newprof.change) {
+      this.userService.editProfile(this.profile, {})
+      .subscribe(res => console.log('Edit Profile', res));
+    } else {
+      this.profile = newprof;
+    }
   }
 
   /**
@@ -186,6 +190,7 @@ export class ProfileComponent implements OnChanges {
     this.addKeywordModal.open();
   }
 
+
   /**
    * Handler for the adding of a keyword
    */
@@ -203,6 +208,37 @@ export class ProfileComponent implements OnChanges {
     this.keywordGridModal.open();
   }
 
+  onKeywordEdit(e: any) {
+    console.log(e);
+    e.map((val:any) => {
+      if(val.action === 'irrelevant' ||
+              val.action === 'garbage') {
+        delete this.profile.keywords[val.word];
+      }
+      if(val.action === 'new') {
+        this.profile.keywords[val.word] = 10000;
+      }
+    });
+    this.sortProfileKeywords();
+
+    let garbage = e.filter((val:any) => val.action === 'garbage').map((val:any)=>val.word);
+
+    if(e.length - garbage.length !== 0) {
+      this.userService.editProfile({}, {
+        add_keywords: e.filter((val:any) => val.action === 'new').map((val:any)=>val.word),
+        remove_keywords: e.filter((val:any) => val.action === 'irrelevant').map((val:any)=>val.word)
+      }).subscribe(
+        success => console.log(success)
+      );
+    }
+
+    if (garbage.length !== 0) {
+      this.queryService.submitGarbageKeywords(garbage)
+          .subscribe(res => console.log(res));
+    }
+
+    this.updateProfile();
+  }
 
   /**
    * UTILS

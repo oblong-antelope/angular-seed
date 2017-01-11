@@ -12,7 +12,7 @@ import { Profile } from '../../models/index';
 export class EditProfileModalComponent {
 
     @Input('profile') profile: Profile = undefined;
-    @Output('onEdit') onEdit: EventEmitter<Profile> = new EventEmitter();
+    @Output('onEdit') onEdit: EventEmitter<any> = new EventEmitter();
 
     @ViewChild('editModal') editModal: ModalComponent;
     @ViewChild('editForm') editForm: any;
@@ -30,15 +30,14 @@ export class EditProfileModalComponent {
     close() {
         if(this.isDirty() && !this.saved) {
             this.profile = JSON.parse(this.backup);
-            console.log('changed but not saved', this.backup, this.profile);
+            this.onEdit.emit({profile: this.profile, change:false});
         }
-        // this.editForm.reset();
+        this.onEdit.emit({profile: this.profile, change:true});
     }
 
     save() {
          this.onEdit.emit(this.profile);
          this.saved = true;
-         console.log('onsave', this.profile);
          this.editModal.close();
     }
 

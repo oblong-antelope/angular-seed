@@ -20,7 +20,7 @@ import { Profile } from '../../models/index';
                         <label for="website">Website</label>
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <a href="{{profile.website}}">{{profile.website}}</a>
+                                <a href="{{profile.website}}" target="_blank">{{profile.website}}</a>
                             </div>
                         </div>
                     </modal-body>

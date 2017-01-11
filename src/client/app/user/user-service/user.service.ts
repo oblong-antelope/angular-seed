@@ -18,6 +18,7 @@ import 'rxjs/add/operator/do';  // for debugging
 export class UserService {
 
   API = 'https://oblong-login.herokuapp.com';
+  BackendApi = Config.BACKEND_API;
 
   /**
    * Creates a new UserService with the injected Http.
@@ -105,6 +106,18 @@ export class UserService {
   }
 
   /**
+   * Returns an Obseervable of a boolean detailing success or not.
+   * @param {Object} profile - the modified profile
+   * @param {Object} keywords - the modified keywords
+   * @return {boolean} success or failure.
+   */
+  editProfile(profile: Object = {}, keywords : Object = {}) : Observable<boolean> {
+    let body = Object.assign(profile, keywords);
+    let uid = this.getId();
+    return this.putProfileEdit(uid, body);
+  }
+
+  /**
    * Returns an observable of a boolean detailing a successful signup or not.
    * @param {Object} details - the signup details to be sent to the server
    * @return {Observable<boolean>} The Boolean Observable to be returned and subscribed to.
@@ -142,6 +155,18 @@ export class UserService {
   }
 
   /**
+   * Returns an Observable for the Authenticated HTTP POST request to edit uid Profile
+   * @param {string} uid - the users uid
+   * @param {Object} body - the edits
+   * @return {any} The Observable Object returned from the request.
+   */
+  private putProfileEdit(uid: string, body: Object): Observable<any> {
+    return this.auth.put(this.genBackendUri('/api/people/' + uid), JSON.stringify(body))
+                   .map((res:Response) => res.json())
+                   .catch(this.handleError);
+  }
+
+  /**
    * Returns an Observable for the HTTP POST request
    * @param {Object} details - the user action details sent to the server
    * @return {any} The Observable Object for the HTTP request.
@@ -174,6 +199,10 @@ export class UserService {
    */
   private genUri(path: string, query?: string) : string {
     return this.API + path + (query === undefined ? '' : query);
+  }
+
+  private genBackendUri(path: string, query?: string) : string {
+    return this.BackendApi + path + (query === undefined ? '' : query);
   }
 }
 

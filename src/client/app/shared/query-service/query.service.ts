@@ -64,6 +64,15 @@ export class QueryService {
                     .catch(this.handleError);
   }
 
+
+
+  submitGarbageKeywords(keywords: any[]): Observable<any> {
+    let options = new RequestOptions({body: JSON.stringify(keywords)});
+    return this.http.delete(this.genUri('/api/keywords'), options)
+                  .map((res:Response) => res.json())
+                  .catch(this.handleError);
+  }
+
   /**
     * Handle HTTP error
     */
